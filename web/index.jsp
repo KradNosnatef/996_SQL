@@ -9,7 +9,7 @@
 
 <html>
   <head>
-    <title>$Title$</title>
+    <title>USTC Student Management System</title>
   </head>
   <body>
   $END$
