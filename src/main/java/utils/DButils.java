@@ -8,7 +8,7 @@ public class DButils {
     public static Connection getConnection() {
         String dbUserName = "admin";
         String dbUserPasswd = "admins_password";
-        String dbURL = "jdbc:mysql://localhost:3306/student_management?"
+        String dbURL = "jdbc:mysql://localhost:3306/mydb?"
                 + "user=" + dbUserName + "&password=" + dbUserPasswd + "&useUnicode=true&characterEncoding=UTF8";
         Connection conn = null;
         try {

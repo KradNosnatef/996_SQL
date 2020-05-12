@@ -5,9 +5,9 @@
   Time: 5:55 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@page import="model.User"%>
+<%@page import="model.User" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8" %>
 <!DOCTYPE HTML>
 <html lang="zh">
 <head>
@@ -21,9 +21,9 @@
 <body>
 <%
     //获取登录成功的用户信息
-    User user = (User) session.getAttribute("user");
+    User user = (User) session.getAttribute("student");
     //判断用户是否登录
-    if(user != null){
+    if (user != null) {
 %>
 <header>
     <div class="title">
@@ -32,8 +32,10 @@
     <nav>
         <div class="userinfo">
             <ul>
-                <li><%=user.get_username() %></li>
-                <li><%=user.get_usertype() %></li>
+                <li><%=user.get_username() %>
+                </li>
+                <li><%=user.get_usertype() %>
+                </li>
                 <li><a href="UserExitServlet">退出登录</a></li>
                 <li><a href="login.html">返回首页</a></li>
             </ul>
@@ -43,7 +45,7 @@
 
 <main>
     <%
-        }else{
+        } else {
             response.sendRedirect("login.html");
         }
     %>
@@ -66,7 +68,7 @@
                 <li>
                     <div class="link">学生信息管理</div>
                     <ul class="submenu">
-                        <li><a  onclick="query_all('student')">查看所有学生</a></li>
+                        <li><a onclick="query_all('student')">查看所有学生</a></li>
                     </ul>
                 </li>
                 <li>
@@ -81,7 +83,7 @@
                 <li>
                     <div class="link">学生成绩管理</div>
                     <ul class="submenu">
-                        <li><a  onclick="query_all('sc')">查看全部学生成绩</a></li>
+                        <li><a onclick="query_all('sc')">查看全部学生成绩</a></li>
                     </ul>
                 </li>
             </ul>
@@ -96,7 +98,7 @@
 
 <footer>
     <div class="copyright">
-        &copy; Copyright. All rights reserved. Design by <a href="http://www.github.com/Soarkey/">Soarkey</a>
+        &copy; Copyright. All rights reserved. Design by <a href="http://www.github.com/Chivier/">Chivier @ USTC</a>
     </div>
 </footer>
 

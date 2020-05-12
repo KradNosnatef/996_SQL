@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import dao.UserDao;
 import model.User;
 
-public class LoginServlet {
+public class LoginServlet extends HttpServlet{
     private static final long serialVersionUID = 1L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
