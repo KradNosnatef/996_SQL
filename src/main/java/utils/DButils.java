@@ -19,19 +19,19 @@ public class DButils {
         try {
             initContext = new InitialContext();
             Context envContext = (Context) initContext.lookup("java:/comp/env");
-            if (envContext == null) {
-                System.out.println("Conn error");
-                return null;
-            }
+            //            if (envContext == null) {
+            //                System.out.println("Conn error");
+            //                return null;
+            //            }
             DataSource ds = (DataSource) envContext.lookup("jdbc/mydb");
-            if (ds == null) {
-                System.out.println("ds error");
-                return null;
-            }
-            System.out.println("corrent env & ds");
+            //            if (ds == null) {
+            //                System.out.println("ds error");
+            //                return null;
+            //            }
+            //            System.out.println("corrent env & ds");
             conn = ds.getConnection();
         } catch (NamingException | SQLException e) {
-            System.out.println("EOFH");
+            //            System.out.println("EOFH");
             e.printStackTrace();
         }
 
