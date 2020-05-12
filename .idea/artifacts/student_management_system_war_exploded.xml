@@ -6,7 +6,9 @@
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="student-management-system" />
+          <element id="library" level="project" name="mysql-connector-java-8.0.13" />
         </element>
+        <element id="library" level="project" name="lib" />
       </element>
     </root>
   </artifact>
