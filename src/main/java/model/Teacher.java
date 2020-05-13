@@ -2,6 +2,11 @@ package model;
 
 import java.io.Serializable;
 
+// Define Teacher Class
+// id: teacher id
+// enrollment_date: enrollment date of a teacher
+// department_id: foreign key in Department table
+// teacher_title: such as 'Professor'. *Some teacher might have no titles*
 public class Teacher implements Serializable {
     private static final long serialVersionUID = 1L;
 

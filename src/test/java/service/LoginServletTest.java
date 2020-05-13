@@ -14,7 +14,7 @@ class LoginServletTest {
         UserDao userdao = new UserDao();
         String username="PB17000144";
         String password="123456";
-        User user = userdao.login(username, password);
+        User user = userdao.loginUnitTest(username, password);
         if (user != null)
             System.out.println("login!");
     }

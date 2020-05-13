@@ -2,6 +2,18 @@ package model;
 
 import java.io.Serializable;
 
+// Define Course Class
+// id: class id information
+// name: name of class
+// department_id: foreign key in Department table
+// teacher_id: foreign key in Teacher table
+// semester: 'AUTUMN' or 'SPRING'
+// year: which year this couerse is opening
+// time: TODO
+//      this part is to be done, need a standard format to represent a time in a week
+//      the easiest way is '{DAY}-{NUM}', {DAY} = {MON, TUE, ..., SUN}, {NUM} = {1, 2, 3, 4, 5}
+//      **BUT WE NEED A TIME-FORMAT HERE**, you can take dateFormat in java/utils/Dateutils.java as reference.
+
 public class Course implements Serializable {
     private static final long serialVersionUID = 1L;
 

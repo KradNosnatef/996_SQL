@@ -9,7 +9,6 @@ import utils.DButils;
 import model.Campus;
 
 public class CampusDao {
-    // Add
     public int insert_campus(String id, String name, String address) {
         Connection conn = DButils.getConnection();
         String sql = "insert into campus (Campus_ID, Campus_Name, Campus_Address) VALUES (?,?,?)";

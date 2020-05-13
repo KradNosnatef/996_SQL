@@ -2,6 +2,12 @@ package model;
 
 import java.io.Serializable;
 
+// Define Class Class (Hmmm, maybe sound a little strange)
+// id: class id
+// date: date of enrollment
+// grade: grade of class, it is also the grade information for all the student in this class
+// department_id: foreign key from Department table
+// head_teacher_id: foreign key from Teacher table
 public class Class implements Serializable {
     private static final long serialVersionUID = 1L;
 

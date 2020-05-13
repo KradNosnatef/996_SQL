@@ -2,6 +2,10 @@ package model;
 
 import java.io.Serializable;
 
+// Define Campus Class
+// id: campus_id in database
+// name: name of campus
+// address address of campus
 public class Campus implements Serializable {
     private static final long serialVersionUID = 1L;
 

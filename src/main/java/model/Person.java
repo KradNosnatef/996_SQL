@@ -2,6 +2,12 @@ package model;
 
 import java.io.Serializable;
 
+// Define Person Class
+// all the followings elments are basic information of a person
+// I will only mention two important rules:
+// card_type: 0 - ID Card in PRC, 1 - passport (Default is 0)
+// TODO we can make check id_card_number is leagal or not when all other parts finish
+// gender: 0 - Male, 1 - Female (We will not consider about LGBT in our database)
 public class Person implements Serializable {
     private static final long serialVersionUID = 1L;
 

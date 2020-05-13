@@ -6,6 +6,8 @@ public class Datautils {
         int num_month = -1;
         int num_day = -1;
         int string_id = 0;
+
+        // Recgonize year number in a string
         while (string_id < date.length()) {
             if (date.charAt(string_id) >= '0' && date.charAt(string_id) <= '9') break;
             string_id++;
@@ -17,6 +19,7 @@ public class Datautils {
             if (date.charAt(string_id) < '0' || date.charAt(string_id) > '9') break;
             string_id++;
         }
+        // Recgonize month number in a string
         while (string_id < date.length()) {
             if (date.charAt(string_id) >= '0' && date.charAt(string_id) <= '9') break;
             string_id++;
@@ -28,6 +31,7 @@ public class Datautils {
             if (date.charAt(string_id) < '0' || date.charAt(string_id) > '9') break;
             string_id++;
         }
+        // Recgonize date number in a string
         while (string_id < date.length()) {
             if (date.charAt(string_id) >= '0' && date.charAt(string_id) <= '9') break;
             string_id++;
@@ -40,6 +44,7 @@ public class Datautils {
             string_id++;
         }
 
+        // Format year number into digit of length 4
         if (num_year < 100) {
             if (num_year < 10) num_year += 2000;
             else num_year += 1900;

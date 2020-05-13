@@ -2,6 +2,13 @@ package model;
 
 import java.io.Serializable;
 
+// Define Student Class
+// id: student id
+// enrollment_date: enrollment date of a student
+// email: email of a student
+//      TODO: check the email is legal or not
+// class_id: foreign key from Class table
+// transaction_id: foreign key from Transaction table
 public class Student implements Serializable {
     private static final long serialVersionUID = 1L;
 

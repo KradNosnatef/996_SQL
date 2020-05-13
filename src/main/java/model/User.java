@@ -2,6 +2,20 @@ package model;
 
 import java.io.Serializable;
 
+// Define User Class
+// id: auto increasement in database
+// username: username of user
+// password: password of user
+//      TODO we should store password as a Hash value in database, but this part can be delayed as we finished all
+//       other parts
+// usertype: 3 types
+//      0 - admin user
+//      1 - teacher user
+//      other - student user (in normal case, we set `2` for student user)
+// foreignid:
+//      for admin user - this value is useless
+//      for student user - this value is foreign key, which is from student_id
+//      for teacher user - this value is foreign key, which is from teacher_id
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 

@@ -2,6 +2,12 @@ package model;
 
 import java.io.Serializable;
 
+// Define Deparetment Class
+// id: id of a department
+// name: name of a department
+// address: address of a department
+// dean: name of the department's dean
+// campus_id: foreign key from Campus table
 public class Department implements Serializable {
     private static final long serialVersionUID = 1L;
 

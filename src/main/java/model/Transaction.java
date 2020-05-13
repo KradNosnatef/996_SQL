@@ -2,6 +2,11 @@ package model;
 
 import java.io.Serializable;
 
+// Transaction Class
+// !!!CAUTION!!!
+// Whenever a transaciton element is created, information in `Class` table, `Student` table will also be altered.
+// type: 0 - Suspension of school, 1 - other reasons
+// reasons will record in detail
 public class Transaction implements Serializable {
     private static final long serialVersionUID = 1L;
 
