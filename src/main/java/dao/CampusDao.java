@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import utils.DButils;
+import utils.UnitTestSwitch;
 import model.Campus;
 
 // ACCESS SETTINGS:
@@ -30,8 +31,10 @@ public class CampusDao {
     // - If insertion action succeed, return a number, which stands for the row count for SQL Data Manipulation
     // Language (DML) statements. Otherwise, it will return 0
     public int insertCampus(String id, String name, String address) {
-        Connection conn = DButils.getConnection();
-        String sql = "INSERT INTO campus (Campus_ID, Campus_Name, Campus_Address) VALUES (?,?,?);";
+        Connection conn;
+        if (UnitTestSwitch.SWITCH) conn = DButils.getConnectionUnitTest();
+        else conn = DButils.getConnection();
+        String sql = "INSERT INTO Campus (Campus_ID, Campus_Name, Campus_Address) VALUES (?,?,?);";
         int insert_flag = 0;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -40,29 +43,8 @@ public class CampusDao {
             ps.setString(3, address);
             insert_flag = ps.executeUpdate();
             ps.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            DButils.closeConnection(conn);
-        }
-        return insert_flag;
-    }
-
-    // A unit test version of data insertion
-    // DELAY DELETE LATER
-    public int insertCampusUnitTest(String id, String name, String address) {
-        Connection conn = DButils.getConnectionUnitTest();
-        String sql = "INSERT INTO campus (Campus_ID, Campus_Name, Campus_Address) VALUES (?,?,?);";
-        int insert_flag = 0;
-        try {
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, id);
-            ps.setString(2, name);
-            ps.setString(3, address);
-            insert_flag = ps.executeUpdate();
-            ps.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
         } finally {
             DButils.closeConnection(conn);
         }
@@ -73,25 +55,51 @@ public class CampusDao {
     // Input:
     // - element_selector: a string used to select element
     // - type: type is used to select the meaning of element_selector
-    //   type = 1 -- delete by id
-    //   type = 2 -- delete by name
-    //   type = 3 -- delete by address (ILLEGAL)
+    //   type = 0 -- delete by id
+    //   type = 1 -- delete by name
+    //   type = 2 -- delete by address (ILLEGAL)
     // Ouput:
     // - return 0 if the element is not existed
     // - return 1 if we delete the element successfully
     // - return -1 if our instruction is illegal
     public int deleteCampus(String element_selector, int type) {
-        Connection conn = DButils.getConnection();
-        String sql;
+        Connection conn;
+        if (UnitTestSwitch.SWITCH) conn = DButils.getConnectionUnitTest();
+        else conn = DButils.getConnection();
+        String sql = "DELETE FROM Campus ";
+        String department_check = "SELECT * FROM Department, Campus ";
+        String campus_selector;
+        String campus_foreign_selector;
         int delete_flag = 0;
-        if (type == 1) {
-            sql = "DELETE FROM CAMPUS WHERE CAMPUS_ID = ?;";
-        } else if (type == 2) {
-            sql = "DELETE FROM CAMPUS WHERE CAMPUS_NAME = ?;";
+        if (type == 0) {
+            campus_foreign_selector = "WHERE Campus.Campus_ID = ? AND Department.Department_Campus_ID = Campus" +
+                                              ".Campus_ID;";
+            campus_selector = "WHERE Campus_ID = ?;";
+        } else if (type == 1) {
+            campus_foreign_selector = "WHERE Campus.Campus_Name = ? AND Department.Department_Campus_ID = Campus" +
+                                              ".Campus_ID;";
+            campus_selector = "WHERE Campus_Name = ?;";
         } else {
             return -1;
         }
+
         try {
+            department_check = department_check + campus_foreign_selector;
+            PreparedStatement ps = conn.prepareStatement(department_check);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return -1;
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException sqle) {
+            if (!UnitTestSwitch.SWITCH) {
+                sqle.printStackTrace();
+            }
+        }
+
+        try {
+            sql = sql + campus_selector;
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, element_selector);
             delete_flag = ps.executeUpdate();
@@ -115,31 +123,34 @@ public class CampusDao {
     // Ouput:
     // - return an array list for your query.
     public ArrayList<Campus> queryCampus(String element_selector, int type) {
-        Connection conn = DButils.getConnection();
+        Connection conn;
+        if (UnitTestSwitch.SWITCH) conn = DButils.getConnectionUnitTest();
+        else conn = DButils.getConnection();
         String sql;
-        ArrayList<Campus> campus_list = new ArrayList<Campus>();
+        ArrayList<Campus> campus_list = new ArrayList<>();
         int query_flag = 0;
         if (type == -1) {
-            sql = "SELECT * FROM CAMPUS ORDERED BY CAMPUS_ID;";
+            sql = "SELECT * FROM Campus ORDER BY Campus_ID;";
         } else if (type == 0) {
-            sql = "SELECT * FROM CAMPUS WHERE CAMPUS_ID = ? ORDERED BY CAMPUS_ID;";
+            sql = "SELECT * FROM Campus WHERE Campus_ID = ? ORDER BY Campus_ID;";
         } else if (type == 1) {
-            sql = "SELECT * FROM CAMPUS WHERE CAMPUS_NAME = ? ORDERED BY CAMPUS_NAME;";
+            sql = "SELECT * FROM Campus WHERE Campus_Name = ? ORDER BY Campus_Name;";
         } else if (type == 2) {
-            sql = "SELECT * FROM CAMPUS WHERE CAMPUS_ADDRESS = ? ORDERED BY CAMPUS_ADDRESS;";
+            sql = "SELECT * FROM Campus WHERE Campus_Address = ? ORDER BY Campus_Address;";
         } else {
             return campus_list;
         }
 
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, element_selector);
+            if (type != -1)
+                ps.setString(1, element_selector);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Campus campus_element = new Campus ();
-                campus_element.set_id(rs.getString("CAMPUS_ID"));
-                campus_element.set_name(rs.getString("CAMPUS_NAME"));
-                campus_element.set_address(rs.getString("CAMPUS_ADDRESS"));
+                Campus campus_element = new Campus();
+                campus_element.set_id(rs.getString("Campus_ID"));
+                campus_element.set_name(rs.getString("Campus_Name"));
+                campus_element.set_address(rs.getString("Campus_Address"));
                 campus_list.add(campus_element);
             }
             rs.close();
@@ -154,7 +165,7 @@ public class CampusDao {
 
     // Modify campus information
     // - old & new type: type is used to select the meaning of old_value & new_value
-    //   type = 0 -- update id
+    //   type = 0 -- update id (ILLEGAL)
     //   type = 1 -- update name
     //   type = 2 -- update address
     // - old & new value:
@@ -164,34 +175,37 @@ public class CampusDao {
     // - return 0 if element is not existed
     // - return 1 if update action succeed
     // - return -1 if type is illegal
-    public int modifyCampus(int old_type, int new_type, String old_value, String new_value) {
-        Connection conn = DButils.getConnection();
+    public int updateCampus(int old_type, int new_type, String old_value, String new_value) {
+        Connection conn;
+        if (UnitTestSwitch.SWITCH) conn = DButils.getConnectionUnitTest();
+        else conn = DButils.getConnection();
         String sql;
         String sql_select_old;
         String sql_update_new;
         int query_flag = 0;
 
         if (old_type == 0) {
-            sql_select_old = " WHERE CAMPUS_ID = ?;";
+            sql_select_old = " WHERE Campus_ID = ?;";
         } else if (old_type == 1) {
-            sql_select_old = " WHERE CAMPUS_NAME = ?;";
+            sql_select_old = " WHERE Campus_Name = ?;";
         } else if (old_type == 2) {
-            sql_select_old = " WHERE CAMPUS_ADDRESS = ?;";
+            sql_select_old = " WHERE Campus_Address = ?;";
         } else {
             return -1;
         }
 
         if (new_type == 0) {
-            sql_update_new = "SET CAMPUS_ID = ?";
+            // sql_update_new = "SET Campus_ID = ?";
+            return -1;
         } else if (new_type == 1) {
-            sql_update_new = "SET CAMPUS_NAME = ?";
+            sql_update_new = "SET Campus_Name = ?";
         } else if (new_type == 2) {
-            sql_update_new = "SET CAMPUS_ADDRESS = ?";
+            sql_update_new = "SET Campus_Address = ?";
         } else {
             return -1;
         }
 
-        sql = "UPDATE CAMPUS " + sql_update_new + sql_select_old;
+        sql = "UPDATE Campus " + sql_update_new + sql_select_old;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, new_value);

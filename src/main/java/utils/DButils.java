@@ -13,7 +13,7 @@ public class DButils {
         String dbUserName = "admin";
         String dbUserPasswd = "admins_password";
         String dbURL = "jdbc:mysql://localhost:3306/mydb?"
-                + "user=" + dbUserName + "&password=" + dbUserPasswd + "&useUnicode=true&characterEncoding=UTF8";
+                + "user=" + dbUserName + "&password=" + dbUserPasswd + "&useSSL=false&useUnicode=true&characterEncoding=UTF8";
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(dbURL, dbUserName, dbUserPasswd);
@@ -28,7 +28,7 @@ public class DButils {
 
     public static Connection getConnection() {
         Connection conn = null;
-        Context initContext = null;
+        Context initContext;
         try {
             initContext = new InitialContext();
             Context envContext = (Context) initContext.lookup("java:/comp/env");
