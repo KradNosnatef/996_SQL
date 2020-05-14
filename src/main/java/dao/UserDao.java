@@ -27,7 +27,7 @@ import utils.DButils;
 //         DButils.closeConnection(conn);
 //     }
 // Whenever your are making a unit test with Junit,
-// **YOU NEED USE ```conn = DButils.getConnectionUnitTest();``` TO CONNECT DATABASE.**
+// **YOU NEED USE ```conn = DButils.getConnectionUnitTest();``` TO CONNECT DATABASE WHEN YOU ARE DOING UNIT TESTS.**
 
 public class UserDao {
     public boolean hasUser(String username) {
