@@ -113,12 +113,11 @@ public class CampusDao {
     //   type = 2 -- select by address
     //   type = -1 -- selecat all elements
     // Ouput:
-    // - return 0 if element is not existed
-    // - return 1 if query action succeed
-    // - return -1 if type is illegal
-    public int queryCampus(String element_selector, int type) {
+    // - return an array list for your query.
+    public ArrayList<Campus> queryCampus(String element_selector, int type) {
         Connection conn = DButils.getConnection();
         String sql;
+        ArrayList<Campus> campus_list = new ArrayList<Campus>();
         int query_flag = 0;
         if (type == -1) {
             sql = "SELECT * FROM CAMPUS ORDERED BY CAMPUS_ID;";
@@ -129,20 +128,28 @@ public class CampusDao {
         } else if (type == 2) {
             sql = "SELECT * FROM CAMPUS WHERE CAMPUS_ADDRESS = ? ORDERED BY CAMPUS_ADDRESS;";
         } else {
-            return -1;
+            return campus_list;
         }
 
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, element_selector);
-            query_flag = ps.executeUpdate();
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Campus campus_element = new Campus ();
+                campus_element.set_id(rs.getString("CAMPUS_ID"));
+                campus_element.set_name(rs.getString("CAMPUS_NAME"));
+                campus_element.set_address(rs.getString("CAMPUS_ADDRESS"));
+                campus_list.add(campus_element);
+            }
+            rs.close();
             ps.close();
         } catch (SQLException sqle) {
             sqle.printStackTrace();
         } finally {
             DButils.closeConnection(conn);
         }
-        return query_flag;
+        return campus_list;
     }
 
     // Modify campus information
