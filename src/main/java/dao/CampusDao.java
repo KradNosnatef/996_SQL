@@ -51,7 +51,7 @@ public class CampusDao {
         return insert_flag;
     }
 
-    // Delete a campus by campus
+    // Delete a campus
     // Input:
     // - element_selector: a string used to select element
     // - type: type is used to select the meaning of element_selector
@@ -83,11 +83,15 @@ public class CampusDao {
             return -1;
         }
 
+        // Check whether there are departments in this campus
         try {
             department_check = department_check + campus_foreign_selector;
             PreparedStatement ps = conn.prepareStatement(department_check);
+            ps.setString(1, element_selector);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
+                rs.close();
+                ps.close();
                 return -1;
             }
             rs.close();
@@ -134,9 +138,9 @@ public class CampusDao {
         } else if (type == 0) {
             sql = "SELECT * FROM Campus WHERE Campus_ID = ? ORDER BY Campus_ID;";
         } else if (type == 1) {
-            sql = "SELECT * FROM Campus WHERE Campus_Name = ? ORDER BY Campus_Name;";
+            sql = "SELECT * FROM Campus WHERE Campus_Name = ? ORDER BY Campus_ID;";
         } else if (type == 2) {
-            sql = "SELECT * FROM Campus WHERE Campus_Address = ? ORDER BY Campus_Address;";
+            sql = "SELECT * FROM Campus WHERE Campus_Address = ? ORDER BY Campus_ID;";
         } else {
             return campus_list;
         }
@@ -165,7 +169,7 @@ public class CampusDao {
 
     // Modify campus information
     // - old & new type: type is used to select the meaning of old_value & new_value
-    //   type = 0 -- update id (ILLEGAL)
+    //   type = 0 -- update id (if new_type == 0, ILLEGAL)
     //   type = 1 -- update name
     //   type = 2 -- update address
     // - old & new value:
