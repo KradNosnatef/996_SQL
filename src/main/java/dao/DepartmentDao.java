@@ -90,44 +90,44 @@ public class DepartmentDao {
         String course_check = "SELECT * FROM Department, Course ";
         String class_check = "SELECT * FROM Department, Class";
 
-        String campus_selector;
-        String campus_foreign_selector_teacher;
-        String campus_foreign_selector_course;
-        String campus_foreign_selector_class;
+        String department_selector;
+        String department_foreign_selector_teacher;
+        String department_foreign_selector_course;
+        String department_foreign_selector_class;
 
         int delete_flag = 0;
 
         if (type == 0) {
-            campus_foreign_selector_teacher = "WHERE Department.Department_ID = ? " +
+            department_foreign_selector_teacher = "WHERE Department.Department_ID = ? " +
                                                       "AND Department.Department_ID = Teacher.Teacher_Department_ID;";
-            campus_foreign_selector_course = "WHERE Department.Department_ID = ? " +
+            department_foreign_selector_course = "WHERE Department.Department_ID = ? " +
                                                      "AND Department.Department_ID = Course.Course_Department_ID;";
-            campus_foreign_selector_class = "WHERE Department.Department_ID = ? " +
+            department_foreign_selector_class = "WHERE Department.Department_ID = ? " +
                                                     "AND Department.Department_ID = Class.Class_Department_ID;";
-            campus_selector = "WHERE Department_ID = ?;";
+            department_selector = "WHERE Department_ID = ?;";
         } else if (type == 1) {
-            campus_foreign_selector_teacher = "WHERE Department.Department_Name = ? " +
+            department_foreign_selector_teacher = "WHERE Department.Department_Name = ? " +
                                                       "AND Department.Department_ID = Teacher.Teacher_Department_ID;";
-            campus_foreign_selector_course = "WHERE Department.Department_Name = ? " +
+            department_foreign_selector_course = "WHERE Department.Department_Name = ? " +
                                                      "AND Department.Department_ID = Course.Course_Department_ID;";
-            campus_foreign_selector_class = "WHERE Department.Department_Name = ? " +
+            department_foreign_selector_class = "WHERE Department.Department_Name = ? " +
                                                     "AND Department.Department_ID = Class.Class_Department_ID;";
-            campus_selector = "WHERE Department_Name = ?;";
+            department_selector = "WHERE Department_Name = ?;";
         } else if (type == 4) {
-            campus_foreign_selector_teacher = "WHERE Department.Department_Campus_ID = ? " +
+            department_foreign_selector_teacher = "WHERE Department.Department_Campus_ID = ? " +
                                                       "AND Department.Department_ID = Teacher.Teacher_Department_ID;";
-            campus_foreign_selector_course = "WHERE Department.Department_Campus_ID = ? " +
+            department_foreign_selector_course = "WHERE Department.Department_Campus_ID = ? " +
                                                      "AND Department.Department_ID = Course.Course_Department_ID;";
-            campus_foreign_selector_class = "WHERE Department.Department_Campus_ID = ? " +
+            department_foreign_selector_class = "WHERE Department.Department_Campus_ID = ? " +
                                                     "AND Department.Department_ID = Class.Class_Department_ID;";
-            campus_selector = "WHERE Department_Campus_ID = ?;";
+            department_selector = "WHERE Department_Campus_ID = ?;";
         } else {
             return -1;
         }
 
         // Check whether there are teachers in this department
         try {
-            teacher_check = teacher_check + campus_foreign_selector_teacher;
+            teacher_check = teacher_check + department_foreign_selector_teacher;
             PreparedStatement ps = conn.prepareStatement(teacher_check);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -143,7 +143,7 @@ public class DepartmentDao {
 
         // Check whether there are courses opened by this department
         try {
-            course_check = course_check + campus_foreign_selector_course;
+            course_check = course_check + department_foreign_selector_course;
             PreparedStatement ps = conn.prepareStatement(course_check);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -159,7 +159,7 @@ public class DepartmentDao {
 
         // Check whether there are classes in this department
         try {
-            class_check = class_check + campus_foreign_selector_class;
+            class_check = class_check + department_foreign_selector_class;
             PreparedStatement ps = conn.prepareStatement(class_check);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -174,7 +174,7 @@ public class DepartmentDao {
         }
 
         try {
-            sql = sql + campus_selector;
+            sql = sql + department_selector;
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, element_selector);
             delete_flag = ps.executeUpdate();
@@ -294,16 +294,16 @@ public class DepartmentDao {
 
         switch (new_type) {
             case 1:
-                sql_update_new = "SET Department.Department_Name = ?";
+                sql_update_new = "UPDATE Department SET Department_Name = ?";
                 break;
             case 2:
-                sql_update_new = "SET Department.Department_Address = ?";
+                sql_update_new = "UPDATE Department SET Department_Address = ?";
                 break;
             case 3:
-                sql_update_new = "SET Department.Department_Dean = ?";
+                sql_update_new = "UPDATE Department SET Department_Dean = ?";
                 break;
             case 4:
-                sql_update_new = "SET Department.Department_Campus_ID = ?";
+                sql_update_new = "UPDATE Department SET Department_Campus_ID = ?";
                 break;
 
             default:
@@ -331,7 +331,7 @@ public class DepartmentDao {
             }
         }
 
-        sql = "UPDATE Department " + sql_update_new + sql_select_old;
+        sql = sql_update_new + sql_select_old;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, new_value);
