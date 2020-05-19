@@ -17,5 +17,3 @@ Some tutorials:
   **CAUTION: This tutorial is based on tomcat 7.0. But we are going to use tomcat 9.0 in future progress.**
 
 - FAQ: [[No suitable driver found for JDBC](https://javarevisited.blogspot.com/2016/09/javasqlsqlexception-no-suitable-driver-mysql-jdbc-localhost.html)](https://javarevisited.blogspot.com/2016/09/javasqlsqlexception-no-suitable-driver-mysql-jdbc-localhost.html)
-
-# 提供接口
