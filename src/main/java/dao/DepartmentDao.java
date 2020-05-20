@@ -34,7 +34,7 @@ public class DepartmentDao {
         if (UnitTestSwitch.SWITCH) conn = DButils.getConnectionUnitTest();
         else conn = DButils.getConnection();
         String campus_check = "SELECT * FROM Campus WHERE Campus_ID = ?;";
-        String sql = "INSERT INTO Department (Department_ID, Department_ID, Department_Address, Department_Dean, " +
+        String sql = "INSERT INTO Department (Department_ID, Department_Name, Department_Address, Department_Dean, " +
                              "Department_Campus_ID) VALUES (?,?,?,?,?);";
         int insert_flag = 0;
 
