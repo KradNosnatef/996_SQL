@@ -85,7 +85,7 @@ public class DepartmentDao {
         Connection conn;
         if (UnitTestSwitch.SWITCH) conn = DButils.getConnectionUnitTest();
         else conn = DButils.getConnection();
-        String sql = "DELETE FROM Campus ";
+        String sql = "DELETE FROM Department ";
         String teacher_check = "SELECT * FROM Department, Teacher ";
         String course_check = "SELECT * FROM Department, Course ";
         String class_check = "SELECT * FROM Department, Class";
@@ -234,7 +234,7 @@ public class DepartmentDao {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Department department_element = new Department();
-                department_element.set_id(rs.getString("Departement_ID"));
+                department_element.set_id(rs.getString("Department_ID"));
                 department_element.set_name(rs.getString("Department_Name"));
                 department_element.set_address(rs.getString("Department_Address"));
                 department_element.set_dean(rs.getString("Department_Dean"));
