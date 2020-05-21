@@ -13,7 +13,7 @@ public class DButils {
         String dbUserName = "admin";
         String dbUserPasswd = "admins_password";
         String dbURL = "jdbc:mysql://localhost:3306/mydb?"
-                + "user=" + dbUserName + "&password=" + dbUserPasswd + "&useSSL=false&useUnicode=true&characterEncoding=UTF8";
+                + "user=" + dbUserName + "&password=" + dbUserPasswd + "&useSSL=false&useUnicode=true&characterEncoding=UTF8&serverTimezone=UTC";
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(dbURL, dbUserName, dbUserPasswd);
