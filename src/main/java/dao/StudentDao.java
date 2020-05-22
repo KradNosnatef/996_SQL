@@ -1,5 +1,12 @@
 package dao;
 
+import utils.DButils;
+import utils.UnitTestSwitch;
+import utils.DButils;
+import utils.UnitTestSwitch;
+import model.Person;
+import model.Student;
+
 import java.sql.*;
 
 // ACCESS SETTINGS:
@@ -14,13 +21,31 @@ import java.sql.*;
 // - update: P100
 
 public class StudentDao {
-    public void insertStudent(String idCardNumber, int idCardType,
-                              String name, int gender, Date birth,
-                              String nationality, String address,
-                              String addressID, String addressPhoneNumber,
-                              String studentID, String studentEnrollDate,
-                              String studentEmail, String studentClassID){
+    public int insertStudent(
+                              String studentID, Date studentEnrollDate,
+                              String stuentEmail, String studentClassID,
+                              String studentTransactionID,String personIDCardNumber){
         Connection connection;
-        String sql =""
+        if(UnitTestSwitch.SWITCH)connection= DButils.getConnectionUnitTest();
+        else connection=DButils.getConnection();
+        String sql = "INSERT INTO Student (Student_ID, Student_Enroll_Date, Stuent_Email, " +
+                "Student_Class_ID, Student_Transaction_ID, Person_ID_Card_Number) VALUES (?,?,?,?,?,?)";
+        int insertFlag = 0;
+        try{
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, studentID);
+            ps.setDate(2, studentEnrollDate);
+            ps.setString(3, stuentEmail);
+            ps.setString(4, studentClassID);
+            ps.setString(5, studentTransactionID);
+            ps.setString(6, personIDCardNumber);
+            insertFlag=ps.executeUpdate();
+            ps.close();
+        }catch (SQLException sqle) {
+            sqle.printStackTrace();
+        } finally {
+            DButils.closeConnection(connection);
+        }
+        return insertFlag;
     }
 }
