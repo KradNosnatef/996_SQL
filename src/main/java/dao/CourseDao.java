@@ -40,11 +40,10 @@ public class CourseDao {
         String department_check = "SELECT * FROM Department WHERE Department_ID = ?;";
         String sql = "INSERT INTO Course (Course_ID, Course_Name, Course_Department_ID, Course_Teacher_ID, " +
                 "Course_Exam_Type, Course_Semester, Course_Year, Course_Time) VALUES (?,?,?,?,?,?,?,?);";
-        //String sql = "INSERT INTO Course (Course_ID, Course_Name, Course_Department_ID, Course_Exam_Type)" +
-        //        "VALUES (?,?,?,?);";
+
         int insert_flag = 0;
 
-        // Chech if department_id existed
+        // Check if department_id existed
         try {
             PreparedStatement ps = conn.prepareStatement(department_check);
             ps.setString(1, department_id);
@@ -83,7 +82,7 @@ public class CourseDao {
     // - type: type is used to select the meaning of element_selector
     //   type = 0 -- delete by id
     //   type = 1 -- delete by name
-    //   type = 2 -- delete by department_id (ILLEGAL)
+    //   type = 2 -- delete by department_id
     //   type = 3 -- delete by exam_type (ILLEGAL)
     // Ouput:
     // - return 0 if the element is not existed
@@ -104,6 +103,8 @@ public class CourseDao {
             course_selector = "WHERE Course_ID = ?;";
         } else if (type == 1) {
             course_selector = "WHERE Course_Name = ?;";
+        } else if (type == 2) {
+            course_selector = "WHERE Course_Department_ID = ?;";
         } else {
             return -1;
         }
@@ -114,14 +115,13 @@ public class CourseDao {
             PreparedStatement ps = conn.prepareStatement(start_course_check);
             ps.setString(1,element_selector);
             ResultSet rs = ps.executeQuery();
-            if (!rs.next()){
-                return  0;
-            }
-            if (rs.getString("Course_Teacher_ID") != null ||
-                    rs.getString("Course_Semester") != null ||
-                    rs.getString("Course_Year") != null ||
-                    rs.getString("Course_Time") != null) {
-                return -1;
+            while (rs.next()){
+                if (rs.getString("Course_Teacher_ID") != null ||
+                        rs.getString("Course_Semester") != null ||
+                        rs.getString("Course_Year") != null ||
+                        rs.getString("Course_Time") != null) {
+                    return -1;
+                }
             }
             rs.close();
             ps.close();
@@ -302,7 +302,7 @@ public class CourseDao {
         Connection conn;
         if (UnitTestSwitch.SWITCH) conn = DButils.getConnectionUnitTest();
         else conn = DButils.getConnection();
-        String teacher_check = "SELECT * FROM Teacher WHERE Department_ID = ?;";
+        String teacher_check = "SELECT * FROM Teacher WHERE Teacher_ID = ?;";
         String sql = "UPDATE  Course SET  Course_Teacher_ID = ?, Course_Semester = ?, Course_Year = ?," +
                 "Course_Time = ? WHERE  Course_ID = ?";
         int insert_flag = 0;
@@ -343,8 +343,12 @@ public class CourseDao {
     // - type: type is used to select the meaning of element_selector
     //   type = 0 -- delete by id
     //   type = 1 -- delete by name
-    //   type = 2 -- delete by department_id (ILLEGAL)
+    //   type = 2 -- delete by department_id
     //   type = 3 -- delete by exam_type (ILLEGAL)
+    //   type = 4 -- delete by teacher_id
+    //   type = 5 -- delete by semester
+    //   type = 6 -- delete by year
+    //   type = 7 -- delete by time
     // Ouput:
     // - return 0 if the element is not existed
     // - return 1 if we delete the element successfully
@@ -370,6 +374,26 @@ public class CourseDao {
             course_foreign_selector_course_selection  = "WHERE Course.Course_Name = ? " +
                     "AND Course.Course_ID = CourseSelection.CourseSelection_Course_ID;";
             course_selector = "WHERE Course_Name = ?;";
+        } else if (type == 2) {
+            course_foreign_selector_course_selection  = "WHERE Course.Course_Department_ID = ? " +
+                    "AND Course.Course_ID = CourseSelection.CourseSelection_Course_ID;";
+            course_selector = "WHERE Course_Department_ID = ?;";
+        } else if (type == 4) {
+            course_foreign_selector_course_selection  = "WHERE Course.Course_Teacher_ID = ? " +
+                    "AND Course.Course_ID = CourseSelection.CourseSelection_Course_ID;";
+            course_selector = "WHERE Course_Teacher_ID = ?;";
+        } else if (type == 5) {
+            course_foreign_selector_course_selection  = "WHERE Course.Course_Semester = ? " +
+                    "AND Course.Course_ID = CourseSelection.CourseSelection_Course_ID;";
+            course_selector = "WHERE Course_Semester = ?;";
+        } else if (type == 6) {
+            course_foreign_selector_course_selection  = "WHERE Course.Course_Year = ? " +
+                    "AND Course.Course_ID = CourseSelection.CourseSelection_Course_ID;";
+            course_selector = "WHERE Course_Year = ?;";
+        } else if (type == 7) {
+            course_foreign_selector_course_selection  = "WHERE Course.Course_Time = ? " +
+                    "AND Course.Course_ID = CourseSelection.CourseSelection_Course_ID;";
+            course_selector = "WHERE Course_Time = ?;";
         } else {
             return -1;
         }
@@ -531,7 +555,7 @@ public class CourseDao {
                 sql_update_new = "UPDATE Course SET Course_Year = ?";
                 break;
             case 5:
-                sql_update_new = "UPDATE Course SET WHERE Course_Time = ?";
+                sql_update_new = "UPDATE Course SET Course_Time = ?";
                 break;
 
             default:
