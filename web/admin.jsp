@@ -23,6 +23,14 @@
     User user = (User) session.getAttribute("admin");
     //判断用户是否登录
     if (user != null) {
+        String user_type_string;
+        if (user.get_usertype() == 0) {
+            user_type_string = "管理员";
+        } else if (user.get_usertype() == 1) {
+            user_type_string = "教师";
+        } else {
+            user_type_string = "学生";
+        }
 %>
 <header>
     <div class="title">
@@ -33,7 +41,7 @@
             <ul>
                 <li><%=user.get_username() %>
                 </li>
-                <li><%=user.get_usertype() %>
+                <li><%=user_type_string %>
                 </li>
                 <li><a href="UserExitServlet">退出登录</a></li>
                 <li><a href="login.html">返回首页</a></li>
@@ -55,10 +63,10 @@
                 <li>
                     <div id="user-info" class="link">用户信息管理</div>
                     <ul class="submenu">
-                        <li><a onclick="query_all('user')">查看所有用户</a></li>
-                        <li><a onclick="show_insert_user()">新增用户信息</a></li>
-                        <li><a onclick="show_delete('user')">删除指定用户</a></li>
-                        <li><a onclick="show_alter('user')">修改用户信息</a></li>
+                        <li><a onclick="queryRequest('user')">查看所有用户</a></li>
+                        <li><a onclick="showInsertUser()">新增用户信息</a></li>
+                        <li><a onclick="showDeleteUser()">删除指定用户</a></li>
+                        <li><a onclick="showUpdateUser()">修改用户信息</a></li>
                     </ul>
                 </li>
                 <li>

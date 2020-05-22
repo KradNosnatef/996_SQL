@@ -13,6 +13,7 @@
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
     </servlet-mapping>
+
     <servlet>
         <description></description>
         <display-name>UserExitServlet</display-name>
@@ -22,6 +23,17 @@
     <servlet-mapping>
         <servlet-name>UserExitServlet</servlet-name>
         <url-pattern>/UserExitServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+    <description></description>
+    <display-name>AdminDao</display-name>
+        <servlet-name>AdminDao</servlet-name>
+        <servlet-class>service.AdminDao</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminDao</servlet-name>
+        <url-pattern>/AdminDao</url-pattern>
     </servlet-mapping>
     <resource-ref>
         <description>Oracle Datasource</description>

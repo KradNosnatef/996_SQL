@@ -196,7 +196,7 @@ public class TeacherDao {
             return delete_flag_person & delete_flag_teacher;
     }
     //
-    public List<Teacher> queryTeacher(String element_selector, int type) {
+    public ArrayList<Teacher> queryTeacher(String element_selector, int type) {
         Connection conn;
         if (UnitTestSwitch.SWITCH) {
             conn = DButils.getConnectionUnitTest();
@@ -211,7 +211,7 @@ public class TeacherDao {
         } else {
             sql = "SELECT * FROM Teacher;";
         }
-        List<Teacher> teacher_list = new ArrayList<>();
+        ArrayList<Teacher> teacher_list = new ArrayList<>();
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             if (type == 0 || type == 1)
