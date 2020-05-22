@@ -14,12 +14,13 @@ import java.sql.*;
 // - update: P100
 
 public class StudentDao {
-    public int insertStudent(String idCardNumber,int idCardType,
-                             String name,int gender,Date birth,
-                             String nationality,String address,
-                             String addressID,String addressPhoneNumber,
-                             String studentID,String studentEnrollDate,
-                             String studentEmail,String studentClassID){
-
+    public void insertStudent(String idCardNumber, int idCardType,
+                              String name, int gender, Date birth,
+                              String nationality, String address,
+                              String addressID, String addressPhoneNumber,
+                              String studentID, String studentEnrollDate,
+                              String studentEmail, String studentClassID){
+        Connection connection;
+        String sql =""
     }
 }
