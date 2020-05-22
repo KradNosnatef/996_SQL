@@ -172,7 +172,7 @@ public class ClassDao {
         return delete_flag;
     }
 
-    public List<Class> queryClass(String element_selector, int type) {
+    public ArrayList<Class> queryClass(String element_selector, int type) {
         Connection conn;
         if (UnitTestSwitch.SWITCH) {
             conn = DButils.getConnectionUnitTest();
@@ -180,7 +180,7 @@ public class ClassDao {
             conn = DButils.getConnection();
         }
         String sql;
-        List<Class> class_list = new ArrayList<>();
+        ArrayList<Class> class_list = new ArrayList<>();
         int query_flag = 0;
         switch (type) {
             case 0:

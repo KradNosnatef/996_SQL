@@ -70,51 +70,89 @@
                     </ul>
                 </li>
                 <li>
+                    <div class="link">校区信息管理</div>
+                    <ul class="submenu">
+                        <li><a onclick="queryRequest('campus')">查看所有校区</a></li>
+                        <li><a onclick="showInsertCampus()">新增校区信息</a></li>
+                        <li><a onclick="showDeleteCampus()">删除指定校区</a></li>
+                        <li><a onclick="showUpdateCampus()">修改校区信息</a></li>
+                    </ul>
+                </li>
+                <li>
                     <div class="link">院系信息管理</div>
                     <ul class="submenu">
-                        <li><a onclick="query_all('department')">查看所有院系</a></li>
-                        <li><a onclick="show_insert_department()">新增院系信息</a></li>
-                        <li><a onclick="show_delete('department')">删除指定院系</a></li>
-                        <li><a onclick="show_alter('department')">修改院系信息</a></li>
+                        <li><a onclick="queryRequest('department')">查看所有院系</a></li>
+                        <li><a onclick="showInsertDepartment()">新增院系信息</a></li>
+                        <li><a onclick="showDeleteDepartment()">删除指定院系</a></li>
+                        <li><a onclick="showUpdateDepartment()">修改院系信息</a></li>
                     </ul>
                 </li>
                 <li>
                     <div class="link">班级信息管理</div>
                     <ul class="submenu">
-                        <li><a onclick="query_all('class')">查看所有班级</a></li>
-                        <li><a onclick="show_insert_class()">新增班级信息</a></li>
-                        <li><a onclick="show_delete('class')">删除指定班级</a></li>
-                        <li><a onclick="show_alter('class')">修改班级信息</a></li>
+                        <li><a onclick="queryRequest('class')">查看所有班级</a></li>
+                        <li><a onclick="showInsertClass()">新增班级信息</a></li>
+                        <li><a onclick="showDeleteClass()">删除指定班级</a></li>
+                        <li><a onclick="showUpdateClass()">修改班级信息</a></li>
                     </ul>
                 </li>
                 <li>
                     <div class="link">学生信息管理</div>
                     <ul class="submenu">
-                        <li><a onclick="query_all('student')">查看所有学生</a></li>
-                        <li><a onclick="show_insert_student()">新增学生信息</a></li>
-                        <li><a onclick="show_delete('student')">删除指定学生</a></li>
-                        <li><a onclick="show_alter('student')">修改学生信息</a></li>
+                        <li><a onclick="queryRequest('student')">查看所有学生</a></li>
+                        <li><a onclick="showInsertStudent()">新增学生信息</a></li>
+                        <li><a onclick="showDeleteStudent()">删除指定学生</a></li>
+                        <li><a onclick="showUpdateStudent()">修改学生信息</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <div class="link">教师信息管理</div>
+                    <ul class="submenu">
+                        <li><a onclick="queryRequest('teacher')">查看所有教师</a></li>
+                        <li><a onclick="showInsertTeacher()">新增教师信息</a></li>
+                        <li><a onclick="showDeleteTeacher()">删除指定教师</a></li>
+                        <li><a onclick="showUpdateTeacher()">修改教师信息</a></li>
                     </ul>
                 </li>
                 <li>
                     <div class="link">课程信息管理</div>
                     <ul class="submenu">
-                        <li><a onclick="query_all('course')">查看所有课程</a></li>
-                        <li><a onclick="show_insert_course()">新增课程信息</a></li>
-                        <li><a onclick="show_delete('course')">删除课程信息</a></li>
-                        <li><a onclick="show_alter('course')">修改课程信息</a></li>
-                        <li><a onclick="course_avg()">查询课程平均分</a></li>
-                        <li><a onclick="fail_rate()">查询课程不及格率</a></li>
-                        <li><a onclick="show_course_ranking()">查询课程排名情况</a></li>
+                        <li><a onclick="queryRequest('course')">查看所有课程</a></li>
+                        <li><a onclick="showInsertCourse()">新增课程信息</a></li>
+                        <li><a onclick="showDeleteCourse()">删除课程信息</a></li>
+                        <li><a onclick="showUpdateCourse()">修改课程信息</a></li>
                     </ul>
                 </li>
                 <li>
-                    <div class="link">学生成绩管理</div>
+                    <div class="link">异动信息管理</div>
                     <ul class="submenu">
-                        <li><a onclick="query_all('sc')">查看全部学生成绩</a></li>
-                        <li><a onclick="show_insert_sc()">新增学生成绩记录</a></li>
-                        <li><a onclick="show_delete('sc')">删除学生成绩记录</a></li>
-                        <li><a onclick="show_alter('sc')">修改学生成绩记录</a></li>
+                        <li><a onclick="queryRequest('transaction')">查看所有异动</a></li>
+                        <li><a onclick="showInsertCourse()">新增异动信息</a></li>
+                        <li><a onclick="showDeleteCourse()">删除异动信息</a></li>
+                        <li><a onclick="showUpdateCourse()">修改异动信息</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <div class="link">普通查询</div>
+                    <ul class="submenu">
+                        <li><a onclick="infoQurey('user')">指定用户查询</a></li>
+                        <li><a onclick="infoQurey('campus')">指定校区查询</a></li>
+                        <li><a onclick="infoQurey('department')">指定院系查询</a></li>
+                        <li><a onclick="infoQurey('class')">指定班级查询</a></li>
+                        <li><a onclick="infoQurey('student')">指定学生查询</a></li>
+                        <li><a onclick="infoQurey('teacher')">指定教师查询</a></li>
+                        <li><a onclick="infoQurey('course')">指定课程查询</a></li>
+                        <li><a onclick="infoQurey('transaction')">指定异动查询</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <div class="link">组合信息查询</div>
+                    <ul class="submenu">
+                        <li><a onclick="infoQurey('student_course')">指定学生查询课程</a></li>
+                        <li><a onclick="infoQurey('course_student')">指定课程查询学生</a></li>
+                        <li><a onclick="infoQurey('teacher_course')">指定教师查询课程</a></li>
+                        <li><a onclick="infoQurey('student_transaction')">指定学生查询异动</a></li>
                     </ul>
                 </li>
             </ul>
