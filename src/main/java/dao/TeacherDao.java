@@ -132,15 +132,28 @@ public class TeacherDao {
         else conn = DButils.getConnection();
         int delete_flag = 1;
         if (type == 0) {
-            String delete_person_sql = "DELETE FROM Person WHERE Person.ID_Card_Number=Teacher.Person_ID_Card_Number " +
-                                               "AND Teacher.Teacher_ID = ?;";
-            String delete_teacher_sql = "DELETE FROM Teacher WHERE Teacher_ID = ?;";
+            String get_id_card_number_sql = "SELECT * FROM Teacher WHERE Teacher_ID = ?;";
+            String id_card_number;
+            String delete_teacher_sql = "DELETE FROM Teacher WHERE Person_ID_Card_Number=?;";
+            String delete_person_sql = "DELETE FROM Person WHERE ID_Card_Number=?;";
             try {
-                PreparedStatement ps = conn.prepareStatement(delete_person_sql);
+                PreparedStatement ps = conn.prepareStatement(get_id_card_number_sql);
                 ps.setString(1, element_selector);
+                ResultSet rs = ps.executeQuery();
+                if (!rs.next()) {
+                    rs.close();
+                    ps.close();
+                    return -1;
+                }
+                id_card_number = rs.getString("Person_ID_Card_Number");
+                rs.close();
+                ps.close();
+                ps = conn.prepareStatement(delete_person_sql);
+                ps.setString(1, id_card_number);
                 delete_flag = ps.executeUpdate();
                 ps.close();
                 ps = conn.prepareStatement(delete_teacher_sql);
+                ps.setString(1, id_card_number);
                 delete_flag &= ps.executeUpdate();
                 ps.close();
             } catch (SQLException sqle) {
@@ -149,14 +162,14 @@ public class TeacherDao {
                 DButils.closeConnection(conn);
             }
         } else {
-            String delete_person_sql = "DELETE FROM Person WHERE ID_Card_Number=?;";
             String delete_teacher_sql = "DELETE FROM Teacher WHERE Person_ID_Card_Number=?;";
+            String delete_person_sql = "DELETE FROM Person WHERE ID_Card_Number=?;";
             try {
-                PreparedStatement ps = conn.prepareStatement(delete_person_sql);
+                PreparedStatement ps = conn.prepareStatement(delete_teacher_sql);
                 ps.setString(1, element_selector);
                 delete_flag = ps.executeUpdate();
-                ps.close();
-                ps = conn.prepareStatement(delete_teacher_sql);
+                ps = conn.prepareStatement(delete_person_sql);
+                ps.setString(1, element_selector);
                 delete_flag &= ps.executeUpdate();
                 ps.close();
             } catch (SQLException sqle) {
@@ -182,14 +195,14 @@ public class TeacherDao {
 
         ArrayList<Teacher> teacher_list = new ArrayList<>();
         if (type == -1) {
-            sql = "SELECT * FROM Teacher ORDER BY Student_ID;";
+            sql = "SELECT * FROM Teacher ORDER BY Teacher_ID;";
         } else if (type == 0) {
-            sql = "SELECT * FROM Teacher WHERE Student_ID = ?;";
+            sql = "SELECT * FROM Teacher WHERE Teacher_ID = ? ORDER BY Teacher_ID;";
         } else if (type == 1) {
-            sql = "SELECT * FROM Teacher WHERE Person_ID_Card_Number=?;";
+            sql = "SELECT * FROM Teacher WHERE Person_ID_Card_Number=? ORDER BY Teacher_ID;";
         } else if (type == 2) {
-            sql = "SELECT * FROM Teacher WHERE Teacher.Person_ID_Card_Number=Person.ID_Card_Number AND Person.Name = " +
-                          "?;";
+            sql = "SELECT * FROM Teacher, Person WHERE Teacher.Person_ID_Card_Number=Person.ID_Card_Number AND Person.Name = " +
+                          "? ORDER BY Teacher_ID;";
         }
 
         try {
@@ -199,7 +212,7 @@ public class TeacherDao {
             }
             ResultSet rs = ps.executeQuery();
 
-            while (!rs.next()) {
+            while (rs.next()) {
                 Teacher teacher_element = new Teacher();
                 teacher_element.set_id(rs.getString("Teacher_ID"));
                 teacher_element.set_enrollment_date(rs.getString("Teacher_Enroll_Date"));
@@ -208,6 +221,8 @@ public class TeacherDao {
                 teacher_element.set_id_card_number(rs.getString("Person_ID_Card_Number"));
                 teacher_list.add(teacher_element);
             }
+            rs.close();
+            ps.close();
         } catch (SQLException sqle) {
             sqle.printStackTrace();
         } finally {
@@ -250,11 +265,11 @@ public class TeacherDao {
         }
 
         if (type == 1) {
-            sql = "UPDATE Teacher SET Teacher_Enroll_Date = ? WHERE Teacher_ID = ?";
+            sql = "UPDATE Teacher SET Teacher_Enroll_Date = ? WHERE Teacher_ID = ?;";
         } else if (type == 2) {
-            sql = "UPDATE Teacher SET Teacher_Department_ID = ? WHERE Teacher_ID = ?";
+            sql = "UPDATE Teacher SET Teacher_Department_ID = ? WHERE Teacher_ID = ?;";
         } else if (type == 3) {
-            sql = "UPDATE Teacher SET Teacher_Title = ? WHERE Teacher_ID = ?";
+            sql = "UPDATE Teacher SET Teacher_Title = ? WHERE Teacher_ID = ?;";
         } else {
             return -1;
         };

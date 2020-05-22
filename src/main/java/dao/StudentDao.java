@@ -133,15 +133,27 @@ public class StudentDao {
         else conn = DButils.getConnection();
         int delete_flag = 1;
         if (type == 0) {
-            String delete_person_sql = "DELETE FROM Person WHERE Person.ID_Card_Number=Student.Person_ID_Card_Number " +
-                                               "AND Student.Student_ID = ?;";
-            String delete_student_sql = "DELETE FROM Student WHERE Student_ID = ?;";
+            String id_card_number;
+            String get_id_card_number_sql = "SELECT * FROM Student WHERE Teacher_ID = ?;";
+            String delete_person_sql = "DELETE FROM Person WHERE ID_Card_Number=?;";
+            String delete_student_sql = "DELETE FROM Student WHERE Person_ID_Card_Number=?;";
             try {
-                PreparedStatement ps = conn.prepareStatement(delete_person_sql);
+                PreparedStatement ps = conn.prepareStatement(get_id_card_number_sql);
                 ps.setString(1, element_selector);
+                ResultSet rs = ps.executeQuery();
+                if (!rs.next()) {
+                    rs.close();
+                    ps.close();
+                    return -1;
+                }
+                id_card_number = rs.getString("Person_ID_Card_Number");
+                rs.close();
+                ps.close();
+                ps = conn.prepareStatement(delete_person_sql);
+                ps.setString(1, id_card_number);
                 delete_flag = ps.executeUpdate();
                 ps.close();
-                ps = conn.prepareStatement(delete_student_sql);
+                ps = conn.prepareStatement(id_card_number);
                 delete_flag &= ps.executeUpdate();
                 ps.close();
             } catch (SQLException sqle) {
@@ -185,11 +197,11 @@ public class StudentDao {
         if (type == -1) {
             sql = "SELECT * FROM Student ORDER BY Student_ID;";
         } else if (type == 0) {
-            sql = "SELECT * FROM Student WHERE Student_ID = ?;";
+            sql = "SELECT * FROM Student WHERE Student_ID = ? ORDER BY Student_ID;";
         } else if (type == 1) {
-            sql = "SELECT * FROM Student WHERE Person_ID_Card_Number=?;";
+            sql = "SELECT * FROM Student WHERE Person_ID_Card_Number=? ORDER BY Student_ID;";
         } else if (type == 2) {
-            sql = "SELECT * FROM Student WHERE Student.Person_ID_Card_Number=Person.ID_Card_Number AND Person.Name = ?;";
+            sql = "SELECT * FROM Student, Person WHERE Student.Person_ID_Card_Number=Person.ID_Card_Number AND Person.Name = ? ORDER BY Student_ID;";
         }
 
         try {
@@ -251,11 +263,11 @@ public class StudentDao {
         }
 
         if (type == 1) {
-            sql = "UPDATE Student SET Student_Enroll_Date = ? WHERE Student_ID = ?";
+            sql = "UPDATE Student SET Student_Enroll_Date = ? WHERE Student_ID = ?;";
         } else if (type == 2) {
-            sql = "UPDATE Student SET Student_Class_ID = ? WHERE Student_ID = ?";
+            sql = "UPDATE Student SET Student_Class_ID = ? WHERE Student_ID = ?;";
         } else if (type == 3) {
-            sql = "UPDATE Student SET Student_Email = ? WHERE Student_ID = ?";
+            sql = "UPDATE Student SET Student_Email = ? WHERE Student_ID = ?;";
         } else {
             return -1;
         };
