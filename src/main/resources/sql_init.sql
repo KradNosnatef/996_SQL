@@ -235,7 +235,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`CourseSelection` (
   `CourseSelection_ID` INT NOT NULL AUTO_INCREMENT,
   `CourseSelection_Course_ID` VARCHAR(50) NOT NULL,
   `CourseSelection_Student_ID` VARCHAR(50) NOT NULL,
-  `CourseSelectioncol_Date` VARCHAR(45) NULL,
+  `CourseSelection_Date` VARCHAR(45) NULL,
   `CourseSelection_Semester` VARCHAR(45) NULL,
   `Score` INT NULL,
   INDEX `fk_CourseSelection_Student1_idx` (`CourseSelection_Student_ID` ASC) VISIBLE,
@@ -291,8 +291,6 @@ DROP TRIGGER IF EXISTS `mydb`.`CourseSelection_BEFORE_INSERT` $$
 USE `mydb`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `mydb`.`CourseSelection_BEFORE_INSERT` BEFORE INSERT ON `CourseSelection` FOR EACH ROW
 BEGIN
-	SET NEW.CourseSelection_Date = 
-	  (SELECT CourseSelection_Date FROM Course WHERE Course.Course_ID = NEW.CourseSelection_ID);
 	SET NEW.CourseSelection_Semester = 
 	  (SELECT CourseSelection_Semester FROM Course WHERE Course.Course_ID = NEW.CourseSelection_ID);
 END$$

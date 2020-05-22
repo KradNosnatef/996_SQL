@@ -38,7 +38,7 @@ public class DepartmentDao {
                              "Department_Campus_ID) VALUES (?,?,?,?,?);";
         int insert_flag = 0;
 
-        // Chech if campus_id existed
+        // Check if campus_id existed
         try {
             PreparedStatement ps = conn.prepareStatement(campus_check);
             ps.setString(1, campus_id);

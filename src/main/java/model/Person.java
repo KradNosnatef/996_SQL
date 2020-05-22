@@ -57,8 +57,4 @@ public class Person implements Serializable {
     public void set_address_postal_code(String new_address_postal_code) {
         address_postal_code = new_address_postal_code;
     }
-
-    public void get_address_phone_number(String new_address_phone_number) {
-        address_phone_number = new_address_phone_number;
-    }
 }
