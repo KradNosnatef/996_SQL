@@ -19,14 +19,15 @@ public class TransactionDaoTest {
     @org.junit.jupiter.api.Test
     void TransactionDaoTestCase1() {//this case design for insert
         TransactionDao transactionDao=new TransactionDao();
-        String ID="02";
+        String transactionID="1";
+        String studentID="1";
         Boolean type=true;
-        Date date=new Date(0);
+        String date="1970-01-01";
         String originClassID="17";
-        String currentClassID="17";
+        String currentClassID="18";
         String leagueMember="nope";
-        Boolean reason=true;
-        int flag= transactionDao.insertTransaction(ID,type,date,originClassID,currentClassID,leagueMember,reason);
+        String reason="1";
+        int flag= transactionDao.insertTransaction(transactionID,studentID,type,date,originClassID,currentClassID,leagueMember,reason);
         if(flag==0)System.out.println("Error when inserting");
         System.exit(0);
     }
@@ -34,7 +35,7 @@ public class TransactionDaoTest {
     @org.junit.jupiter.api.Test
     void TransactionDaoTestCase2(){//this case design for delete
         TransactionDao transactionDao=new TransactionDao();
-        String ID="02";
+        String ID="1";
         int flag=transactionDao.deleteTransaction(ID);
         if(flag==0)System.out.println("Error when deleting");
         System.exit(0);
@@ -51,9 +52,9 @@ public class TransactionDaoTest {
     @org.junit.jupiter.api.Test
     void TransactionDaoTestCase4() {//this case design for Modify
         TransactionDao transactionDao=new TransactionDao();
-        String ID="03";
-        int type=1;
-        String value="0";
+        String ID="1";
+        int type=3;
+        String value="18";
         int flag=transactionDao.updateTransaction(ID,type,value);
         if(flag==-1)System.out.println("Error when updating");
         else if (flag==0)System.out.println("ID not existed");

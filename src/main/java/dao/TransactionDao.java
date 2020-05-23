@@ -30,26 +30,33 @@ public class TransactionDao {
     // - If insertion action succeed, return a number, which stands for the row count for SQL Data Manipulation
     // Language (DML) statements. Otherwise, it will return 0
     public int insertTransaction(
-            String ID, boolean type, String date,
+            String transactionID,String studentID, boolean type, String date,
             String originClassID,String currentClassID,
             String leagueMember,String reason
             ){
         Connection connection;
         if(UnitTestSwitch.SWITCH)connection= DButils.getConnectionUnitTest();
         else connection=DButils.getConnection();
-        String sql="INSERT INTO Transaction(Transaction_ID, Transaction_Type, " +
+        String sql1="INSERT INTO Transaction(Transaction_ID, Transaction_Type, " +
                 "Transaction_Date, Transaction_Origin_Class_ID," +
-                "Transaction_Current_Class_ID,Transaction_League_Member,Transaction_Reason)VALUES(?,?,?,?,?,?,?)";
+                "Transaction_Current_Class_ID,Transaction_League_Member,Transaction_Reason)VALUES(?,?,?,?,?,?,?) ";
+        String sql2="UPDATE Student SET Student_Transaction_ID = ? ,Student_Class_ID = ? WHERE Student_ID = ? ;";
         int insertFlag=0;
         try{
-            PreparedStatement preparedStatement=connection.prepareStatement(sql);
-            preparedStatement.setString(1,ID);
+            PreparedStatement preparedStatement=connection.prepareStatement(sql1);
+            preparedStatement.setString(1,transactionID);
             preparedStatement.setBoolean(2,type);
             preparedStatement.setString(3,date);
             preparedStatement.setString(4,originClassID);
             preparedStatement.setString(5,currentClassID);
             preparedStatement.setString(6,leagueMember);
             preparedStatement.setString(7,reason);
+            insertFlag=preparedStatement.executeUpdate();
+            preparedStatement.close();
+            preparedStatement=connection.prepareStatement(sql2);
+            preparedStatement.setString(1,transactionID);
+            preparedStatement.setString(2,currentClassID);
+            preparedStatement.setString(3,studentID);
             insertFlag=preparedStatement.executeUpdate();
             preparedStatement.close();
         }catch(SQLException sqlException){
@@ -66,15 +73,40 @@ public class TransactionDao {
     // Ouput:
     // - return 0 if the element is not existed
     // - return 1 if we delete the element successfully
-    public int deleteTransaction(String ID){
+    public int deleteTransaction(String transactionID){
         Connection connection;
         if(UnitTestSwitch.SWITCH)connection= DButils.getConnectionUnitTest();
         else connection=DButils.getConnection();
-        String sql = "DELETE FROM Transaction WHERE Transaction_ID = ?;";
+        Student student=new Student();
+        String sql="SELECT *,Transaction_ID,Transaction_Origin_Class_ID FROM Student INNER JOIN Transaction\n" +
+                "ON STUDENT_TRANSACTION_ID=TRANSACTION_ID WHERE Transaction_ID = ? ";
         int deleteFlag=0;
         try{
             PreparedStatement preparedStatement=connection.prepareStatement(sql);
-            preparedStatement.setString(1,ID);
+            preparedStatement.setString(1,transactionID);
+            ResultSet resultSet=preparedStatement.executeQuery();
+            resultSet.next();
+            student.set_id(resultSet.getString("Student_ID"));
+            student.set_class_id(resultSet.getString("Transaction_Origin_Class_ID"));
+            resultSet.close();
+            preparedStatement.close();
+
+            String sql2="UPDATE Student SET Student_Class_ID = ? ,Student_Transaction_ID = ? WHERE Student_ID= ? ";
+            preparedStatement=connection.prepareStatement(sql2);
+            preparedStatement.setString(1,student.get_class_id());
+            preparedStatement.setString(2,null);
+            preparedStatement.setString(3,student.get_id());
+            deleteFlag=preparedStatement.executeUpdate();
+            preparedStatement.close();
+        }catch (SQLException sqlException){
+            sqlException.printStackTrace();
+        }
+
+        sql = "DELETE FROM Transaction WHERE Transaction_ID = ?;";
+        deleteFlag=0;
+        try{
+            PreparedStatement preparedStatement=connection.prepareStatement(sql);
+            preparedStatement.setString(1,transactionID);
             deleteFlag=preparedStatement.executeUpdate();
             preparedStatement.close();
         }catch(SQLException sqlException){
@@ -164,6 +196,7 @@ public class TransactionDao {
             sql1+="Date = ? ";
         }else if(columnSelector==2){
             sql1+="Origin_Class_ID = ? ";
+            System.out.println("WARNING:This option may cause some unexceptable problem\n");
         }else if(columnSelector==3){
             sql1+="Current_Class_ID = ? ";
         }else if(columnSelector==4){
@@ -178,6 +211,14 @@ public class TransactionDao {
             preparedStatement.setString(2,rowSelector);
             updateFlag = preparedStatement.executeUpdate();
             preparedStatement.close();
+            if(columnSelector==3){
+                sql="UPDATE Student SET Student_Class_ID = ? WHERE Student_Transaction_ID = ? ";
+                preparedStatement=connection.prepareStatement(sql);
+                preparedStatement.setString(1,value);
+                preparedStatement.setString(2,rowSelector);
+                updateFlag=preparedStatement.executeUpdate();
+                preparedStatement.close();
+            }
         }catch(SQLException sqlException){
             sqlException.printStackTrace();
             updateFlag=-1;
