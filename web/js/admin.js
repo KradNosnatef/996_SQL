@@ -51,14 +51,21 @@ function insertRequest(object) {
         const password = user[1].value.toString();
         const usertype = user[2].value.toString();
         const foreignid = user[3].value.toString();
-        insert_url = insert_url + "&username=" + username + "&password=" + password + "&usertype=" + usertype + "&foreignid=" + foreignid;
+        insert_url = insert_url +
+            "&username=" + username +
+            "&password=" + password +
+            "&usertype=" + usertype +
+            "&foreignid=" + foreignid;
     } else if (object === "campus") {
         // Insert Campus
         const campus = document.getElementsByClassName("campus_insert_input");
         const id = campus[0].value.toString();
         const name = campus[1].value.toString();
         const address = campus[2].value.toString();
-        insert_url = insert_url + "&id=" + id + "&name=" + name + "&address=" + address;
+        insert_url = insert_url +
+            "&id=" + id +
+            "&name=" + name +
+            "&address=" + address;
     } else if (object === "department") {
         // Insert Department
         const department = document.getElementsByClassName("department_insert_input");
@@ -67,7 +74,90 @@ function insertRequest(object) {
         const address = department[2].value.toString();
         const dean = department[3].value.toString();
         const campus_id = department[4].value.toString();
-        insert_url = insert_url + "&id=" + id + "&name=" + name + "&address=" + address + "&dean=" + dean + "&campus_id=" + campus_id;
+        insert_url = insert_url +
+            "&id=" + id +
+            "&name=" + name +
+            "&address=" + address +
+            "&dean=" + dean +
+            "&campus_id=" + campus_id;
+    } else if (object === "class") {
+        // Insert Class
+        const class_ = document.getElementsByClassName("class_insert_input");
+        const id = class_[0].value.toString();
+        const name = class_[1].value.toString();
+        const date = class_[2].value.toString();
+        const grade = class_[3].value.toString();
+        const department_id = class_[4].value.toString();
+        const head_teacher_id = class_[5].value.toString();
+        insert_url = insert_url +
+            "&id=" + id +
+            "&name=" + name +
+            "&date=" + date +
+            "&grade=" + grade +
+            "&department_id=" + department_id +
+            "&head_teacher_id=" + head_teacher_id;
+    } else if (object === "student") {
+        const student = document.getElementsByClassName("student_insert_input");
+        const id = student[0].value.toString();
+        const enrollment_date = student[1].value.toString();
+        const email = student[2].value.toString();
+        const class_id = student[3].value.toString();
+        const id_card_number = student[4].value.toString();
+        const card_type = student[5].value.toString();
+        const name = student[6].value.toString();
+        const gender = student[7].value.toString();
+        const birthdate = student[8].value.toString();
+        const nationality = student[9].value.toString();
+        const address = student[10].value.toString();
+        const address_postal_code = student[11].value.toString();
+        const address_phone_number = student[12].value.toString();
+
+        insert_url = insert_url +
+            "&id=" + id +
+            "&enrollment_date=" + enrollment_date +
+            "&email=" + email +
+            "&class_id=" + class_id;
+        insert_url = insert_url +
+            "&id_card_number=" + id_card_number +
+            "&card_type=" + card_type +
+            "&name=" + name +
+            "&gender=" + gender +
+            "&birthdate=" + birthdate +
+            "&nationality=" + nationality +
+            "&address=" + address +
+            "&address_postal_code=" + address_postal_code +
+            "&address_phone_number=" + address_phone_number;
+    } else if (object === "teacher") {
+        const teacher = document.getElementsByClassName("teacher_insert_input");
+        const id = teacher[0].value.toString();
+        const enrollment_date = teacher[1].value.toString();
+        const department_id = teacher[2].value.toString();
+        const teacher_title = teacher[3].value.toString();
+        const id_card_number = teacher[4].value.toString();
+        const card_type = teacher[5].value.toString();
+        const name = teacher[6].value.toString();
+        const gender = teacher[7].value.toString();
+        const birthdate = teacher[8].value.toString();
+        const nationality = teacher[9].value.toString();
+        const address = teacher[10].value.toString();
+        const address_postal_code = teacher[11].value.toString();
+        const address_phone_number = teacher[12].value.toString();
+
+        insert_url = insert_url +
+            "&id=" + id +
+            "&enrollment_date=" + enrollment_date +
+            "&department_id=" + department_id +
+            "&teacher_title=" + teacher_title;
+        insert_url = insert_url +
+            "&id_card_number=" + id_card_number +
+            "&card_type=" + card_type +
+            "&name=" + name +
+            "&gender=" + gender +
+            "&birthdate=" + birthdate +
+            "&nationality=" + nationality +
+            "&address=" + address +
+            "&address_postal_code=" + address_postal_code +
+            "&address_phone_number=" + address_phone_number;
     }
     xmlhttp.open("GET", insert_url, true);
     xmlhttp.send();
@@ -84,18 +174,31 @@ function deleteRequest(object) {
     if (object === "user") {
         const user = document.getElementsByClassName("user_delete_input");
         const username = user[0].value.toString();
-        delete_url = delete_url + "&username=" + username;
+        delete_url = delete_url +
+            "&username=" + username;
     } else if (object === "campus") {
         const campus = document.getElementsByClassName("campus_delete_input");
         const id = campus[0].value.toString();
         const name = campus[1].value.toString();
-        delete_url = delete_url + "&id=" + id + "&name=" + name;
+        delete_url = delete_url +
+            "&id=" + id +
+            "&name=" + name;
     } else if (object === "department") {
         const department = document.getElementsByClassName("department_delete_input");
         const id = department[0].value.toString();
         const name = department[1].value.toString();
         const campus_id = department[2].value.toString();
-        delete_url = delete_url + "&id=" + id + "&name=" + name + "&campus_id=" + campus_id;
+        delete_url = delete_url +
+            "&id=" + id +
+            "&name=" + name +
+            "&campus_id=" + campus_id;
+    } else if (object == "class") {
+        const class_ = document.getElementsByClassName("class_delete_input");
+        const id = class_[0].value.toString();
+        const name = class_[1].value.toString();
+        delete_url = delete_url +
+            "&id=" + id +
+            "&name=" + name;
     }
     xmlhttp.open("GET", delete_url, true);
     xmlhttp.send();
@@ -115,14 +218,22 @@ function updateRequest(object) {
         const password = user[1].value.toString();
         const usertype = user[2].value.toString();
         const foreignid = user[3].value.toString();
-        update_url = update_url + "&username=" + username + "&password=" + password + "&usertype=" + usertype + "&foreignid=" + foreignid;
+        update_url = update_url +
+            "&username=" + username +
+            "&password=" + password +
+            "&usertype=" + usertype +
+            "&foreignid=" + foreignid;
     } else if (object === "campus") {
         const campus = document.getElementsByClassName("campus_update_input");
         const id_old = campus[0].value.toString();
         const name_old = campus[1].value.toString();
         const name_new = campus[2].value.toString();
         const address_new = campus[3].value.toString();
-        update_url = update_url + "&id_old=" + id_old + "&name_old" + name_old + "&name_new=" + name_new + "&address_new=" + address_new;
+        update_url = update_url +
+            "&id_old=" + id_old +
+            "&name_old" + name_old +
+            "&name_new=" + name_new +
+            "&address_new=" + address_new;
     } else if (object === "department") {
         const department = document.getElementsByClassName("department_update_input");
         const id_old = department[0].value.toString();
@@ -131,7 +242,28 @@ function updateRequest(object) {
         const address_new = department[3].value.toString();
         const dean_new = department[4].value.toString();
         const campus_id_new = department[5].value.toString();
-        update_url = update_url + "&id_old=" + id_old + "&name_old=" + name_old + "&name_new=" + name_new + "&address_new=" + address_new + "&dean_new=" + dean_new + "&campus_id_new=" + campus_id_new;
+        update_url = update_url +
+            "&id_old=" + id_old +
+            "&name_old=" + name_old +
+            "&name_new=" + name_new +
+            "&address_new=" + address_new +
+            "&dean_new=" + dean_new +
+            "&campus_id_new=" + campus_id_new;
+    } else if (object === "class") {
+        const class_ = document.getElementsByClassName("class_update_input");
+        const id_old = class_[0].value.toString();
+        const name_old = class_[1].value.toString();
+        const name_new = class_[2].value.toString();
+        const date_new = class_[3].value.toString();
+        const department_id_new = class_[4].value.toString();
+        const head_teacher_id_new = class_[5].value.toString();
+        update_url = update_url +
+            "&id_old=" + id_old +
+            "&name_old=" + name_old +
+            "&name_new=" + name_new +
+            "&date_new=" + date_new +
+            "&department_id_new" + department_id_new +
+            "&head_teacher_id_new" + head_teacher_id_new;
     }
     xmlhttp.open("GET", update_url, true);
     xmlhttp.send();
@@ -234,12 +366,52 @@ function showUpdateDepartment() {
     const result = document.getElementById("result");
     result.innerHTML = "<div id='show_delete_department'  class='d_form'>"
         + "<h3>请输入待修改专业信息</h3>"
-        + "<input class='department_delete_input' id='id_old' type='text' autofocus='autofocus' name='id_old' value placeholder='原专业编号' required>"
-        + "<input class='department_delete_input' id='name_old' type='text' name='name_old' value placeholder='原名称' required>"
-        + "<input class='department_insert_input' id='name_new' type='text' name='name_new' value placeholder='名称' required>"
-        + "<input class='department_insert_input' id='address_new' type='text' name='address_new' value placeholder='地址' required>"
-        + "<input class='department_insert_input' id='dean_new' type='text' name='dean_new' value placeholder='院长' required>"
-        + "<input class='department_insert_input' id='campus_id_new' type='text' name='campus_id_new' value placeholder='所在校区编号' required>"
+        + "<input class='department_update_input' id='id_old' type='text' autofocus='autofocus' name='id_old' value placeholder='原专业编号' required>"
+        + "<input class='department_update_input' id='name_old' type='text' name='name_old' value placeholder='原名称' required>"
+        + "<input class='department_update_input' id='name_new' type='text' name='name_new' value placeholder='名称' required>"
+        + "<input class='department_update_input' id='address_new' type='text' name='address_new' value placeholder='地址' required>"
+        + "<input class='department_update_input' id='dean_new' type='text' name='dean_new' value placeholder='院长' required>"
+        + "<input class='department_update_input' id='campus_id_new' type='text' name='campus_id_new' value placeholder='所在校区编号' required>"
         + "<input id='submit' onclick=updateRequest('department') type='button' name='submit' value='删除'>"
+        + "</div>";
+}
+
+// Class Info Maintain
+function showInsertClass() {
+    const result = document.getElementById("result");
+    result.innerHTML = "<div id='show_insert_class'  class='d_form'>"
+        + "<h3>请输入新增班级信息</h3>"
+        + "<input class='class_insert_input' id='id' type='text' autofocus='autofocus' name='id' value placeholder='班级编号' required>"
+        + "<input class='class_insert_input' id='name' type='text' name='name' value placeholder='名称' required>"
+        + "<input class='class_insert_input' id='date' type='text' name='date' value placeholder='建立日期' required>"
+        + "<input class='class_insert_input' id='grade' type='text' name='grade' value placeholder='年级' required>"
+        + "<input class='class_insert_input' id='department_id' type='text' name='department_id' value placeholder='所在专业编号' required>"
+        + "<input class='class_insert_input' id='head_teacher_id' type='text' name='head_teacher_id' value placeholder='班主任工号' required>"
+        + "<input id='submit' onclick=insertRequest('class') type='button' name='submit' value='插入'>"
+        + "</div>";
+}
+
+function showDeleteClass() {
+    const result = document.getElementById("result");
+    result.innerHTML = "<div id='show_delete_class'  class='d_form'>"
+        + "<h3>请输入待删除班级信息</h3>"
+        + "<input class='class_delete_input' id='id' type='text' autofocus='autofocus' name='id' value placeholder='班级编号' required>"
+        + "<input class='class_delete_input' id='name' type='text' name='name' value placeholder='名称' required>"
+        + "<input id='submit' onclick=deleteRequest('class') type='button' name='submit' value='删除'>"
+        + "</div>";
+}
+
+function showUpdateClass() {
+    const result = document.getElementById("result");
+    result.innerHTML = "<div id='show_delete_department'  class='d_form'>"
+        + "<h3>请输入待修改班级信息</h3>"
+        + "<input class='class_update_input' id='id_old' type='text' autofocus='autofocus' name='id_old' value placeholder='原专业编号' required>"
+        + "<input class='class_update_input' id='name_old' type='text' name='name_old' value placeholder='原名称' required>"
+        + "<input class='class_update_input' id='name_new' type='text' name='name_new' value placeholder='名称' required>"
+        + "<input class='class_update_input' id='date_new' type='text' name='date_new' value placeholder='地址' required>"
+        + "<input class='class_update_input' id='grade_new' type='text' name='grade_new' value placeholder='院长' required>"
+        + "<input class='class_update_input' id='department_id_new' type='text' name='department_id_new' value placeholder='所在校区编号' required>"
+        + "<input class='class_update_input' id='head_teacher_id_new' type='text' name='head_teacher_id_new' value placeholder='所在校区编号' required>"
+        + "<input id='submit' onclick=updateRequest('class') type='button' name='submit' value='删除'>"
         + "</div>";
 }

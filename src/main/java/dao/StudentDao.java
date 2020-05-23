@@ -15,7 +15,7 @@ public class StudentDao {
     // Insert a new student
     // Input (Student Info) AND (Person Info)
     // TODO INITIAL WITH TRANSACTION NEED ADDITIONAL CHECK
-    public int insertStudent(String id, String enrollment_date, String email, String class_id, String transaction_id,
+    public int insertStudent(String id, String enrollment_date, String email, String class_id,
                              String id_card_number, boolean card_type, String name, boolean gender, String birthdate,
                              String nationality, String address, String address_postal_code,
                              String address_phone_number) {
@@ -103,16 +103,15 @@ public class StudentDao {
 
         // Then Insert the Student
         String insert_student_sql = "INSERT INTO Student (Student_ID, Student_Enroll_Date, Student_Email, " +
-                                            "Student_Class_ID, Student_Transaction_ID, Person_ID_Card_Number) VALUES" +
-                                            " (?, ?, ?, ?, ?, ?);";
+                                            "Student_Class_ID, Person_ID_Card_Number) VALUES" +
+                                            " (?, ?, ?, ?, ?);";
         try {
             PreparedStatement ps = conn.prepareStatement(insert_student_sql);
             ps.setString(1, id);
             ps.setString(2, enrollment_date);
             ps.setString(3, email);
             ps.setString(4, class_id);
-            ps.setString(5, transaction_id);
-            ps.setString(6, id_card_number);
+            ps.setString(5, id_card_number);
             insert_flag &= ps.executeUpdate();
             ps.close();
         } catch (SQLException sqle) {

@@ -415,9 +415,9 @@ public class AdminDao extends HttpServlet {
         String info = null;
         PrintWriter out = response.getWriter();
         if (flag == 1) {
-            info = "学院删除成功！";
+            info = "学院修改成功！";
         } else {
-            info = "错误：学院删除失败！";
+            info = "错误：学院修改失败！";
         }
         out.write("<div class='error'>");
         out.write("<div>" + info + "</div>");
@@ -469,9 +469,9 @@ public class AdminDao extends HttpServlet {
         String info = null;
         PrintWriter out = response.getWriter();
         if (flag == 1) {
-            info = "学院插入成功！";
+            info = "班级插入成功！";
         } else {
-            info = "错误：学院插入失败！";
+            info = "错误：班级插入失败！";
         }
         out.write("<div class='error'>");
         out.write("<div>" + info + "</div>");
@@ -495,9 +495,9 @@ public class AdminDao extends HttpServlet {
         String info = null;
         PrintWriter out = response.getWriter();
         if (flag == 1) {
-            info = "学院删除成功！";
+            info = "班级删除成功！";
         } else {
-            info = "错误：学院删除失败！";
+            info = "错误：班级删除失败！";
         }
         out.write("<div class='error'>");
         out.write("<div>" + info + "</div>");
@@ -548,9 +548,9 @@ public class AdminDao extends HttpServlet {
         String info = null;
         PrintWriter out = response.getWriter();
         if (flag == 1) {
-            info = "学院删除成功！";
+            info = "班级修改成功！";
         } else {
-            info = "错误：学院删除失败！";
+            info = "错误：班级修改失败！";
         }
         out.write("<div class='error'>");
         out.write("<div>" + info + "</div>");

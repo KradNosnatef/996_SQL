@@ -133,6 +133,19 @@
                     </ul>
                 </li>
                 <li>
+                    <div class="link">选课信息管理</div>
+                    <ul class="submenu">
+                        <li><a onclick="showInsertSelection()">新增选课信息</a></li>
+                        <li><a onclick="showDeleteSelection()">删除选课信息</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <div class="link">个人基本信息管理</div>
+                    <ul class="submenu">
+                        <li><a onclick="showUpdatePerson()">修改个人信息</a></li>
+                    </ul>
+                </li>
+                <li>
                     <div class="link">普通查询</div>
                     <ul class="submenu">
                         <li><a onclick="infoQurey('user')">指定用户查询</a></li>
