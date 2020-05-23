@@ -132,10 +132,10 @@ public class StudentDao {
         else conn = DButils.getConnection();
         int delete_flag = 1;
         if (type == 0) {
+            String get_id_card_number_sql = "SELECT * FROM Student WHERE Student_ID = ?;";
             String id_card_number;
-            String get_id_card_number_sql = "SELECT * FROM Student WHERE Teacher_ID = ?;";
-            String delete_person_sql = "DELETE FROM Person WHERE ID_Card_Number=?;";
             String delete_student_sql = "DELETE FROM Student WHERE Person_ID_Card_Number=?;";
+            String delete_person_sql = "DELETE FROM Person WHERE ID_Card_Number=?;";
             try {
                 PreparedStatement ps = conn.prepareStatement(get_id_card_number_sql);
                 ps.setString(1, element_selector);
@@ -148,11 +148,12 @@ public class StudentDao {
                 id_card_number = rs.getString("Person_ID_Card_Number");
                 rs.close();
                 ps.close();
-                ps = conn.prepareStatement(delete_person_sql);
+                ps = conn.prepareStatement(delete_student_sql);
                 ps.setString(1, id_card_number);
                 delete_flag = ps.executeUpdate();
                 ps.close();
-                ps = conn.prepareStatement(id_card_number);
+                ps = conn.prepareStatement(delete_person_sql);
+                ps.setString(1, id_card_number);
                 delete_flag &= ps.executeUpdate();
                 ps.close();
             } catch (SQLException sqle) {
@@ -164,11 +165,12 @@ public class StudentDao {
             String delete_person_sql = "DELETE FROM Person WHERE ID_Card_Number=?;";
             String delete_student_sql = "DELETE FROM Student WHERE Person_ID_Card_Number=?;";
             try {
-                PreparedStatement ps = conn.prepareStatement(delete_person_sql);
+                PreparedStatement ps = conn.prepareStatement(delete_student_sql);
                 ps.setString(1, element_selector);
                 delete_flag = ps.executeUpdate();
                 ps.close();
-                ps = conn.prepareStatement(delete_student_sql);
+                ps = conn.prepareStatement(delete_person_sql);
+                ps.setString(1, element_selector);
                 delete_flag &= ps.executeUpdate();
                 ps.close();
             } catch (SQLException sqle) {

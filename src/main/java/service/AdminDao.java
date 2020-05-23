@@ -112,6 +112,26 @@ public class AdminDao extends HttpServlet {
             case "update_course":
                 update_course(request, response);
                 break;
+
+            case "query_all_transaction":
+                query_all_transaction(request, response);
+                break;
+            case "insert_transaction":
+                insert_transaction(request, response);
+                break;
+            case "delete_transaction":
+                delete_transaction(request, response);
+                break;
+            case "update_transaction":
+                update_transaction(request, response);
+                break;
+
+            case "insert_selection":
+                insert_selection(request, response);
+                break;
+            case "delete_selection":
+                delete_selection(request, response);
+                break;
         }
     }
 
@@ -963,5 +983,56 @@ public class AdminDao extends HttpServlet {
 
     protected void update_transaction(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+    }
+
+    // CourseSelection Info Maintain
+    protected void insert_selection(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        String student_id = request.getParameter("student_id");
+        String course_id = request.getParameter("course_id");
+        String date = request.getParameter("date");
+
+        int flag = new SelectionDao().insertSelection(student_id, course_id, date);
+
+        String info = null;
+        PrintWriter out = response.getWriter();
+        if (flag == 1) {
+            info = "选课成功！";
+        } else {
+            info = "错误：选课失败！";
+        }
+        out.write("<div class='error'>");
+        out.write("<div>" + info + "</div>");
+        out.write("</div>");
+        out.flush();
+        out.close();
+    }
+
+    protected void delete_selection(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        String student_id = request.getParameter("student_id");
+        String course_id = request.getParameter("course_id");
+
+        int flag = 0;
+
+        if (!student_id.equals("") && !course_id.equals(""))
+            flag = new SelectionDao().deleteSelection(student_id, course_id, 0);
+        else if (!student_id.equals(""))
+            flag = new SelectionDao().deleteSelection(student_id, course_id, 1);
+        else
+            flag = new SelectionDao().deleteSelection(student_id, course_id, 2);
+
+        String info = null;
+        PrintWriter out = response.getWriter();
+        if (flag == 1) {
+            info = "成功删除！";
+        } else {
+            info = "错误：删除失败！";
+        }
+        out.write("<div class='error'>");
+        out.write("<div>" + info + "</div>");
+        out.write("</div>");
+        out.flush();
+        out.close();
     }
 }

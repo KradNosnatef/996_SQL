@@ -151,11 +151,11 @@ public class TeacherDao {
                 id_card_number = rs.getString("Person_ID_Card_Number");
                 rs.close();
                 ps.close();
-                ps = conn.prepareStatement(delete_person_sql);
+                ps = conn.prepareStatement(delete_teacher_sql);
                 ps.setString(1, id_card_number);
                 delete_flag = ps.executeUpdate();
                 ps.close();
-                ps = conn.prepareStatement(delete_teacher_sql);
+                ps = conn.prepareStatement(delete_person_sql);
                 ps.setString(1, id_card_number);
                 delete_flag &= ps.executeUpdate();
                 ps.close();

@@ -1,6 +1,5 @@
 package dao;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,10 +33,12 @@ public class SelectionDao {
     // - If insertion action succeed, return 1
     // - If insertion action is illegal, return -1
     // - If insertion action failed, return 0
-    public int insertSelection (String student_id, String course_id, String date) {
+    public int insertSelection(String student_id, String course_id, String date) {
         Connection conn;
-        if (UnitTestSwitch.SWITCH) conn = DButils.getConnectionUnitTest();
-        else conn = DButils.getConnection();
+        if (UnitTestSwitch.SWITCH)
+            conn = DButils.getConnectionUnitTest();
+        else
+            conn = DButils.getConnection();
 
         int insert_flag = 0;
         date = Datautils.DateFormat(date);
@@ -84,7 +85,8 @@ public class SelectionDao {
 
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                // If find the student has already selected this course in another time, return invalid.
+                // If find the student has already selected this course in another time, return
+                // invalid.
                 return -1;
             }
         } catch (SQLException sqle) {
@@ -110,13 +112,16 @@ public class SelectionDao {
 
     // Delete Selection
     // We have 3 deletion mode in total
-    // type = 0  --  give student_id & course_id to delete a single selection information
-    // type = 1  --  give student_id only
-    // type = 2  --  give course_id only
-     public int deleteSelcction(String student_id, String course_id, int type) {
+    // type = 0 -- give student_id & course_id to delete a single selection
+    // information
+    // type = 1 -- give student_id only
+    // type = 2 -- give course_id only
+    public int deleteSelection(String student_id, String course_id, int type) {
         Connection conn;
-        if (UnitTestSwitch.SWITCH) conn = DButils.getConnectionUnitTest();
-        else conn = DButils.getConnection();
+        if (UnitTestSwitch.SWITCH)
+            conn = DButils.getConnectionUnitTest();
+        else
+            conn = DButils.getConnection();
 
         int delete_flag = 0;
 
@@ -156,10 +161,12 @@ public class SelectionDao {
     // I am going to give out 2 methods here to query:
     // 1. Use student_id to query all the course he chose.
     // 2. Use course_id to quert all the student who chose this class.
-    public ArrayList<Course> queryByStudent (String student_id) {
+    public ArrayList<Course> queryByStudent(String student_id) {
         Connection conn;
-        if (UnitTestSwitch.SWITCH) conn = DButils.getConnectionUnitTest();
-        else conn = DButils.getConnection();
+        if (UnitTestSwitch.SWITCH)
+            conn = DButils.getConnectionUnitTest();
+        else
+            conn = DButils.getConnection();
         String sql;
         ArrayList<Course> course_list = new ArrayList<>();
         sql = "SELECT * FROM CourseSelection WHERE CourseSelection_Student_ID = ? ;";
@@ -190,10 +197,12 @@ public class SelectionDao {
         return course_list;
     }
 
-    public ArrayList<Student> queryByCourse (String course_id) {
+    public ArrayList<Student> queryByCourse(String course_id) {
         Connection conn;
-        if (UnitTestSwitch.SWITCH) conn = DButils.getConnectionUnitTest();
-        else conn = DButils.getConnection();
+        if (UnitTestSwitch.SWITCH)
+            conn = DButils.getConnectionUnitTest();
+        else
+            conn = DButils.getConnection();
         String sql;
         ArrayList<Student> student_list = new ArrayList<>();
         sql = "SELECT * FROM CourseSelection WHERE CourseSelection_Course_ID =;";

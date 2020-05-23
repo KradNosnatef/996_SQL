@@ -164,6 +164,29 @@ function insertRequest(object) {
             "&address=" + address +
             "&address_postal_code=" + address_postal_code +
             "&address_phone_number=" + address_phone_number;
+    } else if (object === "course") {
+        const course = document.getElementsByClassName("course_insert_input");
+        const id = course[0].value.toString();
+        const name = course[1].value.toString();
+        const department_id = course[2].value.toString();
+        const exam_type = course[3].value.toString();
+
+        insert_url = insert_url +
+            "&id=" + id +
+            "&name=" + name +
+            "&department_id=" + department_id +
+            "&exam_type=" + exam_type;
+    } else if (object === "selection") {
+        const today = new Date();
+        const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        const selection = document.getElementsByClassName("selection_insert_input");
+        const student_id = selection[0].value.toString();
+        const course_id = selection[1].value.toString();
+
+        insert_url = insert_url +
+            "&student_id=" + student_id +
+            "&course_id=" + course_id +
+            "&date=" + date;
     }
     xmlhttp.open("GET", insert_url, true);
     xmlhttp.send();
@@ -219,6 +242,22 @@ function deleteRequest(object) {
         delete_url = delete_url +
             "&id=" + id +
             "&id_card_number=" + id_card_number;
+    } else if (object === "course") {
+        const course = document.getElementsByClassName("course_delete_input");
+        const id = course[0].value.toString();
+        const name = course[1].value.toString();
+        const department_id = course[2].value.toString();
+        delete_url = delete_url +
+            "&id=" + id +
+            "&name=" + name +
+            "&department_id=" + department_id;
+    } else if (object === "selection") {
+        const selection = document.getElementsByClassName("selection_delete_input");
+        const student_id = selection[0].value.toString();
+        const course_id = selection[1].value.toString();
+        delete_url = delete_url +
+            "&student_id=" + student_id +
+            "&course_id=" + course_id;
     }
     xmlhttp.open("GET", delete_url, true);
     xmlhttp.send();
@@ -285,7 +324,7 @@ function updateRequest(object) {
             "&department_id_new" + department_id_new +
             "&head_teacher_id_new" + head_teacher_id_new;
     } else if (object === "student") {
-        const student = document.getElementsByClassName("student_update");
+        const student = document.getElementsByClassName("student_update_input");
         const id_old = student[0].value.toString();
         const strinfo1 = student[1].value.toString();
         const strinfo2 = student[2].value.toString();
@@ -296,7 +335,7 @@ function updateRequest(object) {
             "&strinfo2=" + strinfo2 +
             "&strinfo3=" + strinfo3;
     } else if (object === "teacher") {
-        const student = document.getElementsByClassName("student_update");
+        const student = document.getElementsByClassName("student_update_input");
         const id_old = student[0].value.toString();
         const strinfo1 = student[1].value.toString();
         const strinfo2 = student[2].value.toString();
@@ -306,9 +345,36 @@ function updateRequest(object) {
             "&strinfo1=" + strinfo1 +
             "&strinfo2=" + strinfo2 +
             "&strinfo3=" + strinfo3;
+    } else if (object === "course") {
+        const course = document.getElementsByClassName("course_update_input");
+        const id = course[0].value.toString();
+        const teacher_id = course[1].value.toString();
+        const semester = course[2].value.toString();
+        const year = course[3].value.toString();
+        const time = course[4].value.toString();
+        update_url = update_url +
+            "&id=" + id +
+            "&teacher_id=" + teacher_id +
+            "&semester=" + semester +
+            "&year=" + year +
+            "&time=" + time;
     }
     xmlhttp.open("GET", update_url, true);
     xmlhttp.send();
+}
+
+function infoqueryRequest(object) {
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+            document.getElementById("result").innerHTML = xmlhttp.responseText;
+        }
+    };
+    let infoquery_url = "/student_management_system/AdminDao?action=infoquery_" + object;
+
+    if (object === "student") {
+    } else if (object === "teacher") {
+    }
 }
 
 // User Info Maintain
@@ -581,4 +647,47 @@ function showUpdateCourse() {
         "<input class='course_update_input' id='time' type='text' name='time' value placeholder='开课时间'>" +
         "<input id='submit' onclick=updateRequest('course') type='button' name='submit' value='插入'>"
     "</div>";
+}
+
+function showInsertSelection() {
+    const result = document.getElementById("result");
+    result.innerHTML = "<div id='show_insert_selection'  class='d_form'>" +
+        "<h3>请输入选课信息</h3>" +
+        "<input class='selection_insert_input' id='student_id' type='text' autofocus='autofocus' name='student_id' value placeholder='学生编号' required>" +
+        "<input class='selection_insert_input' id='course_id' type='text' name='course_id' value placeholder='课程编号' required>" +
+        "<input id='submit' onclick=insertRequest('selection') type='button' name='submit' value='插入'>" +
+        "</div>";
+}
+
+function showDeleteSelection() {
+    const result = document.getElementById("result");
+    result.innerHTML = "<div id='show_delete_selection'  class='d_form'>" +
+        "<h3>请输入选课信息</h3>" +
+        "<input class='selection_delete_input' id='student_id' type='text' autofocus='autofocus' name='student_id' value placeholder='学生编号' required>" +
+        "<input class='selection_delete_input' id='course_id' type='text' name='course_id' value placeholder='课程编号' required>" +
+        "<input id='submit' onclick=deleteRequest('selection') type='button' name='submit' value='删除'>" +
+        "</div>";
+}
+
+// Special Query I
+function infoQureyStudent() {
+    const result = document.getElementById("result");
+    result.innerHTML = "<div class='show_queryinfo_student'  class='d_form'>" +
+        "<h3>请输入学号</h3>" +
+        "<input class='infoquery_student_input' id='student_id' type='text' autofocus='autofocus' name='student_id' value placeholder='学号' required>" +
+        "<input id='submit' onclick=infoqueryRequest('student') type='button' name='submit' value='插入'>" +
+        "</div>";
+}
+
+function infoQureyTeacher() {
+    const result = document.getElementById("result");
+    result.innerHTML = "<div class='show_queryinfo_teacher'  class='d_form'>" +
+        "<h3>请输入工号</h3>" +
+        "<input class='infoquery_teacher_input' id='teacher_id' type='text' autofocus='autofocus' name='teacher_id' value placeholder='工号' required>" +
+        "<input id='submit' onclick=infoqueryRequest('teacher') type='button' name='submit' value='插入'>" +
+        "</div>";
+}
+
+function infoQueryCourse() {
+
 }
