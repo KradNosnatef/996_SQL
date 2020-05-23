@@ -10,10 +10,10 @@ import javax.naming.*;
 
 public class DButils {
     public static Connection getConnectionUnitTest() {
-        String dbUserName = "admin";
-        String dbUserPasswd = "admins_password";
+        String dbUserName = "root";
+        String dbUserPasswd = "Destroliaralice0";
         String dbURL = "jdbc:mysql://localhost:3306/mydb?"
-                + "user=" + dbUserName + "&password=" + dbUserPasswd + "&useSSL=false&useUnicode=true&characterEncoding=UTF8";
+                + "user=" + dbUserName + "&password=" + dbUserPasswd + "&useSSL=false&useUnicode=true&characterEncoding=UTF8&serverTimezone=UTC";
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(dbURL, dbUserName, dbUserPasswd);
