@@ -52,7 +52,7 @@ public class TransactionDaoTest {
     void TransactionDaoTestCase4() {//this case design for Modify
         TransactionDao transactionDao=new TransactionDao();
         String ID="03";
-        int type=0;
+        int type=1;
         String value="0";
         int flag=transactionDao.updateTransaction(ID,type,value);
         if(flag==-1)System.out.println("Error when updating");
