@@ -1,49 +1,49 @@
 /*Basic*/
-*{
+* {
 	padding: 0;
 	margin: 0;
-	font-family: "PingFangSC-Regular","Microsoft Yahei",sans-serif;
+	font-family: "PingFangSC-Regular", "Microsoft Yahei", sans-serif;
 }
 
 body {
-	background-position: center center; 
+	background-position: center center;
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-size: cover;
 	background-color: #fff;
 }
 
-a{
+a {
 	color: #000;
 	text-decoration: none;
 	cursor: pointer;
 }
 
-a:hover{
+a:hover {
 	font-size: 15px;
 	color: #E0555A;
 }
 
-ul{
+ul {
 	list-style: none;
 }
 
-ul li{
+ul li {
 	display: inline-block;
 }
 
-header{
+header {
 	position: absolute;
 	top: 0;
 	z-index: 30;
-	font-size:15px;
+	font-size: 15px;
 	line-height: 34px;
 	width: 100%;
-	background-color:#fff;
+	background-color: #fff;
 	height: 60px;
 }
 
-.title{
+.title {
 	float: left;
 	text-align: left;
 	font-size: 24px;
@@ -52,73 +52,73 @@ header{
 	margin-left: 1.2em;
 }
 
-header nav{
+header nav {
 	float: right;
 	margin-right: 40px;
 	text-align: center;
 	height: 60px;
 }
 
-.userinfo ul li{
+.userinfo ul li {
 	margin: 0 15px;
 	float: left;
 	height: 38px;
 	font-size: 20px;
 	line-height: 60px;
-	color:#000;
+	color: #000;
 }
 
-.userinfo ul li a{
-	color:#000;
+.userinfo ul li a {
+	color: #000;
 }
 
-.userinfo ul li a:hover{
-	font-size:20px;
+.userinfo ul li a:hover {
+	font-size: 20px;
 	color: red;
 }
 
-main{
+main {
 	display: block;
 	position: absolute;
 	width: 100%;
 	height: 91%;
 	overflow: hidden;
 	z-index: 1;
-	padding-top:60px ;
-	background:#F2F2F2;
+	padding-top: 60px;
+	background: #F2F2F2;
 }
 
-.select{
-	width:200px;
-	height:100%;
+.select {
+	width: 200px;
+	height: 100%;
 	float: left;
 	z-index: 30;
 }
 
-.select h3{
-	margin-left:50px;
-	margin-top:30px;
+.select h3 {
+	margin-left: 50px;
+	margin-top: 30px;
 }
 
 /*------------------------------------------------------*/
 
 .accordion {
- 	width: 100%;
- 	max-width: 360px;
- 	margin:10px auto 20px;
- 	background: #FFF;
- 	-webkit-border-radius: 4px;
- 	-moz-border-radius: 4px;
- 	border-radius: 4px;
- }
+	width: 100%;
+	max-width: 200px;
+	margin: 5px auto 10px;
+	background: #FFF;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
 
 .accordion .link {
-	text-align:center;
+	text-align: center;
 	cursor: pointer;
 	display: block;
-	padding: 15px;
+	padding: 10px;
 	color: #4D4D4D;
-	font-size: 15px;
+	font-size: 10px;
 	font-weight: 700;
 	border-bottom: 1px solid #CCC;
 	position: relative;
@@ -127,9 +127,9 @@ main{
 	transition: all 0.4s ease;
 }
 
-.accordion li{
-	text-align:center;
-	width:100%;
+.accordion li {
+	text-align: center;
+	width: 100%;
 }
 
 .accordion li:last-child .link {
@@ -144,117 +144,117 @@ main{
 }
 
 /*--------------------------- Submenu-----------------------------*/
- .submenu {
- 	display: none;
- 	background: #444359;
- 	font-size: 16px;
- }
+.submenu {
+	display: none;
+	background: #444359;
+	font-size: 10px;
+}
 
- .submenu li {
- 	font-size:15px;
- 	text-align:center;
- 	border-bottom: 1px solid #4b4a5e;
- }
+.submenu li {
+	font-size: 10px;
+	text-align: center;
+	border-bottom: 1px solid #4b4a5e;
+}
 
- .submenu li a {
- 	display: block;
- 	text-decoration: none;
- 	color: #d9d9d9;
- 	padding: 12px;
- 	-webkit-transition: all 0.25s ease;
- 	-o-transition: all 0.25s ease;
- 	transition: all 0.25s ease;
- }
+.submenu li a {
+	display: block;
+	text-decoration: none;
+	color: #d9d9d9;
+	padding: 12px;
+	-webkit-transition: all 0.25s ease;
+	-o-transition: all 0.25s ease;
+	transition: all 0.25s ease;
+}
 
- .submenu li a:hover {
- 	background-color: #E0555A;
- 	color:#fff;
- }
+.submenu li a:hover {
+	background-color: #E0555A;
+	color: #fff;
+}
 
 
 /*------------------------------------------------------*/
 
-.result{
+.result {
 	position: absolute;
 	left: 220px;
-	margin:30px 60px 20px;
-	width:75%;
+	margin: 30px 60px 20px;
+	width: 75%;
 	height: 560px;
-	background-color:#fff;
+	background-color: #fff;
 }
 
-.welcome{
+.welcome {
 	width: 100%;
 	text-align: center;
-	font-size:30px;
-	margin:200px 0;
+	font-size: 30px;
+	margin: 200px 0;
 }
 
-footer{
+footer {
 	display: block;
 	font-size: 15px;
 	text-align: right;
 	position: absolute;
 	right: 20px;
-    bottom: 20px;
+	bottom: 20px;
 	z-index: 1;
 	line-height: 30px;
 	color: #fff;
 }
 
-footer .copyright{
+footer .copyright {
 	margin-right: 60px;
 	color: #000;
 }
 
 /*------------------------------- 动态输出 ------------------------*/
-.all{
-	margin:20px 60px;
+.all {
+	margin: 20px 60px;
 }
 
-.all div{
-	border:1px solid #000;
+.all div {
+	border: 1px solid #000;
 	line-height: 2.1em;
 }
 
-.all div:not(:first-child){
+.all div:not(:first-child) {
 	border-top: none;
 }
 
-.all div span{
+.all div span {
 	display: inline-table;
-    width: 130px;
-    text-align: center;
+	width: 130px;
+	text-align: center;
 }
 
-.all div span:not(:last-child){
-	 border-right: 1px solid #000;
+.all div span:not(:last-child) {
+	border-right: 1px solid #000;
 }
 
-#all_sc div span{
-	width:125px;
+#all_sc div span {
+	width: 125px;
 }
 
-.d_form{
+.d_form {
 	width: 300px;
 	margin: 30px auto;
 	font-weight: 300;
 }
 
-.d_form h3{
+.d_form h3 {
 	font-weight: 600;
 	font-size: 1.5em;
 	margin-bottom: 1.2em;
 }
 
-.d_form p{
+.d_form p {
 	display: block;
 	font-size: 1em;
 	line-height: 1em;
 	margin-bottom: 1em;
 }
 
-.d_form input{
+.d_form input {
 	display: block;
 	border: 1px solid #666;
 	background-color: #fff;
@@ -264,23 +264,23 @@ footer .copyright{
 	margin-bottom: 1em;
 }
 
-.d_form .radio{
+.d_form .radio {
 	display: inline-block;
 	width: 100%;
-	float:left;
+	float: left;
 	margin-bottom: 10px;
 }
 
-.d_form .radio input{
+.d_form .radio input {
 	float: left;
 	width: 20%;
 }
 
-.d_form .radio span{
+.d_form .radio span {
 	float: left;
 }
 
-#submit{
+#submit {
 	color: #fff;
 	background-color: #333;
 	border: none;
@@ -293,15 +293,15 @@ footer .copyright{
 	margin-top: 1.5em;
 }
 
-.error{
+.error {
 	width: 100%;
-    height: 100%;
-    text-align: center;
+	height: 100%;
+	text-align: center;
 }
 
-.error div{
-	margin:24% auto;
-	font-size:30px;
+.error div {
+	margin: 24% auto;
+	font-size: 30px;
 	text-align: center;
 	font-weight: bold;
 }

@@ -16,12 +16,13 @@ public class TeacherDao {
     // Insert a new teacher
     // Input (Teacher Info) AND (Person Info)
     public int insertTeacher(String id, String enrollment_date, String department_id, String teacher_title,
-                             String id_card_number, boolean card_type, String name, boolean gender, String birthdate,
-                             String nationality, String address, String address_postal_code,
-                             String address_phone_number) {
+            String id_card_number, boolean card_type, String name, boolean gender, String birthdate, String nationality,
+            String address, String address_postal_code, String address_phone_number) {
         Connection conn;
-        if (UnitTestSwitch.SWITCH) conn = DButils.getConnectionUnitTest();
-        else conn = DButils.getConnection();
+        if (UnitTestSwitch.SWITCH)
+            conn = DButils.getConnectionUnitTest();
+        else
+            conn = DButils.getConnection();
 
         enrollment_date = Datautils.DateFormat(enrollment_date);
         birthdate = Datautils.DateFormat(birthdate);
@@ -80,9 +81,9 @@ public class TeacherDao {
 
         // Now, let's insert the student
         // Insert the Person first
-        String insert_person_sql = "INSERT INTO Person (ID_Card_Number, ID_Card_Type, Name, Gender, Birth, " +
-                                           "Nationality, Address, Address_Phone_Number, Address_Postal_Code) VALUES " +
-                                           "(?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        String insert_person_sql = "INSERT INTO Person (ID_Card_Number, ID_Card_Type, Name, Gender, Birth, "
+                + "Nationality, Address, Address_Phone_Number, Address_Postal_Code) VALUES "
+                + "(?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
         try {
             PreparedStatement ps = conn.prepareStatement(insert_person_sql);
@@ -102,8 +103,8 @@ public class TeacherDao {
         }
 
         // Then Insert the Teacher
-        String insert_student_sql = "INSERT INTO Teacher (Teacher_ID, Teacher_Enroll_Date, Teacher_Department_ID, " +
-                                            "Teacher_Title, Person_ID_Card_Number) VALUES (?, ?, ?, ?, ?);";
+        String insert_student_sql = "INSERT INTO Teacher (Teacher_ID, Teacher_Enroll_Date, Teacher_Department_ID, "
+                + "Teacher_Title, Person_ID_Card_Number) VALUES (?, ?, ?, ?, ?);";
         try {
             PreparedStatement ps = conn.prepareStatement(insert_student_sql);
             ps.setString(1, id);
@@ -128,8 +129,10 @@ public class TeacherDao {
     // type = 1 : delete by id_card_number
     public int deleteTeacher(String element_selector, int type) {
         Connection conn;
-        if (UnitTestSwitch.SWITCH) conn = DButils.getConnectionUnitTest();
-        else conn = DButils.getConnection();
+        if (UnitTestSwitch.SWITCH)
+            conn = DButils.getConnectionUnitTest();
+        else
+            conn = DButils.getConnection();
         int delete_flag = 1;
         if (type == 0) {
             String get_id_card_number_sql = "SELECT * FROM Teacher WHERE Teacher_ID = ?;";
@@ -186,12 +189,14 @@ public class TeacherDao {
     // type = 0 : use Teacher_ID
     // type = 1 : use ID_card_nubmer
     // type = 2 : use name
-    ArrayList<Teacher> queryTeacher(String element_selector, int type) {
+    public ArrayList<Teacher> queryTeacher(String element_selector, int type) {
         String sql = "";
 
         Connection conn;
-        if (UnitTestSwitch.SWITCH) conn = DButils.getConnectionUnitTest();
-        else conn = DButils.getConnection();
+        if (UnitTestSwitch.SWITCH)
+            conn = DButils.getConnectionUnitTest();
+        else
+            conn = DButils.getConnection();
 
         ArrayList<Teacher> teacher_list = new ArrayList<>();
         if (type == -1) {
@@ -201,8 +206,8 @@ public class TeacherDao {
         } else if (type == 1) {
             sql = "SELECT * FROM Teacher WHERE Person_ID_Card_Number=? ORDER BY Teacher_ID;";
         } else if (type == 2) {
-            sql = "SELECT * FROM Teacher, Person WHERE Teacher.Person_ID_Card_Number=Person.ID_Card_Number AND Person.Name = " +
-                          "? ORDER BY Teacher_ID;";
+            sql = "SELECT * FROM Teacher, Person WHERE Teacher.Person_ID_Card_Number=Person.ID_Card_Number AND Person.Name = "
+                    + "? ORDER BY Teacher_ID;";
         }
 
         try {
@@ -240,8 +245,10 @@ public class TeacherDao {
         String sql;
 
         Connection conn;
-        if (UnitTestSwitch.SWITCH) conn = DButils.getConnectionUnitTest();
-        else conn = DButils.getConnection();
+        if (UnitTestSwitch.SWITCH)
+            conn = DButils.getConnectionUnitTest();
+        else
+            conn = DButils.getConnection();
 
         int update_flag = 0;
 
@@ -272,7 +279,8 @@ public class TeacherDao {
             sql = "UPDATE Teacher SET Teacher_Title = ? WHERE Teacher_ID = ?;";
         } else {
             return -1;
-        };
+        }
+        ;
 
         try {
             PreparedStatement ps = conn.prepareStatement(sql);

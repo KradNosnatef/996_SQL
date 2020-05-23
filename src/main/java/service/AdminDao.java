@@ -22,7 +22,6 @@ public class AdminDao extends HttpServlet {
         action = request.getParameter("action");
 
         switch (action) {
-            //用户操作
             case "query_all_user":
                 query_all_user(request, response);
                 break;
@@ -88,6 +87,31 @@ public class AdminDao extends HttpServlet {
                 update_student(request, response);
                 break;
 
+            case "query_all_teacher":
+                query_all_teacher(request, response);
+                break;
+            case "insert_teacher":
+                insert_teacher(request, response);
+                break;
+            case "delete_teacher":
+                delete_teacher(request, response);
+                break;
+            case "update_teacher":
+                update_teacher(request, response);
+                break;
+
+            case "query_all_course":
+                query_all_course(request, response);
+                break;
+            case "insert_course":
+                insert_course(request, response);
+                break;
+            case "delete_course":
+                delete_course(request, response);
+                break;
+            case "update_course":
+                update_course(request, response);
+                break;
         }
     }
 
@@ -272,8 +296,7 @@ public class AdminDao extends HttpServlet {
         if (!id_old.equals("")) {
             old_type = 0;
             old_info = id_old;
-        }
-        else {
+        } else {
             old_type = 1;
             old_info = name_old;
         }
@@ -400,16 +423,16 @@ public class AdminDao extends HttpServlet {
         }
 
         if (!name_new.equals("")) {
-            flag |= new DepartmentDao().updateDepartment(old_type,1, old_info, name_new);
+            flag |= new DepartmentDao().updateDepartment(old_type, 1, old_info, name_new);
         }
         if (!address_new.equals("")) {
-            flag |= new DepartmentDao().updateDepartment(old_type,2, old_info, address_new);
+            flag |= new DepartmentDao().updateDepartment(old_type, 2, old_info, address_new);
         }
         if (!dean_new.equals("")) {
-            flag |= new DepartmentDao().updateDepartment(old_type,3, old_info, dean_new);
+            flag |= new DepartmentDao().updateDepartment(old_type, 3, old_info, dean_new);
         }
         if (!campus_id_new.equals("")) {
-            flag |= new DepartmentDao().updateDepartment(old_type,4, old_info, campus_id_new);
+            flag |= new DepartmentDao().updateDepartment(old_type, 4, old_info, campus_id_new);
         }
 
         String info = null;
@@ -436,7 +459,8 @@ public class AdminDao extends HttpServlet {
 
         if (class_list != null) {
             out.write("<div class='all'>");
-            out.write("<div><span>ID</span><span>名称</span><span>建立日期</span><span>年级</span><span>学院编号</span><span>班主任工号</span></div>");
+            out.write(
+                    "<div><span>ID</span><span>名称</span><span>建立日期</span><span>年级</span><span>学院编号</span><span>班主任工号</span></div>");
 
             for (Class class_element : class_list) {
                 out.write("<div>");
@@ -530,19 +554,19 @@ public class AdminDao extends HttpServlet {
         }
 
         if (!name_new.equals("")) {
-            flag |= new DepartmentDao().updateDepartment(old_type,1, old_info, name_new);
+            flag |= new DepartmentDao().updateDepartment(old_type, 1, old_info, name_new);
         }
         if (!date_new.equals("")) {
-            flag |= new DepartmentDao().updateDepartment(old_type,2, old_info, date_new);
+            flag |= new DepartmentDao().updateDepartment(old_type, 2, old_info, date_new);
         }
         if (!grade_new.equals("")) {
-            flag |= new DepartmentDao().updateDepartment(old_type,3, old_info, grade_new);
+            flag |= new DepartmentDao().updateDepartment(old_type, 3, old_info, grade_new);
         }
         if (!department_id_new.equals("")) {
-            flag |= new DepartmentDao().updateDepartment(old_type,4, old_info, department_id_new);
+            flag |= new DepartmentDao().updateDepartment(old_type, 4, old_info, department_id_new);
         }
         if (!head_teacher_id_new.equals("")) {
-            flag |= new DepartmentDao().updateDepartment(old_type,5, old_info, head_teacher_id_new);
+            flag |= new DepartmentDao().updateDepartment(old_type, 5, old_info, head_teacher_id_new);
         }
 
         String info = null;
@@ -562,23 +586,23 @@ public class AdminDao extends HttpServlet {
     // Student Info
     protected void query_all_student(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html;charset=utf-8");
-        ClassDao class_dao = new ClassDao();
+        StudentDao student_dao = new StudentDao();
 
-        ArrayList<Class> class_list = class_dao.queryClass("", -1);
+        ArrayList<Student> student_list = student_dao.queryStudent("", -1);
         PrintWriter out = response.getWriter();
 
-        if (class_list != null) {
+        if (student_list != null) {
             out.write("<div class='all'>");
-            out.write("<div><span>ID</span><span>名称</span><span>建立日期</span><span>年级</span><span>学院编号</span><span>班主任工号</span></div>");
+            out.write(
+                    "<div><span>ID</span><span>注册日期</span><span>email</span><span>班级ID</span><span>身份证号</span></div>");
 
-            for (Class class_element : class_list) {
+            for (Student student_element : student_list) {
                 out.write("<div>");
-                out.write("<span>" + class_element.get_id() + "</span>");
-                out.write("<span>" + class_element.get_name() + "</span>");
-                out.write("<span>" + class_element.get_date() + "</span>");
-                out.write("<span>" + class_element.get_grade() + "</span>");
-                out.write("<span>" + class_element.get_department_id() + "</span>");
-                out.write("<span>" + class_element.get_head_teacher_id() + "</span>");
+                out.write("<span>" + student_element.get_id() + "</span>");
+                out.write("<span>" + student_element.get_enrollment_date() + "</span>");
+                out.write("<span>" + student_element.get_email() + "</span>");
+                out.write("<span>" + student_element.get_class_id() + "</span>");
+                out.write("<span>" + student_element.get_id_card_number() + "</span>");
                 out.write("</div>");
             }
             out.write("</div>");
@@ -589,32 +613,233 @@ public class AdminDao extends HttpServlet {
     }
 
     protected void insert_student(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        String id = request.getParameter("id");
+        String enrollment_date = request.getParameter("enrollment_date");
+        String email = request.getParameter("email");
+        String class_id = request.getParameter("class_id");
+        String id_card_number = request.getParameter("id_card_number");
+        String card_type_string = request.getParameter("card_type");
+        Boolean card_type;
+        if (Integer.parseInt(card_type_string) > 0)
+            card_type = true;
+        else
+            card_type = false;
+        String name = request.getParameter("name");
+        String gender_string = request.getParameter("gender");
+        Boolean gender;
+        if (Integer.parseInt(gender_string) > 0)
+            gender = true;
+        else
+            gender = false;
+        String birthdate = request.getParameter("birthdate");
+        String nationality = request.getParameter("nationality");
+        String address = request.getParameter("address");
+        String address_postal_code = request.getParameter("address_postal_code");
+        String address_phone_number = request.getParameter("address_phone_number");
 
+        int flag = new StudentDao().insertStudent(id, enrollment_date, email, class_id, //
+                id_card_number, card_type, name, gender, birthdate, nationality, address, address_postal_code,
+                address_phone_number);
+
+        String info = null;
+        PrintWriter out = response.getWriter();
+        if (flag == 1) {
+            info = "学生插入成功！";
+        } else {
+            info = "错误：学生插入失败！";
+        }
+        out.write("<div class='error'>");
+        out.write("<div>" + info + "</div>");
+        out.write("</div>");
+        out.flush();
+        out.close();
     }
 
     protected void delete_student(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        String id = request.getParameter("id");
+        String id_card_number = request.getParameter("id_card_number");
 
+        int flag = 0;
+        if (!id.equals("")) {
+            flag |= new StudentDao().deleteStudent(id, 0);
+        } else if (!id_card_number.equals("")) {
+            flag |= new StudentDao().deleteStudent(id_card_number, 1);
+        }
+
+        String info = null;
+        PrintWriter out = response.getWriter();
+        if (flag == 1) {
+            info = "学生删除成功！";
+        } else {
+            info = "错误：学生删除失败！";
+        }
+        out.write("<div class='error'>");
+        out.write("<div>" + info + "</div>");
+        out.write("</div>");
+        out.flush();
+        out.close();
     }
 
     protected void update_student(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        String id_old = request.getParameter("id_old");
 
+        String strinfo1 = request.getParameter("strinfo1");
+        String strinfo2 = request.getParameter("strinfo2");
+        String strinfo3 = request.getParameter("strinfo3");
+
+        int flag = 0;
+
+        if (!strinfo1.equals(""))
+            flag |= new StudentDao().updateStudent(id_old, 1, strinfo1);
+        if (!strinfo2.equals(""))
+            flag |= new StudentDao().updateStudent(id_old, 2, strinfo2);
+        if (!strinfo3.equals(""))
+            flag |= new StudentDao().updateStudent(id_old, 3, strinfo3);
+
+        String info;
+        PrintWriter out = response.getWriter();
+        if (flag == 1) {
+            info = "用户信息修改成功！";
+        } else {
+            info = "错误：修改用户失败!";
+        }
+        out.write("<div class='error'>");
+        out.write("<div>" + info + "</div>");
+        out.write("</div>");
+        out.flush();
+        out.close();
     }
 
     // Teacher Info
     protected void query_all_teacher(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        TeacherDao teacher_dao = new TeacherDao();
 
+        ArrayList<Teacher> teacher_list = teacher_dao.queryTeacher("", -1);
+        PrintWriter out = response.getWriter();
+
+        if (teacher_list != null) {
+            out.write("<div class='all'>");
+            out.write("<div><span>ID</span><span>注册日期</span><span>所在院系ID</span><span>职务</span><span>身份证号</span></div>");
+
+            for (Teacher teacher_element : teacher_list) {
+                out.write("<div>");
+                out.write("<span>" + teacher_element.get_id() + "</span>");
+                out.write("<span>" + teacher_element.get_enrollment_date() + "</span>");
+                out.write("<span>" + teacher_element.get_department_id() + "</span>");
+                out.write("<span>" + teacher_element.get_teacher_title() + "</span>");
+                out.write("<span>" + teacher_element.get_id_card_number() + "</span>");
+                out.write("</div>");
+            }
+            out.write("</div>");
+        }
+
+        out.flush();
+        out.close();
     }
 
     protected void insert_teacher(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        String id = request.getParameter("id");
+        String enrollment_date = request.getParameter("enrollment_date");
+        String department_id = request.getParameter("department_id");
+        String teacher_title = request.getParameter("teacher_title");
+        String id_card_number = request.getParameter("id_card_number");
+        String card_type_string = request.getParameter("card_type");
+        Boolean card_type;
+        if (Integer.parseInt(card_type_string) > 0)
+            card_type = true;
+        else
+            card_type = false;
+        String name = request.getParameter("name");
+        String gender_string = request.getParameter("gender");
+        Boolean gender;
+        if (Integer.parseInt(gender_string) > 0)
+            gender = true;
+        else
+            gender = false;
+        String birthdate = request.getParameter("birthdate");
+        String nationality = request.getParameter("nationality");
+        String address = request.getParameter("address");
+        String address_postal_code = request.getParameter("address_postal_code");
+        String address_phone_number = request.getParameter("address_phone_number");
 
+        int flag = new TeacherDao().insertTeacher(id, enrollment_date, department_id, teacher_title, //
+                id_card_number, card_type, name, gender, birthdate, nationality, address, address_postal_code,
+                address_phone_number);
+
+        String info = null;
+        PrintWriter out = response.getWriter();
+        if (flag == 1) {
+            info = "教师插入成功！";
+        } else {
+            info = "错误：教师插入失败！";
+        }
+        out.write("<div class='error'>");
+        out.write("<div>" + info + "</div>");
+        out.write("</div>");
+        out.flush();
+        out.close();
     }
 
-    protected void delete_teacher(HttpServletRequest request, HttpServletRequest response) throws IOException {
+    protected void delete_teacher(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        String id = request.getParameter("id");
+        String id_card_number = request.getParameter("id_card_number");
 
+        int flag = 0;
+        if (!id.equals("")) {
+            flag |= new TeacherDao().deleteTeacher(id, 0);
+        } else if (!id_card_number.equals("")) {
+            flag |= new TeacherDao().deleteTeacher(id_card_number, 1);
+        }
+
+        String info = null;
+        PrintWriter out = response.getWriter();
+        if (flag == 1) {
+            info = "教师删除成功！";
+        } else {
+            info = "错误：教师删除失败！";
+        }
+        out.write("<div class='error'>");
+        out.write("<div>" + info + "</div>");
+        out.write("</div>");
+        out.flush();
+        out.close();
     }
 
     protected void update_teacher(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        String id_old = request.getParameter("id_old");
 
+        String strinfo1 = request.getParameter("strinfo1");
+        String strinfo2 = request.getParameter("strinfo2");
+        String strinfo3 = request.getParameter("strinfo3");
+
+        int flag = 0;
+
+        if (!strinfo1.equals(""))
+            flag |= new TeacherDao().updateTeacher(id_old, 1, strinfo1);
+        if (!strinfo2.equals(""))
+            flag |= new TeacherDao().updateTeacher(id_old, 2, strinfo2);
+        if (!strinfo3.equals(""))
+            flag |= new TeacherDao().updateTeacher(id_old, 3, strinfo3);
+
+        String info;
+        PrintWriter out = response.getWriter();
+        if (flag == 1) {
+            info = "用户信息修改成功！";
+        } else {
+            info = "错误：修改用户失败!";
+        }
+        out.write("<div class='error'>");
+        out.write("<div>" + info + "</div>");
+        out.write("</div>");
+        out.flush();
+        out.close();
     }
 
     // Course Info
@@ -627,8 +852,8 @@ public class AdminDao extends HttpServlet {
 
         if (course_list != null) {
             out.write("<div class='all'>");
-            out.write("<div><span>ID</span><span>课程名</span><span>开课院系</span><span>任课老师工号</span><span>学期</span><span" +
-                              ">开课年份</span><span>上课时间</span></div>");
+            out.write("<div><span>ID</span><span>课程名</span><span>开课院系</span><span>任课老师工号</span><span>学期</span><span"
+                    + ">开课年份</span><span>上课时间</span></div>");
             for (Course course_element : course_list) {
                 out.write("<div>");
                 out.write("<span>" + course_element.get_id() + "</span>");
@@ -648,15 +873,79 @@ public class AdminDao extends HttpServlet {
     }
 
     protected void insert_course(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        String id = request.getParameter("id");
+        String name = request.getParameter("name");
+        String department_id = request.getParameter("department_id");
+        String exam_type = request.getParameter("exam_type");
 
+        int flag = new CourseDao().insertCourse(id, name, department_id, exam_type);
+
+        String info = null;
+        PrintWriter out = response.getWriter();
+        if (flag == 1) {
+            info = "课程插入成功！";
+        } else {
+            info = "错误：课程插入失败！";
+        }
+        out.write("<div class='error'>");
+        out.write("<div>" + info + "</div>");
+        out.write("</div>");
+        out.flush();
+        out.close();
     }
 
     protected void delete_course(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        String id = request.getParameter("id");
+        String name = request.getParameter("name");
+        String department_id = request.getParameter("department_id");
 
+        int flag = 0;
+        if (!id.equals("")) {
+            flag |= new CourseDao().deleteCourse(id, 0);
+        } else if (!name.equals("")) {
+            flag |= new CourseDao().deleteCourse(name, 1);
+        } else if (!department_id.equals("")) {
+            flag |= new CourseDao().deleteCourse(department_id, 2);
+        }
+
+        String info = null;
+        PrintWriter out = response.getWriter();
+        if (flag == 1) {
+            info = "课程删除成功！";
+        } else {
+            info = "错误：课程删除失败！";
+        }
+        out.write("<div class='error'>");
+        out.write("<div>" + info + "</div>");
+        out.write("</div>");
+        out.flush();
+        out.close();
     }
 
     protected void update_course(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        String id = request.getParameter("id");
+        String teacher_id = request.getParameter("teacher_id");
+        String semester = request.getParameter("semester");
+        String year = request.getParameter("year");
+        String time = request.getParameter("time");
 
+        int flag = new CourseDao().insertStartCourse(id, teacher_id, semester, year, time);
+
+        String info = null;
+        PrintWriter out = response.getWriter();
+        if (flag == 1) {
+            info = "课程修改成功！";
+        } else {
+            info = "错误：课程修改失败！";
+        }
+        out.write("<div class='error'>");
+        out.write("<div>" + info + "</div>");
+        out.write("</div>");
+        out.flush();
+        out.close();
     }
 
     // Transaction Info
@@ -676,4 +965,3 @@ public class AdminDao extends HttpServlet {
 
     }
 }
-

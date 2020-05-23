@@ -148,10 +148,6 @@
                 <li>
                     <div class="link">普通查询</div>
                     <ul class="submenu">
-                        <li><a onclick="infoQurey('user')">指定用户查询</a></li>
-                        <li><a onclick="infoQurey('campus')">指定校区查询</a></li>
-                        <li><a onclick="infoQurey('department')">指定院系查询</a></li>
-                        <li><a onclick="infoQurey('class')">指定班级查询</a></li>
                         <li><a onclick="infoQurey('student')">指定学生查询</a></li>
                         <li><a onclick="infoQurey('teacher')">指定教师查询</a></li>
                         <li><a onclick="infoQurey('course')">指定课程查询</a></li>
