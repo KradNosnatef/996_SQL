@@ -989,19 +989,109 @@ public class AdminDao extends HttpServlet {
 
     // Transaction Info
     protected void query_all_transaction(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        TransactionDao transaction_dao = new TransactionDao();
 
+        ArrayList<Transaction> transaction_list = transaction_dao.queryTransaction("", -1);
+        PrintWriter out = response.getWriter();
+
+        if (transaction_list != null) {
+            out.write("<div class='all'>");
+            out.write("<div><span>ID</span><span>异动类型</span><span>异动日期</span><span>异动原因</span></div>");
+            for (Transaction transaction_element : transaction_list) {
+                out.write("<div>");
+                out.write("<span>" + transaction_element.get_id() + "</span>");
+                out.write("<span>" + transaction_element.get_type() + "</span>");
+                out.write("<span>" + transaction_element.get_date() + "</span>");
+                out.write("<span>" + transaction_element.get_reasons() + "</span>");
+                out.write("</div>");
+            }
+            out.write("</div>");
+        }
+
+        out.flush();
+        out.close();
     }
 
     protected void insert_transaction(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        String str0 = request.getParameter("str0");
+        String str1 = request.getParameter("str1");
+        String str2 = request.getParameter("str2");
+        String str3 = request.getParameter("str3");
+        String str4 = request.getParameter("str4");
+        String str5 = request.getParameter("str5");
+        String str6 = request.getParameter("str6");
+        String str7 = request.getParameter("str7");
 
+        int flag = new TransactionDao().insertTransaction(str0, str7, str1, str2, str3, str4, str5, str6);
+
+        String info = null;
+        PrintWriter out = response.getWriter();
+        if (flag == 1) {
+            info = "异动插入成功！";
+        } else {
+            info = "错误：异动插入失败！";
+        }
+        out.write("<div class='error'>");
+        out.write("<div>" + info + "</div>");
+        out.write("</div>");
+        out.flush();
+        out.close();
     }
 
     protected void delete_transaction(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
 
+        String id = request.getParameter("id");
+
+        int flag = new TransactionDao().deleteTransaction(id);
+
+        String info = null;
+        PrintWriter out = response.getWriter();
+        if (flag == 1) {
+            info = "异动删除成功！";
+        } else {
+            info = "错误：异动删除失败！";
+        }
+        out.write("<div class='error'>");
+        out.write("<div>" + info + "</div>");
+        out.write("</div>");
+        out.flush();
+        out.close();
     }
 
     protected void update_transaction(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        String str0 = request.getParameter("str0");
+        String str1 = request.getParameter("str1");
+        String str2 = request.getParameter("str2");
+        String str3 = request.getParameter("str3");
+        String str4 = request.getParameter("str4");
+        String str5 = request.getParameter("str5");
+        String str6 = request.getParameter("str6");
 
+        int flag;
+
+        flag = new TransactionDao().updateTransaction(str0, 0, str1);
+        flag &= new TransactionDao().updateTransaction(str0, 1, str2);
+        flag &= new TransactionDao().updateTransaction(str0, 2, str3);
+        flag &= new TransactionDao().updateTransaction(str0, 3, str4);
+        flag &= new TransactionDao().updateTransaction(str0, 4, str5);
+        flag &= new TransactionDao().updateTransaction(str0, 5, str6);
+
+        String info = null;
+        PrintWriter out = response.getWriter();
+        if (flag == 1) {
+            info = "异动更新成功！";
+        } else {
+            info = "错误：异动更新失败！";
+        }
+        out.write("<div class='error'>");
+        out.write("<div>" + info + "</div>");
+        out.write("</div>");
+        out.flush();
+        out.close();
     }
 
     // CourseSelection Info Maintain

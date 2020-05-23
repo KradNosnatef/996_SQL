@@ -187,6 +187,25 @@ function insertRequest(object) {
             "&student_id=" + student_id +
             "&course_id=" + course_id +
             "&date=" + date;
+    } else if (object === "transaction") {
+        const transaction = document.getElementsByClassName("transaction_insert_input");
+        const str0 = transaction[0].value.toString();
+        const str1 = transaction[1].value.toString();
+        const str2 = transaction[2].value.toString();
+        const str3 = transaction[3].value.toString();
+        const str4 = transaction[4].value.toString();
+        const str5 = transaction[5].value.toString();
+        const str6 = transaction[6].value.toString();
+        const str7 = transaction[7].value.toString();
+        insert_url = insert_url +
+            "&str0=" + str0 +
+            "&str1=" + str1 +
+            "&str2=" + str2 +
+            "&str3=" + str3 +
+            "&str4=" + str4 +
+            "&str5=" + str5 +
+            "&str6=" + str6 +
+            "&str7=" + str7;
     }
     xmlhttp.open("GET", insert_url, true);
     xmlhttp.send();
@@ -258,6 +277,11 @@ function deleteRequest(object) {
         delete_url = delete_url +
             "&student_id=" + student_id +
             "&course_id=" + course_id;
+    } else if (object === "transaction") {
+        const transaction = document.getElementsByClassName("transaction_delete_input");
+        const id = transaction[0].value.toString();
+        delete_url = delete_url +
+            "&id=" + id;
     }
     xmlhttp.open("GET", delete_url, true);
     xmlhttp.send();
@@ -358,6 +382,44 @@ function updateRequest(object) {
             "&semester=" + semester +
             "&year=" + year +
             "&time=" + time;
+    } else if (object === "person") {
+        const person = document.getElementsByClassName("person_update_input");
+        const id_card_number = person[0].value.toString();
+        const card_type = person[1].value.toString();
+        const name = person[2].value.toString();
+        const gender = person[3].value.toString();
+        const birthdate = person[4].value.toString();
+        const nationality = person[5].value.toString();
+        const address = person[6].value.toString();
+        const address_postal_code = person[7].value.toString();
+        const address_phone_number = person[8].value.toString();
+        update_url = update_url +
+            "&id_card_number=" + id_card_number +
+            "&card_type=" + card_type +
+            "&name=" + name +
+            "&gender=" + gender +
+            "&birthdate=" + birthdate +
+            "&nationality=" + nationality +
+            "&address=" + address +
+            "&address_postal_code=" + address_postal_code +
+            "&address_phone_number=" + address_phone_number;
+    } else if (object === "transaction") {
+        const transaction = document.getElementsByClassName("transaction_update_input");
+        const str0 = transaction[0].value.toString();
+        const str1 = transaction[1].value.toString();
+        const str2 = transaction[2].value.toString();
+        const str3 = transaction[3].value.toString();
+        const str4 = transaction[4].value.toString();
+        const str5 = transaction[5].value.toString();
+        const str6 = transaction[6].value.toString();
+        update_url = update_url +
+            "&str0=" + str0 +
+            "&str1=" + str1 +
+            "&str2=" + str2 +
+            "&str3=" + str3 +
+            "&str4=" + str4 +
+            "&str5=" + str5 +
+            "&str6=" + str6;
     }
     xmlhttp.open("GET", update_url, true);
     xmlhttp.send();
@@ -753,4 +815,65 @@ function infoQureyStudentTransaction() {
         "<input class='infoquery_studenttransaction_input' id='student_id' type='text' autofocus='autofocus' name='student_id' value placeholder='学号' required>" +
         "<input id='submit' onclick=infoqueryRequest('studenttransaction') type='button' name='submit' value='查询'>" +
         "</div>";
+}
+
+// Person Info Maintain
+function showUpdatePerson() {
+    const result = document.getElementById("result");
+    result.innerHTML = "<div id='show_update_person'  class='d_form'>" +
+        "<h3>请输新的个人信息，务必全填</h3>" +
+        "<input class='person_insert_input' id='id_card_number' type='text' name='id_card_number' value placeholder='证件号' required>" +
+        "<input class='person_insert_input' id='card_type' type='text' name='card_type' value placeholder='证件类型（0：身份证，1：护照）' required>" +
+        "<input class='person_insert_input' id='name' type='text' name='name' value placeholder='姓名' required>" +
+        "<input class='person_insert_input' id='gender' type='text' name='gender' value placeholder='性别（0：男，1：女）' required>" +
+        "<input class='person_insert_input' id='birthdate' type='text' name='birthdate' value placeholder='出生日期' required>" +
+        "<input class='person_insert_input' id='nationality' type='text' name='nationality' value placeholder='国籍' required>" +
+        "<input class='person_insert_input' id='address' type='text' name='address' value placeholder='住址' required>" +
+        "<input class='person_insert_input' id='address_postal_code' type='text' name='address_postal_code' value placeholder='地址邮编' required>" +
+        "<input class='person_insert_input' id='address_phone_number' type='text' name='address_phone_number' value placeholder='地址电话' required>" +
+        "<input id='submit' onclick=updateRequest('teacher') type='button' name='submit' value='修改'>" +
+        "</div>";
+}
+
+// Transaction Info Maintain
+function showInsertTransaction() {
+    const result = document.getElementById("result");
+    result.innerHTML = "<div id='show_insert_transaction' class='d_form'>" +
+        "<h3>请输入待插入异动信息</h3>" +
+        "<input class='transaction_insert_input id='str1' name='str1' type='text' value placeholder='异动ID'>" +
+        "<input class='transaction_insert_input id='str2' name='str2' type='text' value placeholder='异动类型'>" +
+        "<input class='transaction_insert_input id='str3' name='str3' type='text' value placeholder='日期'>" +
+        "<input class='transaction_insert_input id='str4' name='str4' type='text' value placeholder='原班级'>" +
+        "<input class='transaction_insert_input id='str5' name='str5' type='text' value placeholder='新班级'>" +
+        "<input class='transaction_insert_input id='str6' name='str6' type='text' value placeholder='团员'>" +
+        "<input class='transaction_insert_input id='str7' name='str7' type='text' value placeholder='原因'>" +
+        "<input class='transaction_insert_input id='str8' name='str8' type='text' value placeholder='学生学号'>" +
+        "<input id='submit' onclick=insertRequest('transaction') type='button' name='submit' value='插入'>" +
+        "</div>";
+}
+
+function showDeleteTransaction() {
+    const result = document.getElementById("result");
+    result.innerHTML = "<div id='show_insert_transaction' class='d_form'>" +
+        "<h3>请输入待删除异动信息</h3>" +
+        "<input class='transaction_delete_input id='str1' name='str1' type='text' value placeholder='异动ID'>" +
+        "<input id='submit' onclick=deleteRequest('transaction') type='button' name='submit' value='删除'>" +
+        "</div>";
+
+}
+
+function showUpdateTransaction() {
+    const result = document.getElementById("result");
+    result.innerHTML = "<div id='show_insert_transaction' class='d_form'>" +
+        "<h3>请输入待改动异动信息</h3>" +
+        "<input class='transaction_update_input id='str1' name='str1' type='text' value placeholder='异动ID' required>" +
+        "<input class='transaction_update_input id='str2' name='str2' type='text' value placeholder='异动类型' required>" +
+        "<input class='transaction_update_input id='str3' name='str3' type='text' value placeholder='日期' required>" +
+        "<input class='transaction_update_input id='str4' name='str4' type='text' value placeholder='原班级' required>" +
+        "<input class='transaction_update_input id='str5' name='str5' type='text' value placeholder='新班级' required>" +
+        "<input class='transaction_update_input id='str6' name='str6' type='text' value placeholder='团员'> required" +
+        "<input class='transaction_update_input id='str7' name='str7' type='text' value placeholder='原因'> required" +
+        "<input id='submit' onclick=updateRequest('transaction') type='button' name='submit' value='修改'> required" +
+        "</div>";
+
 }
