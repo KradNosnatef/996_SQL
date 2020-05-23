@@ -1,6 +1,7 @@
 package dao;
 
 import model.Course;
+import model.CourseSelection;
 import model.Student;
 import utils.DButils;
 import utils.UnitTestSwitch;
@@ -137,7 +138,7 @@ public class QueryToolKitsDao {
     //Query Score Selected by classID
     //input: - classID
     //output: - return a list of the courseSelection include the score and StudentID you want
-    public ArrayList<Selection> queryScoreSelectedByClassID(String classID){
+    public ArrayList<CourseSelection> queryScoreSelectedByClassID(String classID){
         Connection connection;
         if (UnitTestSwitch.SWITCH)
             connection = DButils.getConnectionUnitTest();
@@ -145,19 +146,28 @@ public class QueryToolKitsDao {
             connection = DButils.getConnection();
         String sql="SELECT *,Student_Class_ID FROM CourseSelection INNER JOIN Student\n"
                 +"ON CourseSelection_Student_ID=Student_ID WHERE Student_Class_ID= ? ;";
-        ArrayList<Selection> selectionArrayList = new ArrayList<>();
+        ArrayList<CourseSelection> courseselectionArrayList = new ArrayList<>();
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,classID);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
-                Selection selection= new Selection();
+                CourseSelection courseSelection=new CourseSelection();
+                courseSelection.setCourseSelectionID(resultSet.getInt("CourseSelection_ID"));
+                courseSelection.setCourseSelectionCourseID(resultSet.getString("CourseSelection_Course_ID"));
+                courseSelection.setCourseSelectionStudentID(resultSet.getString("CourseSelection_Student_ID"));
+                courseSelection.setCourseSelectionDate(resultSet.getString("CourseSelection_Date"));
+                courseSelection.setCourseSelectionSemester(resultSet.getString("CourseSelection_Semester"));
+                courseSelection.setScore(resultSet.getInt("Score"));
+                courseselectionArrayList.add(courseSelection);
             }
+            resultSet.close();
+            preparedStatement.close();
         }catch(SQLException sqlException){
             sqlException.printStackTrace();
         }finally {
             DButils.closeConnection(connection);
         }
-        return selectionArrayList;
+        return courseselectionArrayList;
     }
 }
