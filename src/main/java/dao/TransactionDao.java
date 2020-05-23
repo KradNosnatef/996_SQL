@@ -39,7 +39,7 @@ public class TransactionDao {
         else connection=DButils.getConnection();
         String sql1="INSERT INTO Transaction(Transaction_ID, Transaction_Type, " +
                 "Transaction_Date, Transaction_Origin_Class_ID," +
-                "Transaction_Current_Class_ID,Transaction_League_Member,Transaction_Reason)VALUES(?,?,?,?,?,?,?) ";
+                "Transaction_Current_Class_ID,Transaction_League_Member,Transaction_Reason)VALUES(?,?,?,?,?,?,?) ;";
         String sql2="UPDATE Student SET Student_Transaction_ID = ? ,Student_Class_ID = ? WHERE Student_ID = ? ;";
         int insertFlag=0;
         try{
@@ -79,7 +79,7 @@ public class TransactionDao {
         else connection=DButils.getConnection();
         Student student=new Student();
         String sql="SELECT *,Transaction_ID,Transaction_Origin_Class_ID FROM Student INNER JOIN Transaction\n" +
-                "ON STUDENT_TRANSACTION_ID=TRANSACTION_ID WHERE Transaction_ID = ? ";
+                "ON STUDENT_TRANSACTION_ID=TRANSACTION_ID WHERE Transaction_ID = ? ;";
         int deleteFlag=0;
         try{
             PreparedStatement preparedStatement=connection.prepareStatement(sql);
@@ -91,7 +91,7 @@ public class TransactionDao {
             resultSet.close();
             preparedStatement.close();
 
-            String sql2="UPDATE Student SET Student_Class_ID = ? ,Student_Transaction_ID = ? WHERE Student_ID= ? ";
+            String sql2="UPDATE Student SET Student_Class_ID = ? ,Student_Transaction_ID = ? WHERE Student_ID= ? ;";
             preparedStatement=connection.prepareStatement(sql2);
             preparedStatement.setString(1,student.get_class_id());
             preparedStatement.setString(2,null);
@@ -102,7 +102,7 @@ public class TransactionDao {
             sqlException.printStackTrace();
         }
 
-        sql = "DELETE FROM Transaction WHERE Transaction_ID = ?;";
+        sql = "DELETE FROM Transaction WHERE Transaction_ID = ? ;";
         deleteFlag=0;
         try{
             PreparedStatement preparedStatement=connection.prepareStatement(sql);
@@ -133,12 +133,12 @@ public class TransactionDao {
         String sql;
         ArrayList<Transaction> transactionArrayList=new ArrayList<>();
         if(type==-1){
-            sql="SELECT * FROM Transaction ORDER BY Transaction_ID";
+            sql="SELECT * FROM Transaction ORDER BY Transaction_ID;";
         }else if(type==0){
-            sql="SELECT * FROM Transaction WHERE Transaction_ID = ? ORDER BY Transaction_ID";
+            sql="SELECT * FROM Transaction WHERE Transaction_ID = ? ORDER BY Transaction_ID;";
         }else if(type==1){
             sql="SELECT *,Student_ID FROM Transaction INNER JOIN Student\n" +
-                    "ON TRANSACTION_ID=STUDENT_TRANSACTION_ID WHERE Student_ID = ? ";
+                    "ON TRANSACTION_ID=STUDENT_TRANSACTION_ID WHERE Student_ID = ? ;";
         }else{
             return transactionArrayList;
         }
@@ -189,7 +189,7 @@ public class TransactionDao {
         String sql,sql1,sql2;
         int updateFlag=0;
         sql1="SET Transaction_";
-        sql2="WHERE Transaction_ID = ?";
+        sql2="WHERE Transaction_ID = ? ;";
         if(columnSelector==0){
             sql1+="Type = ? ";
         }else if(columnSelector==1){
@@ -212,7 +212,7 @@ public class TransactionDao {
             updateFlag = preparedStatement.executeUpdate();
             preparedStatement.close();
             if(columnSelector==3){
-                sql="UPDATE Student SET Student_Class_ID = ? WHERE Student_Transaction_ID = ? ";
+                sql="UPDATE Student SET Student_Class_ID = ? WHERE Student_Transaction_ID = ? ;";
                 preparedStatement=connection.prepareStatement(sql);
                 preparedStatement.setString(1,value);
                 preparedStatement.setString(2,rowSelector);
