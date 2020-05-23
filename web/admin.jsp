@@ -147,7 +147,7 @@
                         </ul>
                     </li>
                     <li>
-                        <div class="link">普通查询</div>
+                        <div class="link">个人信息查询</div>
                         <ul class="submenu">
                             <li><a onclick="infoQureyStudent()">指定学生查询</a></li>
                             <li><a onclick="infoQureyTeacher()">指定教师查询</a></li>
@@ -155,7 +155,7 @@
                     </li>
 
                     <li>
-                        <div class="link">组合信息查询</div>
+                        <div class="link">常用信息查询</div>
                         <ul class="submenu">
                             <li><a onclick="infoQureyStudentCourse()">指定学生查询课程</a></li>
                             <li><a onclick="infoQureyCourseStudent()">指定课程查询学生</a></li>
