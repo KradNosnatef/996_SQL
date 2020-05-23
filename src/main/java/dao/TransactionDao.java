@@ -30,9 +30,9 @@ public class TransactionDao {
     // - If insertion action succeed, return a number, which stands for the row count for SQL Data Manipulation
     // Language (DML) statements. Otherwise, it will return 0
     public int insertTransaction(
-            String ID, boolean type, Date date,
+            String ID, boolean type, String date,
             String originClassID,String currentClassID,
-            String leagueMember,boolean reason
+            String leagueMember,String reason
             ){
         Connection connection;
         if(UnitTestSwitch.SWITCH)connection= DButils.getConnectionUnitTest();
@@ -45,11 +45,11 @@ public class TransactionDao {
             PreparedStatement preparedStatement=connection.prepareStatement(sql);
             preparedStatement.setString(1,ID);
             preparedStatement.setBoolean(2,type);
-            preparedStatement.setDate(3,date);
+            preparedStatement.setString(3,date);
             preparedStatement.setString(4,originClassID);
             preparedStatement.setString(5,currentClassID);
             preparedStatement.setString(6,leagueMember);
-            preparedStatement.setBoolean(7,reason);
+            preparedStatement.setString(7,reason);
             insertFlag=preparedStatement.executeUpdate();
             preparedStatement.close();
         }catch(SQLException sqlException){
@@ -118,11 +118,11 @@ public class TransactionDao {
                 Transaction transaction = new Transaction();
                 transaction.set_id(resultSet.getString("Transaction_ID"));
                 transaction.set_type(resultSet.getBoolean("Transaction_Type"));
-                transaction.set_date(resultSet.getDate("Transaction_Date").toString());
+                transaction.set_date(resultSet.getString("Transaction_Date"));
                 transaction.set_original_class_id(resultSet.getString("Transaction_Origin_Class_ID"));
                 transaction.set_current_class_id(resultSet.getString("Transaction_Current_Class_ID"));
                 transaction.set_league_member(resultSet.getString("Transaction_League_Member"));
-                transaction.set_reasons(Boolean.toString(resultSet.getBoolean("Transaction_Reason")));
+                transaction.set_reasons(resultSet.getString("Transaction_Reason"));
                 transactionArrayList.add(transaction);
             }
             resultSet.close();
