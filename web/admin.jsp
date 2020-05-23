@@ -151,17 +151,16 @@
                         <ul class="submenu">
                             <li><a onclick="infoQureyStudent()">指定学生查询</a></li>
                             <li><a onclick="infoQureyTeacher()">指定教师查询</a></li>
-                            <li><a onclick="infoQureyCourse()">指定课程查询</a></li>
                         </ul>
                     </li>
 
                     <li>
                         <div class="link">组合信息查询</div>
                         <ul class="submenu">
-                            <li><a onclick="infoQurey('student_course')">指定学生查询课程</a></li>
-                            <li><a onclick="infoQurey('course_student')">指定课程查询学生</a></li>
-                            <li><a onclick="infoQurey('teacher_course')">指定教师查询课程</a></li>
-                            <li><a onclick="infoQurey('student_transaction')">指定学生查询异动</a></li>
+                            <li><a onclick="infoQureyStudentCourse()">指定学生查询课程</a></li>
+                            <li><a onclick="infoQureyCourseStudent()">指定课程查询学生</a></li>
+                            <li><a onclick="infoQureyTeacherCourse()">指定教师查询课程</a></li>
+                            <li><a onclick="infoQureyStudentTransaction()">指定学生查询异动</a></li>
                         </ul>
                     </li>
                 </ul>

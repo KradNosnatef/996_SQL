@@ -132,6 +132,25 @@ public class AdminDao extends HttpServlet {
             case "delete_selection":
                 delete_selection(request, response);
                 break;
+
+            case "infoquery_student":
+                infoquery_student(request, response);
+                break;
+            case "infoquery_teacher":
+                infoquery_teacher(request, response);
+                break;
+            case "infoquery_studentcourse":
+                infoquery_studentcourse(request, response);
+                break;
+            case "infoquery_coursestudent":
+                infoquery_coursestudent(request, response);
+                break;
+            case "infoquery_teachercourse":
+                infoquery_teachercourse(request, response);
+                break;
+            case "infoquery_studenttransaction":
+                infoquery_studenttransaction(request, response);
+                break;
         }
     }
 
@@ -1034,5 +1053,105 @@ public class AdminDao extends HttpServlet {
         out.write("</div>");
         out.flush();
         out.close();
+    }
+
+    // infoquery
+    protected void infoquery_student(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+    }
+
+    protected void infoquery_teacher(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+    }
+
+    protected void infoquery_studentcourse(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        String student_id = request.getParameter("student_id");
+        ArrayList<Course> course_list = new QueryToolKitsDao().queryCourseSelectedByStudentID(student_id);
+        PrintWriter out = response.getWriter();
+
+        if (course_list != null) {
+            out.write("<div class='all'>");
+            out.write("<div><span>ID</span><span>课程名</span><span>开课院系</span><span>任课老师工号</span><span>学期</span><span"
+                    + ">开课年份</span><span>上课时间</span></div>");
+            for (Course course_element : course_list) {
+                out.write("<div>");
+                out.write("<span>" + course_element.get_id() + "</span>");
+                out.write("<span>" + course_element.get_name() + "</span>");
+                out.write("<span>" + course_element.get_department_id() + "</span>");
+                out.write("<span>" + course_element.get_teacher_id() + "</span>");
+                out.write("<span>" + course_element.get_semester() + "</span>");
+                out.write("<span>" + course_element.get_year() + "</span>");
+                out.write("<span>" + course_element.get_time() + "</span>");
+                out.write("</div>");
+            }
+            out.write("</div>");
+        }
+
+        out.flush();
+        out.close();
+    }
+
+    protected void infoquery_coursestudent(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        String course_id = request.getParameter("course_id");
+        ArrayList<Student> student_list = new QueryToolKitsDao().queryStudentSelectedByCourseID(course_id);
+        PrintWriter out = response.getWriter();
+
+        if (student_list != null) {
+            out.write("<div class='all'>");
+            out.write(
+                    "<div><span>ID</span><span>注册日期</span><span>email</span><span>班级ID</span><span>身份证号</span></div>");
+
+            for (Student student_element : student_list) {
+                out.write("<div>");
+                out.write("<span>" + student_element.get_id() + "</span>");
+                out.write("<span>" + student_element.get_enrollment_date() + "</span>");
+                out.write("<span>" + student_element.get_email() + "</span>");
+                out.write("<span>" + student_element.get_class_id() + "</span>");
+                out.write("<span>" + student_element.get_id_card_number() + "</span>");
+                out.write("</div>");
+            }
+            out.write("</div>");
+        }
+
+        out.flush();
+        out.close();
+    }
+
+    protected void infoquery_teachercourse(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        String teacher_id = request.getParameter("teacher_id");
+        ArrayList<Course> course_list = new QueryToolKitsDao().queryCourseSelectedByTeacherID(teacher_id);
+        PrintWriter out = response.getWriter();
+
+        if (course_list != null) {
+            out.write("<div class='all'>");
+            out.write("<div><span>ID</span><span>课程名</span><span>开课院系</span><span>任课老师工号</span><span>学期</span><span"
+                    + ">开课年份</span><span>上课时间</span></div>");
+            for (Course course_element : course_list) {
+                out.write("<div>");
+                out.write("<span>" + course_element.get_id() + "</span>");
+                out.write("<span>" + course_element.get_name() + "</span>");
+                out.write("<span>" + course_element.get_department_id() + "</span>");
+                out.write("<span>" + course_element.get_teacher_id() + "</span>");
+                out.write("<span>" + course_element.get_semester() + "</span>");
+                out.write("<span>" + course_element.get_year() + "</span>");
+                out.write("<span>" + course_element.get_time() + "</span>");
+                out.write("</div>");
+            }
+            out.write("</div>");
+        }
+
+        out.flush();
+        out.close();
+    }
+
+    protected void infoquery_studenttransaction(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+        response.setContentType("text/html;charset=utf-8");
     }
 }
