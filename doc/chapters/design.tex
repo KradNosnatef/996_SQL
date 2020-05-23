@@ -31,16 +31,119 @@
 (不允许重复选课),包括选课日期(同开课日期)、选课学期(同开课学期)
 和考试成绩。
 
-\subsection {数据库设计}
+\subsection {数据库设计与改良}
 
-这里结合第二次实验的设计报告，去给出我们最后选择的数据库设计。
+这里结合第二次实验的设计报告，去给出我们最初选择的数据库设计。
 
-\begin{figure}
+\begin{figure}[H]
 \centering
 \includegraphics[width=1\linewidth]{../figure/database-design.png}
 \caption{数据库设计一览}
 \label{fig:database-design}
 \end{figure}
 
+在实际实现的时候，大家迅速发现了问题，单独列出Student\_Identity表，对于我们的信息维护几位不方便。所以最终，在这一版数据库的基础上，我们给Student和Teacher分别增加了一个外健，用于和Person链接。
+
+最终用于生成数据库框架的代码：
+\href{https://github.com/KradNosnatef/996_SQL/blob/master/src/main/resources/sql_init.sql}{\underline{database-init-github-link}}
+
+\section{管理系统总体框架的设计}
+
+我们的框架基本按照一般的前后端分离的办法操作。
+
+Login Servlet 是我们应用的大门，用于处理登陆信息。
+
+User-Type 是我们登陆后第一个需要审查的元素。 我们通过他来判断我们的用户的类别。
+
+我们的用户分为3个基本类别：
+
+1. \texttt{Admin Account} 有所有功能的权限
+
+2. \texttt{Student Account} 只有部分查询权限，可以对自己的个人信息修改
+
+3. \texttt{Teacher Account} 只有煮粉查询权限，可以查询所有学生信息，可以对自己的个人信息修改
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.1\linewidth]{figure/framework}
+\caption{framework}
+\label{fig:untitledpage}
+\end{figure}
+
+我们管理权限主要是利用前端强制管理，这里是我们设计的不足之处。在对应的用户页面上之开放他能用的功能。但是，如果用户足够细心和好运，他可以通过观察我们发出的HTTP Request从而对我们的信息进行解析。继而通过Postman等工具，发送请求，就可以轻松获取自己权限以外的操作。
+
+正确的做法是，处理所有HTTP请求是，处理带上session或者token，记录下用户的类型。此外，对于java servlet发送的请求，我们应当适度做一些加密操作。
+
+\section{后端设计}
+
+\subsection{一览}
+
+后端大体框架为4部分：
+\begin{itemize}
+\itemsep -0.3em
+\item DAO： Data Access Object 主要用来做各种实体的数据库操作 
+\item model： 存放各种实体的数据类型
+\item service： 存放各种 Java Serrvlet 服务
+\item utils： 常用API的单独存放
+\end{itemize}
+
+\subsection{utils}
+
+这里我没有按照字典序介绍，而是理解由易到难的次序介绍。
+
+首先是utils里的各个模块：
+
+\begin{enumerate}
+\itemsep 0em
+\item Datautils 处理我们 Data 等特殊格式的数据的格式标准化
+\item DButils 处理我们的数据库连接和断开的操作
+\item UnitTestSwitch 用于切换本地 JDBC 数据库和 Tomcat 的 JDBI 数据库连接方式，这一模块只存放一个常量，可以理解成 Java 下的条件编译，目的是为了方便的单元测试
+\end{enumerate}
+
+\subsection{model}
+
+对各个基本实体做存储，为各个实体做了一层封装。
+
+\begin{enumerate}
+\itemsep 0em
+\item Campus 存储校区信息
+\item Class 存储班级信息
+\item Course 存储课程信息
+\item Department 存储专业信息
+\item Person 存储个人基本信息
+\item Student 存储学生特有信息
+\item Teacher 存储教师特有信息
+\item Transaction 存储异动信息
+\item Users 存储用户信息，用于系统登陆
+\end{enumerate}
+
+变量细节见程序注释。
+
+\subsection{DAO}
+
+这一部分为程序的核心，用于处理我们的数据库操作。我们的数据库和Java程序全是依靠他们进行连接。
+
+\subsubsection{CampusDao}
+用于对校区进行数据库操作。
+\subsubsection{ClassDao}
+用于对班级进行数据库操作。
+\subsubsection{CourseDao}
+用于对课程进行数据库操作。
+\subsubsection{DepartmentDao}
+用于对专业进行数据库操作。
+\subsubsection{PersonDao}
+用于对个人进行数据库操作。
+\subsubsection{QueryToolKitsDao}
+用于对复杂查询进行数据库操作。
+\subsubsection{SelectionDao}
+用于对选课进行数据库操作。
+\subsubsection{StudentDao}
+用于对学生进行数据库操作。
+\subsubsection{TeacherDao}
+用于对教师进行数据库操作。
+\subsubsection{TransactionDao}
+用于对异动进行数据库操作。
+\subsubsection{UserDao}
+用于对用户进行数据库操作。
 
 \end{document}

@@ -23,6 +23,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{subfiles} 
 \usepackage{indentfirst}
+\usepackage{bibarts}
 
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{3}
@@ -66,7 +67,7 @@
 % When need quote, using \begin{pquotation} and \end{pquotation}
 
 % Set page margins
-\usepackage[top=100pt,bottom=100pt,left=68pt,right=66pt]{geometry}
+\usepackage[top=60pt,bottom=60pt,left=40pt,right=40pt]{geometry}
 
 % Package used for placeholder text
 \usepackage{lipsum}
@@ -132,9 +133,7 @@
 	\vspace{1cm}
 	{\large \textbf{学生管理系统设计} \par}
 	\vspace{4cm}
-	{\normalsize 黄业琦\\ % \\ specifies a new line
-	             FIRST LAST \\
-	             FIRST LAST\par}
+	{\normalsize 黄业琦\par}
 	\vspace{5cm}
     
     \centering 
@@ -159,10 +158,9 @@
 \chapter{项目简介}
 
 \subfile{chapters/intro}
+\subfile{chapters/framework}
 \subfile{chapters/background}
 
-\chapter{管理系统简介}
-\subfile{chapters/framework}
 
 \chapter{管理系统的设计}
 \subfile{chapters/design}
@@ -176,12 +174,6 @@
 \pagebreak
 
 % Adding a bibliography if citations are used in the report
-
-\renewcommand\bibname{参考文献}
-\bibliographystyle{plain}
-\bibliography{bibliography.bib}
-% Adds reference to the Bibliography in the ToC
-\addcontentsline{toc}{chapter}{参考文献}
 
 \pagebreak
 
