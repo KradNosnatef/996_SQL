@@ -44,8 +44,12 @@ public class DepartmentDao {
             ps.setString(1, campus_id);
             ResultSet rs = ps.executeQuery();
             if (!rs.next()) {
+                rs.close();
+                ps.close();
                 return -1;
             }
+            rs.close();
+            ps.close();
         } catch (SQLException sqle) {
             sqle.printStackTrace();
             return -1;
@@ -131,6 +135,8 @@ public class DepartmentDao {
             PreparedStatement ps = conn.prepareStatement(teacher_check);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
+                rs.close();
+                ps.close();
                 return -1;
             }
             rs.close();
@@ -147,6 +153,8 @@ public class DepartmentDao {
             PreparedStatement ps = conn.prepareStatement(course_check);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
+                rs.close();
+                ps.close();
                 return -1;
             }
             rs.close();
@@ -163,6 +171,8 @@ public class DepartmentDao {
             PreparedStatement ps = conn.prepareStatement(class_check);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
+                rs.close();
+                ps.close();
                 return -1;
             }
             rs.close();
@@ -269,7 +279,7 @@ public class DepartmentDao {
         String sql;
         String sql_select_old;
         String sql_update_new;
-        int query_flag = 0;
+        int update_flag = 0;
 
         switch (old_type) {
             case 0:
@@ -336,13 +346,13 @@ public class DepartmentDao {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, new_value);
             ps.setString(2, old_value);
-            query_flag = ps.executeUpdate();
+            update_flag = ps.executeUpdate();
             ps.close();
         } catch (SQLException sqle) {
             sqle.printStackTrace();
         } finally {
             DButils.closeConnection(conn);
         }
-        return query_flag;
+        return update_flag;
     }
 }

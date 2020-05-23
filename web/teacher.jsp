@@ -15,7 +15,6 @@
     <title>用户操作界面</title>
     <link rel="stylesheet" type="text/css" href="css/user&admin.css">
     <link rel="icon" type="image/x-ico" href="images/stu.ico">
-
 </head>
 
 <body>
