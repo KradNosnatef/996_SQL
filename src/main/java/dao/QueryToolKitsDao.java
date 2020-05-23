@@ -170,4 +170,30 @@ public class QueryToolKitsDao {
         }
         return courseselectionArrayList;
     }
+
+    //Query Average Score Selected by CourseID
+    //input: - courseID
+    //output: - return the average score of the course
+    public double queryAverageScoreSelectedByCourseID(String courseID){
+        Connection connection;
+        if (UnitTestSwitch.SWITCH)
+            connection = DButils.getConnectionUnitTest();
+        else
+            connection = DButils.getConnection();
+        String sql="SELECT AVG(Score) AS AVGScore FROM CourseSelection WHERE CourseSelection_Course_ID = ? ;";
+        double avgScore=-1;
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,courseID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            avgScore=resultSet.getDouble("AVGScore");
+            resultSet.close();
+            preparedStatement.close();
+        }catch(SQLException sqlException){
+            sqlException.printStackTrace();
+        }finally {
+            DButils.closeConnection(connection);
+        }
+        return avgScore;
+    }
 }
