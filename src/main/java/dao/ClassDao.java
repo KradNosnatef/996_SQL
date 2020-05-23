@@ -47,7 +47,7 @@ public class ClassDao {
             return -1;
         }
         //Check if head_teacher_id exists
-        String head_teacher_check = "SELECT * FROM Teacher_Identity WHERE Teacher_Teacher_ID = ?;";
+        String head_teacher_check = "SELECT * FROM Teacher WHERE Teacher_ID = ?;";
         try {
             PreparedStatement ps = conn.prepareStatement(head_teacher_check);
             ps.setString(1, head_teacher_id);

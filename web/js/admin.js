@@ -45,6 +45,7 @@ function insertRequest(object) {
     };
     let insert_url = "/student_management_system/AdminDao?action=insert_" + object;
     if (object === "user") {
+        // Insert User
         const user = document.getElementsByClassName("user_insert_input");
         const username = user[0].value.toString();
         const password = user[1].value.toString();
@@ -52,12 +53,14 @@ function insertRequest(object) {
         const foreignid = user[3].value.toString();
         insert_url = insert_url + "&username=" + username + "&password=" + password + "&usertype=" + usertype + "&foreignid=" + foreignid;
     } else if (object === "campus") {
+        // Insert Campus
         const campus = document.getElementsByClassName("campus_insert_input");
         const id = campus[0].value.toString();
         const name = campus[1].value.toString();
         const address = campus[2].value.toString();
         insert_url = insert_url + "&id=" + id + "&name=" + name + "&address=" + address;
     } else if (object === "department") {
+        // Insert Department
         const department = document.getElementsByClassName("department_insert_input");
         const id = department[0].value.toString();
         const name = department[1].value.toString();
