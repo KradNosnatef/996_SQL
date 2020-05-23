@@ -1016,7 +1016,6 @@ public class AdminDao extends HttpServlet {
     protected void insert_transaction(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html;charset=utf-8");
         String str0 = request.getParameter("str0");
-        String str1 = request.getParameter("str1");
         String str2 = request.getParameter("str2");
         String str3 = request.getParameter("str3");
         String str4 = request.getParameter("str4");
@@ -1024,7 +1023,15 @@ public class AdminDao extends HttpServlet {
         String str6 = request.getParameter("str6");
         String str7 = request.getParameter("str7");
 
-        int flag = new TransactionDao().insertTransaction(str0, str7, str1, str2, str3, str4, str5, str6);
+        String str1 = request.getParameter("str1");
+        Boolean flag1;
+
+        if (Integer.parseInt(str1) == 0)
+            flag1 = false;
+        else
+            flag1 = true;
+
+        int flag = new TransactionDao().insertTransaction(str0, str7, flag1, str2, str3, str4, str5, str6);
 
         String info = null;
         PrintWriter out = response.getWriter();
