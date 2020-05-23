@@ -17,19 +17,5 @@ public class StudentDaoTest {
 
     @org.junit.jupiter.api.Test
     void StudentDaoTestCase1(){//this case design for insert
-        StudentDao studentDao=new StudentDao();
-        String IDCardNumber="441302";
-        String studentID="1735";
-        Date studentEnrollDate=new Date(0);
-        String studentEmail="hahaha@mail.com";
-        String studentClassID="17";
-        String studentTransactionID="01";
-
-        int flag=studentDao.insertStudent(studentID,
-                studentEnrollDate,studentEmail,studentClassID,studentTransactionID,IDCardNumber);
-        if(flag==0){
-            System.out.println("Error when inserting");
-        }
-        System.exit(0);
     }
 }

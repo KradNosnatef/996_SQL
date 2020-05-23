@@ -81,7 +81,7 @@ public class SelectionDao {
         try {
             PreparedStatement ps = conn.prepareStatement(duplicating_check);
             ps.setString(1, course_id);
-            ps.setString(1, student_id);
+            ps.setString(2, student_id);
 
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -94,7 +94,7 @@ public class SelectionDao {
             return -1;
         }
 
-        String sql = "INSERET INTO CourseSelection (CourseSelection_Course_ID, CourseSelection_Student_ID, CourseSelection_Date) VALUES (?,?,?);";
+        String sql = "INSERT INTO CourseSelection (CourseSelection_Course_ID, CourseSelection_Student_ID, CourseSelection_Date) VALUES (?,?,?);";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, course_id);
@@ -114,10 +114,11 @@ public class SelectionDao {
     // We have 3 deletion mode in total
     // type = 0 -- give student_id & course_id to delete a single selection
     // information
-    // type = 1 -- give student_id only
-    // type = 2 -- give course_id only
+    // type = 1 -- give course_id only
+    // type = 2 -- give student_id only
     public int deleteSelection(String student_id, String course_id, int type) {
         Connection conn;
+        System.out.println("Type = " + type);
         if (UnitTestSwitch.SWITCH)
             conn = DButils.getConnectionUnitTest();
         else
@@ -129,18 +130,19 @@ public class SelectionDao {
         if (type == 0)
             sql = sql + "CourseSelection_Student_ID = ? AND CourseSelection_Course_ID = ?;";
         else if (type == 1)
-            sql = sql + "CourseSelection_Student_ID = ?;";
-        else if (type == 2)
             sql = sql + "CourseSelection_Course_ID = ?;";
+        else if (type == 2)
+            sql = sql + "CourseSelection_Student_ID = ?;";
         else
             return -1;
 
+        System.out.println("sql = " + sql);
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
 
             if (type == 0) {
-                ps.setString(1, course_id);
-                ps.setString(2, student_id);
+                ps.setString(1, student_id);
+                ps.setString(2, course_id);
             } else if (type == 1)
                 ps.setString(1, course_id);
             else

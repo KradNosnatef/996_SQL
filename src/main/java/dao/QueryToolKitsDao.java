@@ -13,24 +13,26 @@ import java.util.ArrayList;
 
 public class QueryToolKitsDao {
     // Query course Selected by studentID
-    //Input:
+    // Input:
     // - id: student id
-    //output:
+    // output:
     // - return a list of the course you want to query
-    public ArrayList<Course> queryCourseSelectedByStudentID(String studentID){
+    public ArrayList<Course> queryCourseSelectedByStudentID(String studentID) {
         Connection connection;
-        if(UnitTestSwitch.SWITCH)connection= DButils.getConnectionUnitTest();
-        else connection=DButils.getConnection();
+        if (UnitTestSwitch.SWITCH)
+            connection = DButils.getConnectionUnitTest();
+        else
+            connection = DButils.getConnection();
         String sql;
-        ArrayList<Course> courseArrayList=new ArrayList<>();
-        sql="SELECT *,CourseSelection_Student_ID FROM Course INNER JOIN CourseSelection\n"+
-                    "ON Course_ID=CourseSelection_Course_ID WHERE CourseSelection_Student_ID = ? ";
-        try{
-            PreparedStatement preparedStatement=connection.prepareStatement(sql);
-            preparedStatement.setString(1,studentID);
-            ResultSet resultSet=preparedStatement.executeQuery();
-            while(resultSet.next()){
-                Course course=new Course();
+        ArrayList<Course> courseArrayList = new ArrayList<>();
+        sql = "SELECT *,CourseSelection_Student_ID FROM Course INNER JOIN CourseSelection\n"
+                + "ON Course_ID=CourseSelection_Course_ID WHERE CourseSelection_Student_ID = ? ;";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, studentID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Course course = new Course();
                 course.set_id(resultSet.getString("Course_ID"));
                 course.set_name(resultSet.getString("Course_Name"));
                 course.set_department_id(resultSet.getString("Course_Department_ID"));
@@ -43,33 +45,35 @@ public class QueryToolKitsDao {
             }
             resultSet.close();
             preparedStatement.close();
-        }catch(SQLException sqlException){
+        } catch (SQLException sqlException) {
             sqlException.printStackTrace();
-        }finally {
+        } finally {
             DButils.closeConnection(connection);
         }
         return courseArrayList;
     }
 
     // Query student Selected by courseID
-    //Input:
+    // Input:
     // - id: course id
-    //output:
+    // output:
     // - return a list of the student you want to query
-    public ArrayList<Student> queryStudentSelectedByCourseID(String courseID){
+    public ArrayList<Student> queryStudentSelectedByCourseID(String courseID) {
         Connection connection;
-        if(UnitTestSwitch.SWITCH)connection= DButils.getConnectionUnitTest();
-        else connection=DButils.getConnection();
+        if (UnitTestSwitch.SWITCH)
+            connection = DButils.getConnectionUnitTest();
+        else
+            connection = DButils.getConnection();
         String sql;
-        ArrayList<Student> studentArrayList=new ArrayList<>();
-        sql="SELECT *,CourseSelection_Course_ID FROM Student INNER JOIN CourseSelection\n"+
-                    "ON Student_ID=CourseSelection_Student_ID WHERE CourseSelection_Course_ID = ? ";
-        try{
-            PreparedStatement preparedStatement=connection.prepareStatement(sql);
-            preparedStatement.setString(1,courseID);
-            ResultSet resultSet=preparedStatement.executeQuery();
-            while(resultSet.next()){
-                Student student=new Student();
+        ArrayList<Student> studentArrayList = new ArrayList<>();
+        sql = "SELECT *,CourseSelection_Course_ID FROM Student INNER JOIN CourseSelection\n"
+                + "ON Student_ID=CourseSelection_Student_ID WHERE CourseSelection_Course_ID = ? ;";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, courseID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Student student = new Student();
                 student.set_id(resultSet.getString("Student_ID"));
                 student.set_enrollment_date(resultSet.getDate("Student_Enroll_Date").toString());
                 student.set_email(resultSet.getString("Student_Email"));
@@ -80,33 +84,35 @@ public class QueryToolKitsDao {
             }
             resultSet.close();
             preparedStatement.close();
-        }catch(SQLException sqlException){
+        } catch (SQLException sqlException) {
             sqlException.printStackTrace();
-        }finally {
+        } finally {
             DButils.closeConnection(connection);
         }
         return studentArrayList;
     }
 
     // Query course Selected by teacherID
-    //Input:
+    // Input:
     // - id: teacher id
-    //output:
+    // output:
     // - return a list of the course you want to query
-    public ArrayList<Course> queryCourseSelectedByTeacherID(String teacherID){
+    public ArrayList<Course> queryCourseSelectedByTeacherID(String teacherID) {
         Connection connection;
-        if(UnitTestSwitch.SWITCH)connection= DButils.getConnectionUnitTest();
-        else connection=DButils.getConnection();
+        if (UnitTestSwitch.SWITCH)
+            connection = DButils.getConnectionUnitTest();
+        else
+            connection = DButils.getConnection();
         String sql;
-        ArrayList<Course> courseArrayList=new ArrayList<>();
-        sql="SELECT *,Teacher_ID FROM Course INNER JOIN Teacher\n"+
-                    "ON Course_Teacher_ID=Teacher_ID WHERE Teacher_ID = ? ";
-        try{
-            PreparedStatement preparedStatement=connection.prepareStatement(sql);
-            preparedStatement.setString(1,teacherID);
-            ResultSet resultSet=preparedStatement.executeQuery();
-            while(resultSet.next()){
-                Course course=new Course();
+        ArrayList<Course> courseArrayList = new ArrayList<>();
+        sql = "SELECT *,Teacher_ID FROM Course INNER JOIN Teacher\n"
+                + "ON Course_Teacher_ID=Teacher_ID WHERE Teacher_ID = ? ;";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, teacherID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Course course = new Course();
                 course.set_id(resultSet.getString("Course_ID"));
                 course.set_name(resultSet.getString("Course_Name"));
                 course.set_department_id(resultSet.getString("Course_Department_ID"));
@@ -119,9 +125,9 @@ public class QueryToolKitsDao {
             }
             resultSet.close();
             preparedStatement.close();
-        }catch(SQLException sqlException){
+        } catch (SQLException sqlException) {
             sqlException.printStackTrace();
-        }finally {
+        } finally {
             DButils.closeConnection(connection);
         }
         return courseArrayList;

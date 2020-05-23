@@ -1037,9 +1037,9 @@ public class AdminDao extends HttpServlet {
         if (!student_id.equals("") && !course_id.equals(""))
             flag = new SelectionDao().deleteSelection(student_id, course_id, 0);
         else if (!student_id.equals(""))
-            flag = new SelectionDao().deleteSelection(student_id, course_id, 1);
-        else
             flag = new SelectionDao().deleteSelection(student_id, course_id, 2);
+        else
+            flag = new SelectionDao().deleteSelection(student_id, course_id, 1);
 
         String info = null;
         PrintWriter out = response.getWriter();

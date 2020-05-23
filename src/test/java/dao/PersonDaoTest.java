@@ -19,22 +19,5 @@ public class PersonDaoTest {
 
     @org.junit.jupiter.api.Test
     void PersonDaoTestCase1() {//this case design for insert
-        PersonDao personDao = new PersonDao();
-        String IDCardNumber = "441302";
-        Boolean idCardType = true;
-        String name = "fuqianshan";
-        Boolean gender = true;
-        Date birth = new Date(0);
-        String nationality = "CN";
-        String address = "CNGDHZ";
-        String addressID = null;
-        String addressPhoneNumber = "0752";
-
-        int flag = personDao.insertPerson(IDCardNumber, idCardType, name, gender,
-                birth, nationality, address, addressID, addressPhoneNumber);
-        if (flag == 0) {
-            System.out.println("Error when inserting");
-        }
-        System.exit(0);
     }
 }

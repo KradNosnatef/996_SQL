@@ -702,7 +702,7 @@ function showDeleteSelection() {
 // Special Query I
 function infoQureyStudent() {
     const result = document.getElementById("result");
-    result.innerHTML = "<div class='show_queryinfo_student'  class='d_form'>" +
+    result.innerHTML = "<div id='show_queryinfo_student'  class='d_form'>" +
         "<h3>请输入学号</h3>" +
         "<input class='infoquery_student_input' id='student_id' type='text' autofocus='autofocus' name='student_id' value placeholder='学号' required>" +
         "<input id='submit' onclick=infoqueryRequest('student') type='button' name='submit' value='查询'>" +
@@ -711,7 +711,7 @@ function infoQureyStudent() {
 
 function infoQureyTeacher() {
     const result = document.getElementById("result");
-    result.innerHTML = "<div class='show_queryinfo_teacher'  class='d_form'>" +
+    result.innerHTML = "<div id='show_queryinfo_teacher'  class='d_form'>" +
         "<h3>请输入工号</h3>" +
         "<input class='infoquery_teacher_input' id='teacher_id' type='text' autofocus='autofocus' name='teacher_id' value placeholder='工号' required>" +
         "<input id='submit' onclick=infoqueryRequest('teacher') type='button' name='submit' value='查询'>" +
@@ -720,7 +720,7 @@ function infoQureyTeacher() {
 
 function infoQureyStudentCourse() {
     const result = document.getElementById("result");
-    result.innerHTML = "<div class='show_queryinfo_studentcourse'  class='d_form'>" +
+    result.innerHTML = "<div id='show_queryinfo_studentcourse'  class='d_form'>" +
         "<h3>请输入学号</h3>" +
         "<input class='infoquery_studentcourse_input' id='student_id' type='text' autofocus='autofocus' name='student_id' value placeholder='学号' required>" +
         "<input id='submit' onclick=infoqueryRequest('studentcourse') type='button' name='submit' value='查询'>" +
@@ -729,7 +729,7 @@ function infoQureyStudentCourse() {
 
 function infoQureyCourseStudent() {
     const result = document.getElementById("result");
-    result.innerHTML = "<div class='show_queryinfo_coursestudent'  class='d_form'>" +
+    result.innerHTML = "<div id='show_queryinfo_coursestudent'  class='d_form'>" +
         "<h3>请输入课号</h3>" +
         "<input class='infoquery_coursestudent_input' id='course_id' type='text' autofocus='autofocus' name='course_id' value placeholder='课号' required>" +
         "<input id='submit' onclick=infoqueryRequest('coursestudent') type='button' name='submit' value='查询'>" +
@@ -738,16 +738,17 @@ function infoQureyCourseStudent() {
 
 function infoQureyTeacherCourse() {
     const result = document.getElementById("result");
-    result.innerHTML = "<div class='show_queryinfo_teachercourse'  class='d_form'>" +
+    result.innerHTML = "<div id='show_queryinfo_teachercourse'  class='d_form'>" +
         "<h3>请输入工号</h3>" +
         "<input class='infoquery_teachercourse_input' id='teacher_id' type='text' autofocus='autofocus' name='teacher_id' value placeholder='工号' required>" +
         "<input id='submit' onclick=infoqueryRequest('teachercourse') type='button' name='submit' value='查询'>" +
         "</div>";
+
 }
 
 function infoQureyStudentTransaction() {
     const result = document.getElementById("result");
-    result.innerHTML = "<div class='show_queryinfo_studenttransaction'  class='d_form'>" +
+    result.innerHTML = "<div id='show_queryinfo_studenttransaction'  class='d_form'>" +
         "<h3>请输入学号</h3>" +
         "<input class='infoquery_studenttransaction_input' id='student_id' type='text' autofocus='autofocus' name='student_id' value placeholder='学号' required>" +
         "<input id='submit' onclick=infoqueryRequest('studenttransaction') type='button' name='submit' value='查询'>" +

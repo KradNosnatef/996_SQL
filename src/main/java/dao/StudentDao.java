@@ -212,7 +212,7 @@ public class StudentDao {
             }
             ResultSet rs = ps.executeQuery();
 
-            while (!rs.next()) {
+            while (rs.next()) {
                 Student student_element = new Student();
                 student_element.set_id(rs.getString("Student_ID"));
                 student_element.set_enrollment_date(rs.getString("Student_Enroll_Date"));

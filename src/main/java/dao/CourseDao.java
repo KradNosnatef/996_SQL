@@ -191,6 +191,10 @@ public class CourseDao {
                 course_element.set_name(rs.getString("Course_Name"));
                 course_element.set_department_id(rs.getString("Course_Department_ID"));
                 course_element.set_exam_type(rs.getString("Course_Exam_Type"));
+                course_element.set_teacher_id(rs.getString("Course_Teacher_ID"));
+                course_element.set_semester(rs.getString("Course_Semester"));
+                course_element.set_year(rs.getString("Course_Year"));
+                course_element.set_time(rs.getString("Course_Time"));
                 course_list.add(course_element);
             }
             rs.close();
@@ -303,8 +307,7 @@ public class CourseDao {
         if (UnitTestSwitch.SWITCH) conn = DButils.getConnectionUnitTest();
         else conn = DButils.getConnection();
         String teacher_check = "SELECT * FROM Teacher WHERE Teacher_ID = ?;";
-        String sql = "UPDATE  Course SET  Course_Teacher_ID = ?, Course_Semester = ?, Course_Year = ?," +
-                "Course_Time = ? WHERE  Course_ID = ?";
+        String sql = "UPDATE Course SET  Course_Teacher_ID = ?, Course_Semester = ?, Course_Year = ?, Course_Time = ? WHERE  Course_ID = ?;";
         int insert_flag = 0;
 
         // Chech if teacher_id existed
