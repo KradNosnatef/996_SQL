@@ -23,7 +23,12 @@
 \usepackage[utf8]{inputenc}
 \usepackage{subfiles} 
 \usepackage{indentfirst}
-\usepackage{bibarts}
+
+  \usepackage[
+    style=numeric,
+  ]{biblatex}
+
+ \addbibresource{bibliography.bib}
 
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{3}
@@ -172,8 +177,7 @@
 \subfile{chapters/conclusion}
 
 \pagebreak
-
-% Adding a bibliography if citations are used in the report
+\printbibliography[title=参考文献]
 
 \pagebreak
 
