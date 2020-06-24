@@ -80,7 +80,7 @@ public class UserDao {
     public User login(String username, String password) {
         Connection conn = DButils.getConnection();
         User user = null;
-        String sql = "select * from User where username = ? and password = ?";
+        String sql = "select * from User where username = ? and password = ?;";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, username);

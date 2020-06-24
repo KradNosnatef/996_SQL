@@ -1,4 +1,4 @@
-//折叠菜单效果
+// Folding Menu
 $(function () {
     const Accordion = function (el, multiple) {
         this.el = el || {};
@@ -165,6 +165,7 @@ function insertRequest(object) {
             "&address_postal_code=" + address_postal_code +
             "&address_phone_number=" + address_phone_number;
     } else if (object === "course") {
+        // Insert course
         const course = document.getElementsByClassName("course_insert_input");
         const id = course[0].value.toString();
         const name = course[1].value.toString();
@@ -177,6 +178,7 @@ function insertRequest(object) {
             "&department_id=" + department_id +
             "&exam_type=" + exam_type;
     } else if (object === "selection") {
+        // Insert selection
         const today = new Date();
         const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
         const selection = document.getElementsByClassName("selection_insert_input");
@@ -188,6 +190,7 @@ function insertRequest(object) {
             "&course_id=" + course_id +
             "&date=" + date;
     } else if (object === "transaction") {
+        // Insert transaction
         const transaction = document.getElementsByClassName("transaction_insert_input");
         const str0 = transaction[0].value.toString();
         const str1 = transaction[1].value.toString();
@@ -220,11 +223,13 @@ function deleteRequest(object) {
     };
     let delete_url = "/student_management_system/AdminDao?action=delete_" + object;
     if (object === "user") {
+        // Delete user
         const user = document.getElementsByClassName("user_delete_input");
         const username = user[0].value.toString();
         delete_url = delete_url +
             "&username=" + username;
     } else if (object === "campus") {
+        // Delete campus
         const campus = document.getElementsByClassName("campus_delete_input");
         const id = campus[0].value.toString();
         const name = campus[1].value.toString();
@@ -232,6 +237,7 @@ function deleteRequest(object) {
             "&id=" + id +
             "&name=" + name;
     } else if (object === "department") {
+        // Delete department
         const department = document.getElementsByClassName("department_delete_input");
         const id = department[0].value.toString();
         const name = department[1].value.toString();
@@ -241,6 +247,7 @@ function deleteRequest(object) {
             "&name=" + name +
             "&campus_id=" + campus_id;
     } else if (object == "class") {
+        // Delete class
         const class_ = document.getElementsByClassName("class_delete_input");
         const id = class_[0].value.toString();
         const name = class_[1].value.toString();
@@ -248,6 +255,7 @@ function deleteRequest(object) {
             "&id=" + id +
             "&name=" + name;
     } else if (object === "student") {
+        // Delete student
         const student = document.getElementsByClassName("student_delete_input");
         const id = student[0].value.toString();
         const id_card_number = student[1].value.toString();
@@ -255,6 +263,7 @@ function deleteRequest(object) {
             "&id=" + id +
             "&id_card_number=" + id_card_number;
     } else if (object === "teacher") {
+        // Delete teacher
         const teacher = document.getElementsByClassName("teacher_delete_input");
         const id = teacher[0].value.toString();
         const id_card_number = teacher[1].value.toString();
@@ -262,6 +271,7 @@ function deleteRequest(object) {
             "&id=" + id +
             "&id_card_number=" + id_card_number;
     } else if (object === "course") {
+        // Delete course
         const course = document.getElementsByClassName("course_delete_input");
         const id = course[0].value.toString();
         const name = course[1].value.toString();
@@ -271,6 +281,7 @@ function deleteRequest(object) {
             "&name=" + name +
             "&department_id=" + department_id;
     } else if (object === "selection") {
+        // Delete selection
         const selection = document.getElementsByClassName("selection_delete_input");
         const student_id = selection[0].value.toString();
         const course_id = selection[1].value.toString();
@@ -278,6 +289,7 @@ function deleteRequest(object) {
             "&student_id=" + student_id +
             "&course_id=" + course_id;
     } else if (object === "transaction") {
+        // Delete transaction
         const transaction = document.getElementsByClassName("transaction_delete_input");
         const id = transaction[0].value.toString();
         delete_url = delete_url +
@@ -296,6 +308,8 @@ function updateRequest(object) {
     };
     let update_url = "/student_management_system/AdminDao?action=update_" + object;
     if (object === "user") {
+        // Update user
+        // ANCHOR: User Management Updater
         const user = document.getElementsByClassName("user_update_input");
         const username = user[0].value.toString();
         const password = user[1].value.toString();
@@ -307,6 +321,7 @@ function updateRequest(object) {
             "&usertype=" + usertype +
             "&foreignid=" + foreignid;
     } else if (object === "campus") {
+        // Update campus
         const campus = document.getElementsByClassName("campus_update_input");
         const id_old = campus[0].value.toString();
         const name_old = campus[1].value.toString();
@@ -318,6 +333,7 @@ function updateRequest(object) {
             "&name_new=" + name_new +
             "&address_new=" + address_new;
     } else if (object === "department") {
+        // Update department
         const department = document.getElementsByClassName("department_update_input");
         const id_old = department[0].value.toString();
         const name_old = department[1].value.toString();
@@ -333,6 +349,7 @@ function updateRequest(object) {
             "&dean_new=" + dean_new +
             "&campus_id_new=" + campus_id_new;
     } else if (object === "class") {
+        // Update class
         const class_ = document.getElementsByClassName("class_update_input");
         const id_old = class_[0].value.toString();
         const name_old = class_[1].value.toString();
@@ -348,6 +365,7 @@ function updateRequest(object) {
             "&department_id_new" + department_id_new +
             "&head_teacher_id_new" + head_teacher_id_new;
     } else if (object === "student") {
+        // Update student
         const student = document.getElementsByClassName("student_update_input");
         const id_old = student[0].value.toString();
         const strinfo1 = student[1].value.toString();
@@ -359,6 +377,7 @@ function updateRequest(object) {
             "&strinfo2=" + strinfo2 +
             "&strinfo3=" + strinfo3;
     } else if (object === "teacher") {
+        // Update teacher
         const student = document.getElementsByClassName("student_update_input");
         const id_old = student[0].value.toString();
         const strinfo1 = student[1].value.toString();
@@ -370,6 +389,7 @@ function updateRequest(object) {
             "&strinfo2=" + strinfo2 +
             "&strinfo3=" + strinfo3;
     } else if (object === "course") {
+        // Update course
         const course = document.getElementsByClassName("course_update_input");
         const id = course[0].value.toString();
         const teacher_id = course[1].value.toString();
@@ -383,6 +403,7 @@ function updateRequest(object) {
             "&year=" + year +
             "&time=" + time;
     } else if (object === "person") {
+        // Update person
         const person = document.getElementsByClassName("person_update_input");
         const id_card_number = person[0].value.toString();
         const card_type = person[1].value.toString();
@@ -393,6 +414,7 @@ function updateRequest(object) {
         const address = person[6].value.toString();
         const address_postal_code = person[7].value.toString();
         const address_phone_number = person[8].value.toString();
+
         update_url = update_url +
             "&id_card_number=" + id_card_number +
             "&card_type=" + card_type +
@@ -404,7 +426,9 @@ function updateRequest(object) {
             "&address_postal_code=" + address_postal_code +
             "&address_phone_number=" + address_phone_number;
     } else if (object === "transaction") {
+        // Update transaction
         const transaction = document.getElementsByClassName("transaction_update_input");
+        // Sorry to say, I made some lazy choices here.
         const str0 = transaction[0].value.toString();
         const str1 = transaction[1].value.toString();
         const str2 = transaction[2].value.toString();
@@ -435,31 +459,37 @@ function infoqueryRequest(object) {
     let infoquery_url = "/student_management_system/AdminDao?action=infoquery_" + object;
 
     if (object === "student") {
+        // Info query for student
         const student = document.getElementsByClassName("infoquery_student_input");
         const student_id = student[0].value.toString();
         infoquery_url = infoquery_url +
             "&student_id=" + student_id;
     } else if (object === "teacher") {
+        // Info query for teacher
         const teacher = document.getElementsByClassName("infoquery_teacher_input");
         const teacher_id = teacher[0].value.toString();
         infoquery_url = infoquery_url +
             "&teacher_id=" + teacher_id;
     } else if (object === "studentcourse") {
+        // Info query for studentcourse
         const student = document.getElementsByClassName("infoquery_studentcourse_input");
         const student_id = student[0].value.toString();
         infoquery_url = infoquery_url +
             "&student_id=" + student_id;
     } else if (object === "coursestudent") {
+        // Info query for coursestudent
         const course = document.getElementsByClassName("infoquery_coursestudent_input");
         const course_id = course[0].value.toString();
         infoquery_url = infoquery_url +
             "&course_id=" + course_id;
     } else if (object === "teachercourse") {
+        // Info query for teachercourse
         const teacher = document.getElementsByClassName("infoquery_teacher_input");
         const teacher_id = teacher[0].value.toString();
         infoquery_url = infoquery_url +
             "&teacher_id=" + teacher_id;
     } else if (object === "studenttransaction") {
+        // Info query for studenttransaction
         const student = document.getElementsByClassName("infoquery_studentcourse_input");
         const student_id = student[0].value.toString();
         infoquery_url = infoquery_url +

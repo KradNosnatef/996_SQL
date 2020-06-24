@@ -143,7 +143,7 @@
                     <li>
                         <div class="link">个人基本信息管理</div>
                         <ul class="submenu">
-                            <li><a onclick="showUpdatePerson()">修改个人信息</a></li>
+                            <li><a onclick="showUpdateUser()">修改个人信息</a></li>
                         </ul>
                     </li>
                     <li>

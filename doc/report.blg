@@ -1,17 +1,9 @@
 [0] Config.pm:304> INFO - This is Biber 2.14 (beta)
 [0] Config.pm:307> INFO - Logfile is 'report.blg'
-[69] biber:322> INFO - === Sun May 24, 2020, 17:28:10
-[83] Biber.pm:415> INFO - Reading 'report.bcf'
-[148] Biber.pm:943> INFO - Found 1 citekeys in bib section 0
-[162] Biber.pm:4256> INFO - Processing section 0
-[162] Utils.pm:75> INFO - Globbing data source 'bibliography.bib'
-[162] Utils.pm:91> INFO - Globbed data source 'bibliography.bib' to bibliography.bib
-[173] Biber.pm:4455> INFO - Looking for bibtex format file 'bibliography.bib' for section 0
-[174] bibtex.pm:1653> INFO - LaTeX decoding ...
-[180] bibtex.pm:1471> INFO - Found BibTeX data source 'bibliography.bib'
-[222] UCollate.pm:68> INFO - Overriding locale 'it-IT' defaults 'variable = shifted' with 'variable = non-ignorable'
-[223] UCollate.pm:68> INFO - Overriding locale 'it-IT' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[223] Biber.pm:4084> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'it-IT'
-[223] Biber.pm:4090> INFO - No sort tailoring available for locale 'it-IT'
-[225] bbl.pm:652> INFO - Writing 'report.bbl' with encoding 'UTF-8'
-[226] bbl.pm:755> INFO - Output to report.bbl
+[61] biber:322> INFO - === Sat Jun 13, 2020, 15:47:15
+[73] Biber.pm:415> INFO - Reading 'report.bcf'
+[129] Biber.pm:943> INFO - Found 0 citekeys in bib section 0
+[134] Utils.pm:293> WARN - The file 'report.bcf' does not contain any citations!
+[140] bbl.pm:652> INFO - Writing 'report.bbl' with encoding 'UTF-8'
+[140] bbl.pm:755> INFO - Output to report.bbl
+[140] Biber.pm:128> INFO - WARNINGS: 1

@@ -45,7 +45,7 @@
 在实际实现的时候，大家迅速发现了问题，单独列出Student\_Identity表，对于我们的信息维护几位不方便。所以最终，在这一版数据库的基础上，我们给Student和Teacher分别增加了一个外健，用于和Person链接。
 
 最终用于生成数据库框架的代码：
-\href{https://github.com/KradNosnatef/996_SQL/blob/master/src/main/resources/sql_init.sql}{\underline{database-init-github-link}}
+\MYhref{https://github.com/KradNosnatef/996_SQL/blob/master/src/main/resources/sql_init.sql}{\underline{database-init-github-link}}
 
 \section{管理系统总体框架的设计}
 
@@ -81,6 +81,7 @@ User-Type 是我们登陆后第一个需要审查的元素。 我们通过他来
 后端大体框架为4部分：
 \begin{itemize}
 \itemsep -0.3em
+\ttfamily
 \item DAO： Data Access Object 主要用来做各种实体的数据库操作 
 \item model： 存放各种实体的数据类型
 \item service： 存放各种 Java Serrvlet 服务
@@ -95,6 +96,7 @@ User-Type 是我们登陆后第一个需要审查的元素。 我们通过他来
 
 \begin{enumerate}
 \itemsep 0em
+\ttfamily 
 \item Datautils 处理我们 Data 等特殊格式的数据的格式标准化
 \item DButils 处理我们的数据库连接和断开的操作
 \item UnitTestSwitch 用于切换本地 JDBC 数据库和 Tomcat 的 JDBI 数据库连接方式，这一模块只存放一个常量，可以理解成 Java 下的条件编译，目的是为了方便的单元测试
@@ -106,6 +108,7 @@ User-Type 是我们登陆后第一个需要审查的元素。 我们通过他来
 
 \begin{enumerate}
 \itemsep 0em
+\ttfamily 
 \item Campus 存储校区信息
 \item Class 存储班级信息
 \item Course 存储课程信息
@@ -117,33 +120,172 @@ User-Type 是我们登陆后第一个需要审查的元素。 我们通过他来
 \item Users 存储用户信息，用于系统登陆
 \end{enumerate}
 
-变量细节见程序注释。
+类型细节见程序注释。
 
 \subsection{DAO}
 
 这一部分为程序的核心，用于处理我们的数据库操作。我们的数据库和Java程序全是依靠他们进行连接。
 
+我们这里不论我们的DAO母体，我们有一些公共的设计规则：
+\begin{enumerate}
+\ttfamily
+\item 插入方法的规则\\
+名称：\\
+insert[Model\_Name]\\
+输入：\\
+对于所有的插入方法，参数为我们建立Dao对应母体的Class Model的所有需要的参数。\\
+输出：\\
+如果插入成功，返回非0数值，为SQL DML(Data Manipulation Language)的行号。\\
+如果插入失败，返回0。如果插入成功，返回非0数值，为SQL DML(Data Manipulation Language)的行号。\\
+如果插入失败，返回0。
+\item 删除方法的规则\\
+名称：\\
+delete[Model\_Name]\\
+输出：\\
+对于所有的删除方法，参数为(String element\_selector, int type)\\
+element\_selector 为我们的选择子，用于选定我们待删除的对象。\\
+type 用于选择我们的选择子的含义。\\
+我们只提供了“合理”的删除方法。这里的合理定义是符合一般常理的，例如根据院长去删除一个专业，这种事情听起来即不合理，且极容易发生操作失误。这类借口我们一律不予提供。\\
+输出：\\
+如果返回值为0, 待删除元素不存在。\\
+如果返回值为1, 删除成功。\\
+如果返回值为-1, 数据库操作异常。
+\item 查询方法的规则
+名称：\\
+query[Model\_Name]\\
+输入：\\
+对于所有的查询方法，参数为(String element\_selector, int type)\\
+element\_selector 为我们的选择子，用于选定我们待查询的对象。\\
+type 用于选择我们的选择子的含义。\\
+type = -1 表示查询所有元素的所有信息。\\
+输出：\\
+一个ArrayList<Model>，Model为DAO对应母体的类型。
+\item 更新方法的规则
+名称：\\
+update[Model\_Name]\\
+对于所有的更新方法，我们有两种类型：
+\begin{itemize}
+\item 
+Update Detail Mode\\
+输入：\\
+参数为(int old\_type, int new\_type, String old\_value, String new\_value)\\
+old\_XXX用于确定我们的更改目标，old\_type用于说明old\_value的含义。old\_value则是我们的目标的选择子。\\
+new\_type指定说明我们的目标更改项，目标项的new\_type代表的属性，需要更新为new\_value。\\
+输出：
+\item 
+Rebuild Update Mode\\
+输入：\\
+这里需要输入了一个基本的用于定位元素的键值，一般是主键，当然，特定情况也有其他的选择方案。
+\end{itemize}
+
+\end{enumerate}
+
 \subsubsection{CampusDao}
 用于对校区进行数据库操作。
+\begin{enumerate}
+\ttfamily 
+\item 插入校区\\
+public int insertCampus(String id, String name, String address)
+\begin{itemize}
+\item id： 待插入校区id
+\item name: 待插入校区名称
+\item address: 待插入校区地址
+\end{itemize}
+
+
+\item 删除校区\\
+public int deleteCampus(String element\_selector, int type)
+\begin{itemize}
+\item element\_selector: 待删除校区选择子
+\item type: 选择子类型
+\end{itemize}
+这里我们根据我们的选择子选定待删除的校区。\\
+有如下规定：
+\begin{itemize}
+\item type = 0， 根据id选择校区并删除。
+\item type = 1， 根据校区名选择校区并删除。
+\item 其他type值非法。
+\end{itemize}
+
+\item 查询校区\\
+public ArrayList<Campus> queryCampus(String element\_selector, int type)
+\begin{itemize}
+\item element\_selector: 查询所用选择子
+\item type: 选择子类型
+\end{itemize}
+这里我们的选择子有以下规定：
+\begin{itemize}
+\item type = 0， 根据id查询
+\item type = 1， 根据校区名查询
+\item type = 2， 根据地址查询
+\item type = -1， 查询所有信息
+\end{itemize}
+返回为一个ArrayList类型变量。
+
+\item 更新校区\\
+public int updateCampus(int old\_type, int new\_type, String old\_value, String new\_value)
+
+\end{enumerate}
+
 \subsubsection{ClassDao}
 用于对班级进行数据库操作。
+\begin{enumerate}
+\itemsep 0em
+\item 
+\end{enumerate}
 \subsubsection{CourseDao}
 用于对课程进行数据库操作。
+\begin{enumerate}
+\itemsep 0em
+\item 
+\end{enumerate}
 \subsubsection{DepartmentDao}
 用于对专业进行数据库操作。
+\begin{enumerate}
+\itemsep 0em
+\item 
+\end{enumerate}
 \subsubsection{PersonDao}
 用于对个人进行数据库操作。
+\begin{enumerate}
+\itemsep 0em
+\item 
+\end{enumerate}
 \subsubsection{QueryToolKitsDao}
 用于对复杂查询进行数据库操作。
+\begin{enumerate}
+\itemsep 0em
+\item 
+\end{enumerate}
 \subsubsection{SelectionDao}
 用于对选课进行数据库操作。
+\begin{enumerate}
+\itemsep 0em
+\item 
+\end{enumerate}
 \subsubsection{StudentDao}
 用于对学生进行数据库操作。
+\begin{enumerate}
+\itemsep 0em
+\item 
+\end{enumerate}
 \subsubsection{TeacherDao}
 用于对教师进行数据库操作。
+\begin{enumerate}
+\itemsep 0em
+\item 
+\end{enumerate}
 \subsubsection{TransactionDao}
 用于对异动进行数据库操作。
+\begin{enumerate}
+\itemsep 0em
+\item 
+\end{enumerate}
 \subsubsection{UserDao}
 用于对用户进行数据库操作。
+\begin{enumerate}
+\itemsep 0em
+\item 
+\end{enumerate}
 
 \end{document}
