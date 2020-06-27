@@ -15,6 +15,7 @@ public class StudentDao {
     // Insert a new student
     // Input (Student Info) AND (Person Info)
     // TODO INITIAL WITH TRANSACTION NEED ADDITIONAL CHECK
+
     public int insertStudent(String id, String enrollment_date, String email, String class_id,
                              String id_card_number, boolean card_type, String name, boolean gender, String birthdate,
                              String nationality, String address, String address_postal_code,

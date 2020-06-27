@@ -171,121 +171,465 @@ Update Detail Mode\\
 参数为(int old\_type, int new\_type, String old\_value, String new\_value)\\
 old\_XXX用于确定我们的更改目标，old\_type用于说明old\_value的含义。old\_value则是我们的目标的选择子。\\
 new\_type指定说明我们的目标更改项，目标项的new\_type代表的属性，需要更新为new\_value。\\
-输出：
+输出：\\
+整数，1，代表成功；0，代表失败。
 \item 
 Rebuild Update Mode\\
 输入：\\
-这里需要输入了一个基本的用于定位元素的键值，一般是主键，当然，特定情况也有其他的选择方案。
+这里需要输入了一个基本的用于定位元素的键值，一般是主键，当然，特定情况也有其他的选择方案。其余的输入则是我们希望或者说允许更新的元素。\\
+简而言之，我们这里所说的更新和插入基本是一样的。所以称为Rebuild Update Mode。
 \end{itemize}
 
 \end{enumerate}
+
+下面我将用代码注释说明各个方法的作用。
 
 \subsubsection{CampusDao}
 用于对校区进行数据库操作。
 \begin{enumerate}
 \ttfamily 
 \item 插入校区\\
-public int insertCampus(String id, String name, String address)
-\begin{itemize}
-\item id： 待插入校区id
-\item name: 待插入校区名称
-\item address: 待插入校区地址
-\end{itemize}
-
+insertCampus(String id, String name, String address)
+\begin{lstlisting}[language=java, backgroundcolor=\color{lightgray}]
+    // Insert new campus element
+    // Input:
+    // - id: campus id
+    // - name: campus name
+    // - address: campus address
+    // Ouput:
+    // - If insertion action succeed, return a number, which stands for the row count for SQL Data Manipulation
+    // Language (DML) statements. Otherwise, it will return 0
+\end{lstlisting}
 
 \item 删除校区\\
-public int deleteCampus(String element\_selector, int type)
-\begin{itemize}
-\item element\_selector: 待删除校区选择子
-\item type: 选择子类型
-\end{itemize}
-这里我们根据我们的选择子选定待删除的校区。\\
-有如下规定：
-\begin{itemize}
-\item type = 0， 根据id选择校区并删除。
-\item type = 1， 根据校区名选择校区并删除。
-\item 其他type值非法。
-\end{itemize}
+deleteCampus(String element\_selector, int type)
+\begin{lstlisting}[language=java, backgroundcolor=\color{lightgray}]
+    // Delete a campus
+    // Input:
+    // - element_selector: a string used to select element
+    // - type: type is used to select the meaning of element_selector
+    //   type = 0 -- delete by id
+    //   type = 1 -- delete by name
+    //   type = 2 -- delete by address (ILLEGAL)
+    // Ouput:
+    // - return 0 if the element is not existed
+    // - return 1 if we delete the element successfully
+    // - return -1 if our instruction is illegal
+\end{lstlisting}
 
 \item 查询校区\\
-public ArrayList<Campus> queryCampus(String element\_selector, int type)
-\begin{itemize}
-\item element\_selector: 查询所用选择子
-\item type: 选择子类型
-\end{itemize}
-这里我们的选择子有以下规定：
-\begin{itemize}
-\item type = 0， 根据id查询
-\item type = 1， 根据校区名查询
-\item type = 2， 根据地址查询
-\item type = -1， 查询所有信息
-\end{itemize}
-返回为一个ArrayList类型变量。
+queryCampus(String element\_selector, int type)
+\begin{lstlisting}[language=java, backgroundcolor=\color{lightgray}]
+    // Query campus information
+    // Input:
+    // - element_selector: a string used to select element
+    // - type: type is used to select the meaning of element_selector
+    //   type = 0 -- select by id
+    //   type = 1 -- select by name
+    //   type = 2 -- select by address
+    //   type = -1 -- selecat all elements
+    // Ouput:
+    // - return an array list for your query.
+\end{lstlisting}
 
 \item 更新校区\\
-public int updateCampus(int old\_type, int new\_type, String old\_value, String new\_value)
-
+updateCampus(int old\_type, int new\_type, String old\_value, String new\_value)
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+    // Modify campus information
+    // - old & new type: type is used to select the meaning of old_value & new_value
+    //   type = 0 -- update id (if new_type == 0, ILLEGAL)
+    //   type = 1 -- update name
+    //   type = 2 -- update address
+    // - old & new value:
+    //   old value is used to select which element to update
+    //   new value is used to update the database
+    // Ouput:
+    // - return 0 if element is not existed
+    // - return 1 if update action succeed
+    // - return -1 if type is illegal
+\end{lstlisting}
 \end{enumerate}
 
 \subsubsection{ClassDao}
 用于对班级进行数据库操作。
 \begin{enumerate}
 \itemsep 0em
-\item 
+\item 插入班级\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+    // Note: You need to make sure the department_id and the head_teacher_id of the new class element exists
+    // Note: If you want to delete a class, you need to make sure the class does not have student or transaction.
+    // Return value: 1: succeed; -1: illegal; 0: fail(not exist);
+    // Type: 0: by id; 1: by name; 2: by date; 3: by grade; 4:by department; 5: by teacher;
+    // You can only delete by id or name;
+\end{lstlisting}
+\item 删除班级\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+
+\end{lstlisting}
+\item 查询校区\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+\end{lstlisting}
+\item 更新校区\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+\end{lstlisting}
 \end{enumerate}
 \subsubsection{CourseDao}
 用于对课程进行数据库操作。
 \begin{enumerate}
 \itemsep 0em
-\item 
+\item 插入课程\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+    // Insert new course element
+    // Input:
+    // - id: course id
+    // - name: course name
+    // - department_id: foreiggn key from Department.Department_ID
+    // - exam_type: course exam type
+    // Ouput:
+    // - If insertion action succeed, return 1
+    // - If insertion action is illegal, return -1
+    // - If insertion action failed, return 0
+\end{lstlisting}
+\item 删除课程\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+    // Delete a course
+    // Input:
+    // - element_selector: a string used to select element
+    // - type: type is used to select the meaning of element_selector
+    //   type = 0 -- delete by id
+    //   type = 1 -- delete by name
+    //   type = 2 -- delete by department_id
+    //   type = 3 -- delete by exam_type (ILLEGAL)
+    // Ouput:
+    // - return 0 if the element is not existed
+    // - return 1 if we delete the element successfully
+    // - return -1 if our instruction is illegal
+\end{lstlisting}
+\item 查询校区\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+    // Query course information
+    // Input:
+    // - element_selector: a string used to select element
+    // - type: type is used to select the meaning of element_selector
+    //   type = 0 -- select by id
+    //   type = 1 -- select by name
+    //   type = 2 -- select by department_id
+    //   type = 3 -- select by exam_type
+    //   type = -1 -- selecat all elements
+    // Ouput:
+    // - return an array list for your query.
+\end{lstlisting}
+\item 更新校区\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+    // Modify course information
+    // - old & new type: type is used to select the meaning of old_value & new_value
+    //   type = 0 -- update id (if new_type == 0m ILLEGAL)
+    //   type = 1 -- update name (if new_type == 1 ILLEGAL)
+    //   type = 2 -- update department_id (check if existed before update)
+    //   type = 3 -- update exam_type
+    // Ouput:
+    // - return 0 if element is not existed
+    // - return 1 if update action succeed
+    // - return -1 if type is illegal
+\end{lstlisting}
 \end{enumerate}
 \subsubsection{DepartmentDao}
 用于对专业进行数据库操作。
 \begin{enumerate}
 \itemsep 0em
-\item 
+\item 插入学院\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+    // Insert new department element
+    // Input:
+    // - id: department id
+    // - name: department name
+    // - address: department address
+    // - dean: department dean
+    // - campus_id: foreiggn key from Campus.Campus_ID
+    // Ouput:
+    // - If insertion action succeed, return 1
+    // - If insertion action is illegal, return -1
+    // - If insertion action failed, return 0
+\end{lstlisting}
+\item 删除学院\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+    // Delete a department
+    // Input:
+    // - element_selector: a string used to select element
+    // - type: type is used to select the meaning of element_selector
+    //   type = 0 -- delete by id
+    //   type = 1 -- delete by name
+    //   type = 2 -- delete by address (ILLEGAL)
+    //   type = 3 -- delete by dean (ILLEGAL)
+    //   type = 4 -- delete by campus_id
+    // Ouput:
+    // - return 0 if the element is not existed
+    // - return 1 if we delete the element successfully
+    // - return -1 if our instruction is illegal
+\end{lstlisting}
+\item 查询学院\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+    // Query department information
+    // Input:
+    // - element_selector: a string used to select element
+    // - type: type is used to select the meaning of element_selector
+    //   type = 0 -- select by id
+    //   type = 1 -- select by name
+    //   type = 2 -- select by address
+    //   type = 3 -- select by dean
+    //   type = 4 -- select by campus_id
+    //   type = -1 -- selecat all elements
+    // Ouput:
+    // - return an array list for your query.
+\end{lstlisting}
+\item 更新学院\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+    // Modify department information
+    // - old & new type: type is used to select the meaning of old_value & new_value
+    //   type = 0 -- update id (if new_type == 0m ILLEGAL)
+    //   type = 1 -- update name
+    //   type = 2 -- update address
+    //   type = 3 -- update dean
+    //   type = 4 -- update campus_id (check if existed before update)
+    // Ouput:
+    // - return 0 if element is not existed
+    // - return 1 if update action succeed
+    // - return -1 if type is illegal
+\end{lstlisting}
 \end{enumerate}
 \subsubsection{PersonDao}
-用于对个人进行数据库操作。
+用于对个人进行数据库操作。内部操作，被Student和Teacher的DAO所控制。
 \begin{enumerate}
 \itemsep 0em
-\item 
+\item 查询教师个人信息\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+	public Person queryStudentPerson(String id)
+\end{lstlisting}
+\item 查询学生个人信息\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+	public Person queryTeacherPerson(String id) 
+\end{lstlisting}
+\item 更新个人信息\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+	public int updatePerson(String id_card_number, String name, Boolean gender, String birth, String nationality, String address, String address_postal_code, String address_phone_number) 
+\end{lstlisting}
 \end{enumerate}
 \subsubsection{QueryToolKitsDao}
 用于对复杂查询进行数据库操作。
 \begin{enumerate}
 \itemsep 0em
-\item 
+\item 根据学生ID查询课程\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+    // Query course Selected by studentID
+    // Input:
+    // - id: student id
+    // output:
+    // - return a list of the course you want to query
+    public ArrayList<Course> queryCourseSelectedByStudentID(String studentID)
+\end{lstlisting}
+\item 根据课程ID查询学生\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+    // Query student Selected by courseID
+    // Input:
+    // - id: course id
+    // output:
+    // - return a list of the student you want to query
+    public ArrayList<Student> queryStudentSelectedByCourseID(String courseID)
+\end{lstlisting}
+\item 根据教师ID查询课程\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+    // Query course Selected by teacherID
+    // Input:
+    // - id: teacher id
+    // output:
+    // - return a list of the course you want to query
+    public ArrayList<Course> queryCourseSelectedByTeacherID(String teacherID)
+\end{lstlisting}
 \end{enumerate}
 \subsubsection{SelectionDao}
 用于对选课进行数据库操作。
 \begin{enumerate}
 \itemsep 0em
-\item 
+\item 插入选课信息\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+    // Insert a new course selecction information
+    // student_id & course_id are foreign keys from other table
+    // date is fetch from browser
+    // Ouput:
+    // - If insertion action succeed, return 1
+    // - If insertion action is illegal, return -1
+    // - If insertion action failed, return 0
+\end{lstlisting}
+\item 删除选课信息\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+    // Delete Selection
+    // We have 3 deletion mode in total
+    // type = 0 -- give student_id & course_id to delete a single selection
+    // information
+    // type = 1 -- give course_id only
+    // type = 2 -- give student_id only
+\end{lstlisting}
+\item 查询选课信息\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+    // Query selection information
+    // I am going to give out 2 methods here to query:
+    // 1. Use student_id to query all the course he chose.
+    // 2. Use course_id to quert all the student who chose this class.
+    public ArrayList<Course> queryByStudent(String student_id)
+    public ArrayList<Student> queryByCourse(String course_id)
+\end{lstlisting}
 \end{enumerate}
 \subsubsection{StudentDao}
 用于对学生进行数据库操作。
 \begin{enumerate}
 \itemsep 0em
-\item 
+\item 插入学生\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+    // Insert a new student
+    // Input (Student Info) AND (Person Info)
+    // TODO INITIAL WITH TRANSACTION NEED ADDITIONAL CHECK
+    public int insertStudent(String id, String enrollment_date, String email, String class_id,
+                                 String id_card_number, boolean card_type, String name, boolean gender, String birthdate,
+                                 String nationality, String address, String address_postal_code,
+                                 String address_phone_number)
+\end{lstlisting}
+\item 删除学生\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+    // Delete an existed student
+    // We support 2 types to delete a student
+    // type = 0 : delete by student_id
+    // type = 1 : delete by id_card_number
+\end{lstlisting}
+\item 查询学生\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+    // Query student
+    // type = -1 : list out all the students
+    // type = 0 : use Student_ID
+    // type = 1 : use ID_card_nubmer
+    // type = 2 : use name
+\end{lstlisting}
+\item 更新学生\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+    // Update student
+    // type = 1 : update enroll date
+    // type = 2 : update class id
+    // type = 3 : update email
+\end{lstlisting}
 \end{enumerate}
 \subsubsection{TeacherDao}
 用于对教师进行数据库操作。
 \begin{enumerate}
 \itemsep 0em
-\item 
+\item 插入教师\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+    // Insert a new teacher
+    // Input (Teacher Info) AND (Person Info)
+    public int insertTeacher(String id, String enrollment_date, String department_id, String teacher_title,
+            String id_card_number, boolean card_type, String name, boolean gender, String birthdate, String nationality,
+            String address, String address_postal_code, String address_phone_number)
+\end{lstlisting}
+\item 删除教师\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+    // Delete an existed teacher
+    // We support 2 types to delete a teacher
+    // type = 0 : delete by teacher_id
+    // type = 1 : delete by id_card_number
+\end{lstlisting}
+\item 查询教师\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+    // Query teacher
+    // type = -1 : List out all the teachers
+    // type = 0 : use Teacher_ID
+    // type = 1 : use ID_card_nubmer
+    // type = 2 : use name
+\end{lstlisting}
+\item 更新教师\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+    // Update teacher
+    // type = 1 : update enroll date
+    // type = 2 : update department id
+    // type = 3 : update title
+\end{lstlisting}
 \end{enumerate}
 \subsubsection{TransactionDao}
 用于对异动进行数据库操作。
 \begin{enumerate}
 \itemsep 0em
-\item 
+\item 插入异动\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+    // Insert new transaction element
+    // Input:
+    // - id: transaction id
+    // - type: transaction type
+    // - date: transaction date
+    // - and so on
+    // Ouput:
+    // - If insertion action succeed, return a number, which stands for the row
+    // count for SQL Data Manipulation
+    // Language (DML) statements. Otherwise, it will return 0
+\end{lstlisting}
+\item 删除异动\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+    // Delete a transaction
+    // Input:
+    // - id: transaction id
+    // Ouput:
+    // - return 0 if the element is not existed
+    // - return 1 if we delete the element successfully
+\end{lstlisting}
+\item 查询异动\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+    // Query traction information
+    // Input:
+    // - elementSelector: a string used to select element
+    // - type: type is used to select the meaning of element_selector
+    // type = 0 -- select by transactionID
+    // type = 1 -- select by studentID
+    // type = -1 -- selecat all elements
+    // Ouput:
+    // - return an array list for your query.
+\end{lstlisting}
+\item 更新异动\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+    // Modify campus information
+    // - row & column selector: used to select the value you want to update , use id
+    // to select row
+    // - columnSelector:
+    // 0 -- update type
+    // 1 -- update date
+    // 2 -- update originClassID
+    // 3 -- update CurrentClassID
+    // 4 -- update LeagueMember
+    // 5 -- update Reason
+    // - value:
+    // used to update the database
+    // Ouput:
+    // - return 0 if element is not existed
+    // - return 1 if update action succeed
+    // - return -1 if action is illegal
+\end{lstlisting}
 \end{enumerate}
 \subsubsection{UserDao}
 用于对用户进行数据库操作。
 \begin{enumerate}
 \itemsep 0em
-\item 
+\item 插入用户\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+public int insertUser(String username, String password, int usertype, String foreign_id)
+\end{lstlisting}
+\item 删除用户\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+public int deleteUser(String username)
+\end{lstlisting}
+\item 查询用户\\
+查询所有用户\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+public ArrayList<User> queryUser()
+\end{lstlisting}
+\item 更新用户\\
+\begin{lstlisting}[language=java,backgroundcolor=\color{lightgray}]
+public int updateUser (String username, String password, String usertype_string, String foreign_id)
+\end{lstlisting}
 \end{enumerate}
 
 \end{document}
